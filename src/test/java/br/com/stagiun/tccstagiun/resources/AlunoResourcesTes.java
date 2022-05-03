@@ -1,13 +1,9 @@
 package br.com.stagiun.tccstagiun.resources;
 
-import br.com.centralkondo.model.entity.address.Aluno;
-import br.com.centralkondo.model.service.AlunoService;
-import br.com.centralkondo.util.JsonUtil;
 import br.com.stagiun.tccstagiun.controller.AlunoResources;
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import br.com.stagiun.tccstagiun.model.service.AlunoService;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
