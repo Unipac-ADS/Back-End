@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Turma;
 import br.com.stagiun.tccstagiun.model.service.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class TurmaResources {
     }
 
     @PostMapping
-    public ResponseEntity<Turma> salvar(@RequestBody Turma turma) {
+    public ResponseEntity<Turma> salvar(@RequestBody Turma turma) throws ResourceFoundException {
         Turma turmaRetornado = turmaService.salvar(turma);
 
         if (turmaRetornado != null) {
@@ -53,7 +54,7 @@ public class TurmaResources {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Turma> editar(@PathVariable("id") Long id, @RequestBody Turma turma) {
+    public ResponseEntity<Turma> editar(@PathVariable("id") Long id, @RequestBody Turma turma) throws ResourceFoundException {
         Turma turmaEditado = turmaService.editar(id, turma);
 
         if (turmaEditado != null) {

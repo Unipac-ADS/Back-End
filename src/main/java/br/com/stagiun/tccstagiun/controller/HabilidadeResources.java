@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Habilidade;
 import br.com.stagiun.tccstagiun.model.service.HabilidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class HabilidadeResources {
     }
 
     @PostMapping
-    public ResponseEntity<Habilidade> salvar(@RequestBody Habilidade habilidade) {
+    public ResponseEntity<Habilidade> salvar(@RequestBody Habilidade habilidade) throws ResourceFoundException {
         Habilidade habilidadeRetornado = habilidadeService.salvar(habilidade);
 
         if (habilidadeRetornado != null) {
@@ -53,7 +54,7 @@ public class HabilidadeResources {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Habilidade> editar(@PathVariable("id") Long id, @RequestBody Habilidade habilidade) {
+    public ResponseEntity<Habilidade> editar(@PathVariable("id") Long id, @RequestBody Habilidade habilidade) throws ResourceFoundException {
         Habilidade habilidadeEditado = habilidadeService.editar(id, habilidade);
 
         if (habilidadeEditado != null) {

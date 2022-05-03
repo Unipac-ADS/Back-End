@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.UsuarioPerfil;
 import br.com.stagiun.tccstagiun.model.repository.UsuarioPerfilRepository;
 import br.com.stagiun.tccstagiun.model.service.UsuarioPerfilService;
@@ -42,7 +43,7 @@ public class UsuarioPerfilResources {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioPerfil> salvar(@RequestBody UsuarioPerfil usuarioperfil) {
+    public ResponseEntity<UsuarioPerfil> salvar(@RequestBody UsuarioPerfil usuarioperfil) throws ResourceFoundException {
         UsuarioPerfil usuarioperfilRetornado = usuarioperfilService.salvar(usuarioperfil);
 
         if (usuarioperfil != null) {
@@ -54,7 +55,7 @@ public class UsuarioPerfilResources {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioPerfil> salvar(@PathVariable("id") Long id, @RequestBody UsuarioPerfil usuarioperfil) {
+    public ResponseEntity<UsuarioPerfil> salvar(@PathVariable("id") Long id, @RequestBody UsuarioPerfil usuarioperfil) throws ResourceFoundException {
         UsuarioPerfil usuarioperfilRetornado = usuarioperfilService.editar(id, usuarioperfil);
 
         if (usuarioperfilRetornado != null) {

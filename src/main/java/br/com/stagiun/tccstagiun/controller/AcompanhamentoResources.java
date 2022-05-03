@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Acompanhamento;
 import br.com.stagiun.tccstagiun.model.service.AcompanhamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class AcompanhamentoResources {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Acompanhamento> salvar(@RequestBody Acompanhamento acompanhamento) {
+    public ResponseEntity<Acompanhamento> salvar(@RequestBody Acompanhamento acompanhamento) throws ResourceFoundException {
         Acompanhamento acompanhamentoCadastrado = acompanhamentoService.salvar(acompanhamento);
 
         if (acompanhamentoCadastrado != null) {
@@ -59,7 +60,7 @@ public class AcompanhamentoResources {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public  ResponseEntity<Acompanhamento> editar(@PathVariable("id") Long id, @RequestBody Acompanhamento acompanhamento){
+    public  ResponseEntity<Acompanhamento> editar(@PathVariable("id") Long id, @RequestBody Acompanhamento acompanhamento) throws ResourceFoundException {
         Acompanhamento acompanhamentoEditado = acompanhamentoService.editar(id, acompanhamento);
 
         if(acompanhamentoEditado != null) {
