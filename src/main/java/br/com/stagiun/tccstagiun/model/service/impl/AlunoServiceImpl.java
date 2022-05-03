@@ -21,7 +21,7 @@ public class AlunoServiceImpl implements AlunoService {
     @Override
     public Aluno salvar(Aluno aluno) throws ResourceFoundException {
         Optional<Aluno> existeAluno = findByCpf(aluno.getCpf());
-        if (!existeAluno.isPresent()) {
+        if (existeAluno.isPresent()) {
             throw new ResourceFoundException("Aluno jã encontrado!");
         }
 
@@ -31,9 +31,11 @@ public class AlunoServiceImpl implements AlunoService {
     @Override
     public Aluno editar(Long id, Aluno aluno) throws ResourceFoundException {
         Optional<Aluno> existeAluno = findById(id);
+
         if (!existeAluno.isPresent()) {
-            throw new ResourceFoundException("Aluno jã encontrado!");
+            throw new ResourceFoundException("Aluno nao encontrado!");
         }
+
         Aluno alunoUpdate = existeAluno.get();
         alunoUpdate.update(id, aluno);
         return alunoRepository.save(alunoUpdate);
