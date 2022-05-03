@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import br.com.stagiun.tccstagiun.model.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class AlunoResources {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Aluno> salvar(@RequestBody Aluno aluno) {
+    public ResponseEntity<Aluno> salvar(@RequestBody Aluno aluno) throws ResourceFoundException {
         Aluno alunoCadastrado = alunoService.salvar(aluno);
 
         if (alunoCadastrado != null) {
@@ -57,7 +58,7 @@ public class AlunoResources {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public  ResponseEntity<Aluno> editar(@PathVariable("id") Long id, @RequestBody Aluno aluno){
+    public  ResponseEntity<Aluno> editar(@PathVariable("id") Long id, @RequestBody Aluno aluno) throws ResourceFoundException {
         Aluno alunoEditado = alunoService.editar(id, aluno);
 
         if(alunoEditado != null) {

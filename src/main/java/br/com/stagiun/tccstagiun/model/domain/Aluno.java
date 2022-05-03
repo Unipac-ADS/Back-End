@@ -43,4 +43,16 @@ public class Aluno extends IdModel {
 
     @Column(name = "curriculo_de_aluno", nullable = true)
     private String curriculo;
+
+    public void update(Long id, Aluno aluno) {
+        this.id = id;
+        this.usuario = aluno.getUsuario();
+        this.endereco = aluno.getEndereco();
+        this.nome = aluno.getNome();
+        this.matricula = aluno.getMatricula();
+        this.cpf = aluno.getCpf();
+        this.telefone = aluno.getTelefone();
+        this.email = aluno.getEmail();
+        this.curriculo = aluno.getCurriculo();
+    }
 }

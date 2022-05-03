@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Dica;
 import br.com.stagiun.tccstagiun.model.service.DicaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class DicaResources {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Dica> salvar(@RequestBody Dica dica) {
+    public ResponseEntity<Dica> salvar(@RequestBody Dica dica) throws ResourceFoundException {
         Dica dicaCadastrado = dicaService.salvar(dica);
 
         if (dicaCadastrado != null) {
@@ -57,7 +58,7 @@ public class DicaResources {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public  ResponseEntity<Dica> editar(@PathVariable("id") Long id, @RequestBody Dica dica){
+    public  ResponseEntity<Dica> editar(@PathVariable("id") Long id, @RequestBody Dica dica) throws ResourceFoundException {
         Dica dicaEditado = dicaService.editar(id, dica);
 
         if(dicaEditado != null) {

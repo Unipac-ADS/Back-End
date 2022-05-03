@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import br.com.stagiun.tccstagiun.model.repository.AlunoRepository;
 import br.com.stagiun.tccstagiun.model.service.AlunoService;
@@ -18,14 +19,24 @@ public class AlunoServiceImpl implements AlunoService {
     private AlunoRepository alunoRepository;
 
     @Override
-    public Aluno salvar(Aluno aluno) {
+    public Aluno salvar(Aluno aluno) throws ResourceFoundException {
+        Optional<Aluno> existeAluno = findByCpf(aluno.getCpf());
+        if (!existeAluno.isPresent()) {
+            throw new ResourceFoundException("Aluno jã encontrado!");
+        }
+
         return alunoRepository.save(aluno);
     }
 
     @Override
-    public Aluno editar(Long id, Aluno aluno) {
-        aluno.setId(id);
-        return alunoRepository.save(aluno);
+    public Aluno editar(Long id, Aluno aluno) throws ResourceFoundException {
+        Optional<Aluno> existeAluno = findById(id);
+        if (!existeAluno.isPresent()) {
+            throw new ResourceFoundException("Aluno jã encontrado!");
+        }
+        Aluno alunoUpdate = existeAluno.get();
+        alunoUpdate.update(id, aluno);
+        return alunoRepository.save(alunoUpdate);
     }
 
     @Override
@@ -36,6 +47,11 @@ public class AlunoServiceImpl implements AlunoService {
     @Override
     public Optional<Aluno> findById(Long id) {
         return alunoRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Aluno> findByCpf(Integer cpf) {
+        return alunoRepository.findByCpf(cpf);
     }
 
     @Override

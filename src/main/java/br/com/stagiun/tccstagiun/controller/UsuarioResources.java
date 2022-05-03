@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Usuario;
 import br.com.stagiun.tccstagiun.model.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class UsuarioResources {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) throws ResourceFoundException {
         Usuario usuarioRetornado = usuarioService.salvar(usuario);
 
         if (usuarioRetornado != null) {
@@ -53,7 +54,7 @@ public class UsuarioResources {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> editar(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> editar(@PathVariable("id") Long id, @RequestBody Usuario usuario) throws ResourceFoundException {
         Usuario usuarioEditado = usuarioService.editar(id, usuario);
 
         if (usuarioEditado != null) {

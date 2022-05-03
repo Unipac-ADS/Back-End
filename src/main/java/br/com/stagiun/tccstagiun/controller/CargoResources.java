@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Cargo;
 import br.com.stagiun.tccstagiun.model.service.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class CargoResources {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Cargo> salvar(@RequestBody Cargo cargo) {
+    public ResponseEntity<Cargo> salvar(@RequestBody Cargo cargo) throws ResourceFoundException {
         Cargo cargoCadastrado = cargoService.salvar(cargo);
 
         if (cargoCadastrado != null) {
@@ -57,7 +58,7 @@ public class CargoResources {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public  ResponseEntity<Cargo> editar(@PathVariable("id") Long id, @RequestBody Cargo cargo){
+    public  ResponseEntity<Cargo> editar(@PathVariable("id") Long id, @RequestBody Cargo cargo) throws ResourceFoundException {
         Cargo cargoEditado = cargoService.editar(id, cargo);
 
         if(cargoEditado != null) {

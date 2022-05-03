@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Endereco;
 import br.com.stagiun.tccstagiun.model.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class EnderecoResources {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Endereco> salvar(@RequestBody Endereco endereco) {
+    public ResponseEntity<Endereco> salvar(@RequestBody Endereco endereco) throws ResourceFoundException {
         Endereco enderecoCadastrado = enderecoService.salvar(endereco);
 
         if (enderecoCadastrado != null) {
@@ -57,7 +58,7 @@ public class EnderecoResources {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public  ResponseEntity<Endereco> editar(@PathVariable("id") Long id, @RequestBody Endereco endereco){
+    public  ResponseEntity<Endereco> editar(@PathVariable("id") Long id, @RequestBody Endereco endereco) throws ResourceFoundException {
         Endereco enderecoEditado = enderecoService.editar(id, endereco);
 
         if(enderecoEditado != null) {

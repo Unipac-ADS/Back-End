@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Cep;
 import br.com.stagiun.tccstagiun.model.service.CepService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class CepResources {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Cep> salvar(@RequestBody Cep cep) {
+    public ResponseEntity<Cep> salvar(@RequestBody Cep cep) throws ResourceFoundException {
         Cep cepCadastrado = cepService.salvar(cep);
 
         if (cepCadastrado != null) {
@@ -57,7 +58,7 @@ public class CepResources {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public  ResponseEntity<Cep> editar(@PathVariable("id") Long id, @RequestBody Cep cidade){
+    public  ResponseEntity<Cep> editar(@PathVariable("id") Long id, @RequestBody Cep cidade) throws ResourceFoundException {
         Cep cidadeEditado = cepService.editar(id, cidade);
 
         if(cidadeEditado != null) {

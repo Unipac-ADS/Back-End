@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Perfil;
 import br.com.stagiun.tccstagiun.model.service.PerfilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class PerfilResources {
     }
 
     @PostMapping
-    public ResponseEntity<Perfil> salvar(@RequestBody Perfil perfil) {
+    public ResponseEntity<Perfil> salvar(@RequestBody Perfil perfil) throws ResourceFoundException {
         Perfil perfilRetornado = perfilService.salvar(perfil);
 
         if (perfilRetornado != null) {
@@ -53,7 +54,7 @@ public class PerfilResources {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Perfil> editar(@PathVariable("id") Long id, @RequestBody Perfil perfil) {
+    public ResponseEntity<Perfil> editar(@PathVariable("id") Long id, @RequestBody Perfil perfil) throws ResourceFoundException {
         Perfil perfilEditado = perfilService.editar(id, perfil);
 
         if (perfilEditado != null) {

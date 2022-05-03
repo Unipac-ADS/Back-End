@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Idioma;
 import br.com.stagiun.tccstagiun.model.service.IdiomaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class IdiomaResources {
     }
 
     @PostMapping
-    public ResponseEntity<Idioma> salvar(@RequestBody Idioma idioma) {
+    public ResponseEntity<Idioma> salvar(@RequestBody Idioma idioma) throws ResourceFoundException {
         Idioma idiomaRetornado = idiomaService.salvar(idioma);
 
         if (idiomaRetornado != null) {
@@ -53,7 +54,7 @@ public class IdiomaResources {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Idioma> editar(@PathVariable("id") Long id, @RequestBody Idioma idioma) {
+    public ResponseEntity<Idioma> editar(@PathVariable("id") Long id, @RequestBody Idioma idioma) throws ResourceFoundException {
         Idioma idiomaEditado = idiomaService.editar(id, idioma);
 
         if (idiomaEditado != null) {
