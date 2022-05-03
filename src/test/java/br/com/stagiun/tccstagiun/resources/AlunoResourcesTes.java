@@ -53,7 +53,7 @@ public class AlunoResourcesTes {
             Aluno aluno = getAluno();
             given(service.findById(id).get()).willReturn(aluno);
 
-            mockMvc.perform(get("/api/v1/countries/{id}", id)).andDo(print()).andExpect(status().isOk());
+            mockMvc.perform(get("/api/v1/alunos/{id}", id)).andDo(print()).andExpect(status().isOk());
             // .andExpect(content().string(response));
         }
 
@@ -64,7 +64,7 @@ public class AlunoResourcesTes {
             when(this.service.salvar(url)).thenReturn(url);
 
             RequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .post("/api/v1/countries")
+                    .post("/api/v1/alunos")
                     .accept(MediaType.APPLICATION_JSON).content(JsonUtil.getJson(getAluno()))
                     .contentType(MediaType.APPLICATION_JSON);
 
