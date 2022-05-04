@@ -10,10 +10,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString(callSuper = true, of = { "description" })
+@ToString(callSuper = true, of = {"description"})
 @Builder
 @Data
-public class Cargo extends IdModel{
+public class Cargo extends IdModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +39,16 @@ public class Cargo extends IdModel{
 
     @Column
     private String competencias_desejadas;
+
+    public void update(Long id, Cargo cargo) {
+        this.id = id;
+        this.descricao = cargo.getDescricao();
+        this.experiencia = cargo.getExperiencia();
+        this.area_atuacao = cargo.getArea_atuacao();
+        this.beneficios = cargo.getBeneficios();
+        this.salario = cargo.getSalario();
+        this.habilidades_desejadas = cargo.getHabilidades_desejadas();
+        this.competencias_desejadas = getCompetencias_desejadas();
+    }
 
 }

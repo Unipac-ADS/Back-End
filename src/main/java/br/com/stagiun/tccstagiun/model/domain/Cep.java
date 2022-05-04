@@ -10,10 +10,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString(callSuper = true, of = { "description" })
+@ToString(callSuper = true, of = {"description"})
 @Builder
 @Data
-public class Cep extends IdModel{
+public class Cep extends IdModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,11 @@ public class Cep extends IdModel{
     @ManyToOne
     @JoinColumn(name = "bairro_id", referencedColumnName = "id")
     private Bairro bairro;
+
+    public void update(Long id, Cep cep) {
+        this.id = id;
+        this.descricao = cep.getDescricao();
+        this.bairro = cep.getBairro();
+    }
 
 }

@@ -20,4 +20,10 @@ public class Perfil extends IdModel {
 
     @Column(nullable = false)
     private String descricao;
+
+    public void update(Long id, Perfil perfil) {
+        this.id = id;
+        this.descricao = perfil.getDescricao();
+    }
+
 }

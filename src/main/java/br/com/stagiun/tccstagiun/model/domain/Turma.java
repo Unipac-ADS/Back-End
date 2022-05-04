@@ -27,4 +27,12 @@ public class Turma extends IdModel {
     @ManyToOne
     @JoinColumn(name = "curso_id", referencedColumnName = "id")
     private Curso curso;
+
+    public void update(Long id, Turma turma) {
+        this.id = id;
+        this.descricao = turma.getDescricao();
+        this.periodo = turma.getPeriodo();
+        this.curso = turma.getCurso();
+    }
+
 }

@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Cidade;
 import br.com.stagiun.tccstagiun.model.repository.CidadeRepository;
 import br.com.stagiun.tccstagiun.model.service.CidadeService;
@@ -18,14 +19,27 @@ public class CidadeServiceImpl implements CidadeService {
     private CidadeRepository cidadeRepository;
 
     @Override
-    public Cidade salvar(Cidade cidade) {
+    public Cidade salvar(Cidade cidade) throws ResourceFoundException {
+        Optional<Cidade> existeCidade = findById(cidade.getId());
+
+        if (existeCidade.isPresent()) {
+            throw new ResourceFoundException("Cidade já encontrada!");
+        }
+
         return cidadeRepository.save(cidade);
     }
 
     @Override
-    public Cidade editar(Long id, Cidade cidade) {
-        cidade.setId(id);
-        return cidadeRepository.save(cidade);
+    public Cidade editar(Long id, Cidade cidade) throws ResourceFoundException {
+        Optional<Cidade> existeCidade = findById(id);
+
+        if (!existeCidade.isPresent()) {
+            throw new ResourceFoundException("Cidade não encontrada!");
+        }
+
+        Cidade updateCidade = existeCidade.get();
+        updateCidade.update(id, cidade);
+        return cidadeRepository.save(updateCidade);
     }
 
     @Override

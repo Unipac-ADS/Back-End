@@ -40,4 +40,16 @@ public class Vaga extends IdModel {
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "id")
     private Empresa empresa;
+
+    public void update(Long id, Vaga vaga) {
+        this.id = id;
+        this.aplicado = vaga.getAplicado();
+        this.amount = vaga.getAmount();;
+        this.data_oferta_inicio = vaga.getData_oferta_inicio();
+        this.data_oferta_fim = vaga.getData_oferta_fim();
+        this.nome = vaga.getNome();
+        this.cargo = vaga.getCargo();
+        this.empresa = vaga.getEmpresa();
+    }
+
 }

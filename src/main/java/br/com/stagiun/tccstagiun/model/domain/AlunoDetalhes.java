@@ -63,4 +63,22 @@ public class AlunoDetalhes  extends IdModel {
     @Column
     private String file_curriculo;
 
+    public void update (Long id, AlunoDetalhes alunoDetalhes) {
+        this.id = id;
+        this.aluno = alunoDetalhes.getAluno();
+        this.turma = alunoDetalhes.getTurma();
+        this.ano_de_inicio_curso = alunoDetalhes.getAno_de_inicio_curso();
+        this.ano_de_conclusao_curso = alunoDetalhes.getAno_de_conclusao_curso();
+        this.experiencia = alunoDetalhes.getExperiencia();
+        this.info_adicionais = alunoDetalhes.getInfo_adicionais();
+        this.deficiencia = alunoDetalhes.getDeficiencia();
+        this.sobre = alunoDetalhes.getSobre();
+        this.linkedin = alunoDetalhes.getLinkedin();
+        this.github = alunoDetalhes.getGithub();
+        this.instagram = alunoDetalhes.getInstagram();
+        this.twitter = alunoDetalhes.getTwitter();
+        this.facebook = alunoDetalhes.getFacebook();
+        this.file_curriculo = alunoDetalhes.getFile_curriculo();
+    }
+
 }

@@ -20,4 +20,10 @@ public class Faculdade extends IdModel {
 
     @Column(nullable = false)
     private String nome;
+
+    public void update(Long id, Faculdade faculdade) {
+        this.id = id;
+        this.nome = faculdade.getNome();
+    }
+
 }

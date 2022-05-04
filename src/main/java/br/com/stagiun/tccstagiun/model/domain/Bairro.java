@@ -25,4 +25,10 @@ public class Bairro extends IdModel {
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
     private Cidade cidade;
 
+    public void update (Long id, Bairro bairro) {
+        this.id = id;
+        this.descricao = bairro.getDescricao();
+        this.cidade = bairro.getCidade();
+    }
+
 }

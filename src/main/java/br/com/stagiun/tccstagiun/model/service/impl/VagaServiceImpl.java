@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Vaga;
 import br.com.stagiun.tccstagiun.model.repository.VagaRepository;
 import br.com.stagiun.tccstagiun.model.service.VagaService;
@@ -16,14 +17,27 @@ public class VagaServiceImpl implements VagaService {
     private VagaRepository vagaRepository;
 
     @Override
-    public Vaga salvar(Vaga vaga) {
+    public Vaga salvar(Vaga vaga) throws ResourceFoundException {
+        Optional<Vaga> existeVaga = findById(vaga.getId());
+
+        if (existeVaga.isPresent()) {
+            throw new ResourceFoundException("Vaga já encontrada!");
+        }
+
         return vagaRepository.save(vaga);
     }
 
     @Override
-    public Vaga editar(Long id, Vaga vaga) {
-        vaga.setId(id);
-        return vagaRepository.save(vaga);
+    public Vaga editar(Long id, Vaga vaga) throws ResourceFoundException{
+        Optional<Vaga> existeVaga = findById(id);
+
+        if (!existeVaga.isPresent()) {
+            throw new ResourceFoundException("Vaga não encontrada!");
+        }
+
+        Vaga updateVaga = existeVaga.get();
+        updateVaga.update(id, vaga);
+        return vagaRepository.save(updateVaga);
     }
 
     @Override

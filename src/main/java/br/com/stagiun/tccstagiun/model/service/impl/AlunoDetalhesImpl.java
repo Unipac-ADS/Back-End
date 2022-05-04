@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhes;
 import br.com.stagiun.tccstagiun.model.repository.AlunoDetalhesRepository;
 import br.com.stagiun.tccstagiun.model.service.AlunoDetalhesService;
@@ -18,14 +19,27 @@ public class AlunoDetalhesImpl implements AlunoDetalhesService {
     private AlunoDetalhesRepository alunoDetalhesRepository;
 
     @Override
-    public AlunoDetalhes salvar(AlunoDetalhes alunoDetalhes) {
+    public AlunoDetalhes salvar(AlunoDetalhes alunoDetalhes) throws ResourceFoundException {
+        Optional<AlunoDetalhes> existeAlunoDetalhes = findById(alunoDetalhes.getId());
+
+        if (existeAlunoDetalhes.isPresent()) {
+            throw new ResourceFoundException("Aluno detalhes já encontrado!");
+        }
+
         return alunoDetalhesRepository.save(alunoDetalhes);
     }
 
     @Override
-    public AlunoDetalhes editar(Long id, AlunoDetalhes alunoDetalhes) {
-        alunoDetalhes.setId(id);
-        return alunoDetalhesRepository.save(alunoDetalhes);
+    public AlunoDetalhes editar(Long id, AlunoDetalhes alunoDetalhes) throws ResourceFoundException {
+        Optional<AlunoDetalhes> existeAlunoDetalhes = findById(id);
+
+        if (!existeAlunoDetalhes.isPresent()) {
+            throw new ResourceFoundException("Aluno detalhes não encontrado!");
+        }
+
+        AlunoDetalhes updateAlunoDetalhes = existeAlunoDetalhes.get();
+        updateAlunoDetalhes.update(id, alunoDetalhes);
+        return alunoDetalhesRepository.save(updateAlunoDetalhes);
     }
 
     @Override

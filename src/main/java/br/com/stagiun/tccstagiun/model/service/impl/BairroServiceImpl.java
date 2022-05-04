@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Bairro;
 import br.com.stagiun.tccstagiun.model.repository.BairroRepository;
 import br.com.stagiun.tccstagiun.model.service.BairroService;
@@ -18,14 +19,27 @@ public class BairroServiceImpl implements BairroService {
     private BairroRepository bairroRepository;
 
     @Override
-    public Bairro salvar(Bairro bairro) {
+    public Bairro salvar(Bairro bairro) throws ResourceFoundException {
+        Optional<Bairro> existeBairro = findById(bairro.getId());
+
+        if (existeBairro.isPresent()) {
+            throw new ResourceFoundException("Bairro já encontrado!");
+        }
+
         return bairroRepository.save(bairro);
     }
 
     @Override
-    public Bairro editar(Long id, Bairro bairro) {
-        bairro.setId(id);
-        return bairroRepository.save(bairro);
+    public Bairro editar(Long id, Bairro bairro) throws ResourceFoundException {
+        Optional<Bairro> existeBairro = findById(id);
+
+        if (!existeBairro.isPresent()) {
+            throw new ResourceFoundException("Bairro não encontrado!");
+        }
+
+        Bairro updateBairro = existeBairro.get();
+        updateBairro.update(id, bairro);
+        return bairroRepository.save(updateBairro);
     }
 
     @Override

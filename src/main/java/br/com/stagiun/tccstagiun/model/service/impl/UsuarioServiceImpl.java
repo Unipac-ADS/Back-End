@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Usuario;
 import br.com.stagiun.tccstagiun.model.repository.UsuarioRepository;
 import br.com.stagiun.tccstagiun.model.service.UsuarioService;
@@ -18,14 +19,27 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public Usuario salvar(Usuario usuario) {
+    public Usuario salvar(Usuario usuario) throws ResourceFoundException {
+        Optional<Usuario> existeUsuario = findById(usuario.getId());
+
+        if (existeUsuario.isPresent()) {
+            throw new ResourceFoundException("Usuário já encontrado");
+        }
+
         return usuarioRepository.save(usuario);
     }
 
     @Override
-    public Usuario editar(Long id, Usuario usuario) {
-        usuario.setId(id);
-        return usuarioRepository.save(usuario);
+    public Usuario editar(Long id, Usuario usuario) throws ResourceFoundException{
+        Optional<Usuario> existeUsuario = findById(id);
+
+        if (!existeUsuario.isPresent()) {
+            throw new ResourceFoundException("Usuário não encontrado!");
+        }
+
+        Usuario updateUsuario = existeUsuario.get();
+        updateUsuario.update(id, usuario);
+        return usuarioRepository.save(updateUsuario);
     }
 
     @Override

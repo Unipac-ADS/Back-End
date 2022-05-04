@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Estado;
 import br.com.stagiun.tccstagiun.model.repository.EstadoRepository;
 import br.com.stagiun.tccstagiun.model.service.EstadoService;
@@ -18,14 +19,27 @@ public class EstadoServiceImpl implements EstadoService {
     private EstadoRepository estadoRepository;
 
     @Override
-    public Estado salvar(Estado estado) {
+    public Estado salvar(Estado estado) throws ResourceFoundException {
+        Optional<Estado> existeEstado = findById(estado.getId());
+
+        if (existeEstado.isPresent()) {
+            throw new ResourceFoundException("Estado já encontrado!");
+        }
+
         return estadoRepository.save(estado);
     }
 
     @Override
-    public Estado editar(Long id, Estado estado) {
-        estado.setId(id);
-        return estadoRepository.save(estado);
+    public Estado editar(Long id, Estado estado) throws ResourceFoundException{
+        Optional<Estado> existeEstado = findById(id);
+
+        if (!existeEstado.isPresent()) {
+            throw new ResourceFoundException("Estado não encontrado!");
+        }
+
+        Estado updateEstado = existeEstado.get();
+        updateEstado.update(id, estado);
+        return estadoRepository.save(updateEstado);
     }
 
     @Override

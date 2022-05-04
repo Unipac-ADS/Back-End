@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Dica;
 import br.com.stagiun.tccstagiun.model.repository.DicaRepository;
 import br.com.stagiun.tccstagiun.model.service.DicaService;
@@ -18,14 +19,27 @@ public class DicaImpl implements DicaService {
     private DicaRepository dicaRepository;
 
     @Override
-    public Dica salvar(Dica dica) {
+    public Dica salvar(Dica dica) throws ResourceFoundException {
+        Optional<Dica> existeDica = findById(dica.getId());
+
+        if (existeDica.isPresent()) {
+            throw new ResourceFoundException("Dica já encontrada!");
+        }
+
         return dicaRepository.save(dica);
     }
 
     @Override
-    public Dica editar(Long id, Dica dica) {
-        dica.setId(id);
-        return dicaRepository.save(dica);
+    public Dica editar(Long id, Dica dica) throws ResourceFoundException {
+        Optional<Dica> existeDica = findById(id);
+
+        if (!existeDica.isPresent()) {
+            throw new ResourceFoundException("Dica não encontrada!");
+        }
+
+        Dica updateDica = existeDica.get();
+        updateDica.update(id, dica);
+        return dicaRepository.save(updateDica);
     }
 
     @Override

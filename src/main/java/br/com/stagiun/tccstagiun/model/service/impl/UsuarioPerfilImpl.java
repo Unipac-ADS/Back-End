@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.UsuarioPerfil;
 import br.com.stagiun.tccstagiun.model.repository.UsuarioPerfilRepository;
 import br.com.stagiun.tccstagiun.model.service.UsuarioPerfilService;
@@ -18,14 +19,27 @@ public class UsuarioPerfilImpl implements UsuarioPerfilService {
     private UsuarioPerfilRepository usuarioperfilRepository;
 
     @Override
-    public UsuarioPerfil salvar(UsuarioPerfil usuarioperfil) {
+    public UsuarioPerfil salvar(UsuarioPerfil usuarioperfil) throws ResourceFoundException {
+        Optional<UsuarioPerfil> existeUsuarioPerfil = findById(usuarioperfil.getId());
+
+        if (existeUsuarioPerfil.isPresent()) {
+            throw new ResourceFoundException("Usuário Perfil já encontrado!");
+        }
+
         return usuarioperfilRepository.save(usuarioperfil);
     }
 
     @Override
-    public UsuarioPerfil editar(Long id, UsuarioPerfil usuarioperfil) {
-       // usuarioperfil.setId(id);
-        return usuarioperfilRepository.save(usuarioperfil);
+    public UsuarioPerfil editar(Long id, UsuarioPerfil usuarioperfil) throws ResourceFoundException{
+        Optional<UsuarioPerfil> existeUsuarioPerfil = findById(id);
+
+        if (!existeUsuarioPerfil.isPresent()) {
+            throw new ResourceFoundException("Usuário Perfil não encontrado!");
+        }
+
+        UsuarioPerfil updateUsuarioPerfil = existeUsuarioPerfil.get();
+        updateUsuarioPerfil.update(id, usuarioperfil);
+        return usuarioperfilRepository.save(updateUsuarioPerfil);
     }
 
     @Override

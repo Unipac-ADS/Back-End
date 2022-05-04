@@ -26,4 +26,12 @@ public class Usuario extends IdModel{
 
     @Column(nullable = false)
     private String senha;
+
+    public void update(Long id, Usuario usuario) {
+        this.id = id;
+        this.nome = usuario.getNome();
+        this.email = usuario.getEmail();
+        this.senha = usuario.getSenha();
+    }
+
 }

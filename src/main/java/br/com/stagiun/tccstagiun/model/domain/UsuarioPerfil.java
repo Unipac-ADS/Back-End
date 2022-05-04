@@ -26,4 +26,11 @@ public class UsuarioPerfil implements Serializable {
     @ManyToOne
     @JoinColumn(name = "perfil_id", referencedColumnName = "id")
     private Perfil perfil;
+
+    public void update(Long id, UsuarioPerfil usuarioPerfil) {
+        this.id = id;
+        this.aluno = usuarioPerfil.getAluno();
+        this.perfil = usuarioPerfil.getPerfil();
+    }
+
 }

@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Cargo;
 import br.com.stagiun.tccstagiun.model.repository.CargoRepository;
 import br.com.stagiun.tccstagiun.model.service.CargoService;
@@ -18,14 +19,27 @@ public class CargoServiceImpl implements CargoService {
     private CargoRepository cargoRepository;
 
     @Override
-    public Cargo salvar(Cargo cargo) {
+    public Cargo salvar(Cargo cargo) throws ResourceFoundException {
+        Optional<Cargo> existeCargo = findById(cargo.getId());
+
+        if (existeCargo.isPresent()) {
+            throw new ResourceFoundException("Cargo já encontrado!");
+        }
+
         return cargoRepository.save(cargo);
     }
 
     @Override
-    public Cargo editar(Long id, Cargo cargo) {
-        cargo.setId(id);
-        return cargoRepository.save(cargo);
+    public Cargo editar(Long id, Cargo cargo) throws ResourceFoundException {
+        Optional<Cargo> existeCargo = findById(id);
+
+        if (!existeCargo.isPresent()) {
+            throw new ResourceFoundException("Cargo não encontrado!");
+        }
+
+        Cargo updateCargo = existeCargo.get();
+        updateCargo.update(id, cargo);
+        return cargoRepository.save(updateCargo);
     }
 
     @Override

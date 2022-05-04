@@ -25,4 +25,10 @@ public class Curso extends IdModel {
     @JoinColumn(name = "faculdade_id", referencedColumnName = "id")
     private Faculdade faculdade;
 
+    public void update(Long id, Curso curso) {
+        this.id = id;
+        this.descricao = curso.getDescricao();
+        this.faculdade = curso.getFaculdade();
+    }
+
 }

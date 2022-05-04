@@ -2,6 +2,8 @@ package br.com.stagiun.tccstagiun.model.service;
 
 import br.com.stagiun.tccstagiun.model.domain.Cep;
 
-public interface CepService extends CrudService<Cep, Long> {
+import java.util.Optional;
 
+public interface CepService extends CrudService<Cep, Long> {
+    Optional<Cep> findById(Long id);
 }

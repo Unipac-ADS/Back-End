@@ -1,5 +1,7 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
+import br.com.stagiun.tccstagiun.model.domain.Cidade;
 import br.com.stagiun.tccstagiun.model.domain.Curso;
 import br.com.stagiun.tccstagiun.model.repository.CursoRepository;
 import br.com.stagiun.tccstagiun.model.service.CursoService;
@@ -18,14 +20,27 @@ public class CursoServiceImpl implements CursoService {
     private CursoRepository cursoRepository;
 
     @Override
-    public Curso salvar(Curso curso) {
+    public Curso salvar(Curso curso) throws ResourceFoundException {
+        Optional<Curso> existeCurso = findById(curso.getId());
+
+        if (existeCurso.isPresent()) {
+            throw new ResourceFoundException("Curso já encontrado!");
+        }
+
         return cursoRepository.save(curso);
     }
 
     @Override
-    public Curso editar(Long id, Curso curso) {
-        curso.setId(id);
-        return cursoRepository.save(curso);
+    public Curso editar(Long id, Curso curso) throws ResourceFoundException {
+        Optional<Curso> existeCurso = findById(id);
+
+        if (!existeCurso.isPresent()) {
+            throw new ResourceFoundException("Curso não encontrado!");
+        }
+
+        Curso updateCurso = existeCurso.get();
+        updateCurso.update(id, curso);
+        return cursoRepository.save(updateCurso);
     }
 
     @Override

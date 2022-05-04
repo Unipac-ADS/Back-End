@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Pais;
 import br.com.stagiun.tccstagiun.model.repository.PaisRepository;
 import br.com.stagiun.tccstagiun.model.service.PaisService;
@@ -16,14 +17,27 @@ public class PaisServiceImpl implements PaisService {
     private PaisRepository paisRepository;
 
     @Override
-    public Pais salvar(Pais pais) {
+    public Pais salvar(Pais pais) throws ResourceFoundException {
+        Optional<Pais> existePais = findById(pais.getId());
+
+        if (existePais.isPresent()) {
+            throw new ResourceFoundException("País já encontrado!");
+        }
+
         return paisRepository.save(pais);
     }
 
     @Override
-    public Pais editar(Long id, Pais pais) {
-        pais.setId(id);
-        return paisRepository.save(pais);
+    public Pais editar(Long id, Pais pais) throws ResourceFoundException{
+        Optional<Pais> existePais = findById(id);
+
+        if (!existePais.isPresent()) {
+            throw new ResourceFoundException("País não encontrado!");
+        }
+
+        Pais updatePais = existePais.get();
+        updatePais.update(id, pais);
+        return paisRepository.save(updatePais);
     }
 
     @Override

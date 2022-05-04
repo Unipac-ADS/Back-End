@@ -34,4 +34,13 @@ public class Dica extends IdModel {
     @JoinColumn(name = "cargo_store_id",referencedColumnName = "id")
     private Cargo cargo;
 
+    public void update(Long id, Dica dica) {
+        this.id = id;
+        this.titulo = dica.getTitulo();
+        this.descricao = dica.getDescricao();
+        this.links_uteis = dica.getLinks_uteis();
+        this.data_publicacao = dica.getData_publicacao();
+        this.cargo = dica.getCargo();
+    }
+
   }

@@ -29,4 +29,11 @@ public class AplicacaoAlunoVaga extends IdModel{
     @ManyToOne
     @JoinColumn(name = "aluno_id", referencedColumnName = "id")
     private Aluno aluno;
+
+    public void update(Long id, AplicacaoAlunoVaga aplicacaoAlunoVaga) {
+        this.id = id;
+        this.data_aplicacao = aplicacaoAlunoVaga.getData_aplicacao();
+        this.vaga = aplicacaoAlunoVaga.getVaga();
+        this.aluno = aplicacaoAlunoVaga.getAluno();
+    }
 }

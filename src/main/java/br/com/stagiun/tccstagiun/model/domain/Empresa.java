@@ -50,5 +50,17 @@ public class Empresa  extends IdModel {
     @Column(nullable = false)
     private String email;
 
+    public void update(Long id, Empresa empresa) {
+        this.id = id;
+        this.tipoEmpresa = empresa.getTipoEmpresa();
+        this.usuario = empresa.getUsuario();
+        this.endereco = empresa.getEndereco();
+        this.cep = empresa.getCep();
+        this.nome_fantasia = empresa.getNome_fantasia();
+        this.razao_social = empresa.getRazao_social();
+        this.cnpj = empresa.getCnpj();
+        this.telefone = empresa.getTelefone();
+        this.email = empresa.getEmail();
+    }
 
 }

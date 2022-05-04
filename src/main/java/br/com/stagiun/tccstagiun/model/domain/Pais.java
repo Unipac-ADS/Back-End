@@ -1,6 +1,7 @@
 package br.com.stagiun.tccstagiun.model.domain;
 
 import lombok.*;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.*;
 
@@ -20,4 +21,10 @@ public class Pais extends IdModel {
 
     @Column(nullable = false)
     private String descricao;
+
+    public void update(Long id, Pais pais) {
+        this.id = id;
+        this.descricao = pais.getDescricao();
+    }
+
 }

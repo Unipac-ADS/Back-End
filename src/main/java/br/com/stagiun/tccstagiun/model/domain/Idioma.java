@@ -24,4 +24,11 @@ public class Idioma extends IdModel {
     @ManyToOne
     @JoinColumn(name = "aluno_id" , referencedColumnName = "id")
     private Aluno aluno;
+
+    public void update(Long id, Idioma idioma) {
+        this.id = id;
+        this.nome = idioma.getNome();
+        this.aluno = idioma.getAluno();
+    }
+
 }

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString(callSuper = true, of = { "description" })
+@ToString(callSuper = true, of = {"description"})
 @Builder
 @Data
 public class Cidade extends IdModel {
@@ -24,5 +24,11 @@ public class Cidade extends IdModel {
     @ManyToOne
     @JoinColumn(name = "estado_id", referencedColumnName = "id")
     private Estado estado;
+
+    public void update(Long id, Cidade cidade) {
+        this.id = id;
+        this.descricao = cidade.getDescricao();
+        this.estado = cidade.getEstado();
+    }
 
 }

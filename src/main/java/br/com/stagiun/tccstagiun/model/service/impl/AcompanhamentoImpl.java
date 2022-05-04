@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Acompanhamento;
 import br.com.stagiun.tccstagiun.model.repository.AcompanhamentoRepository;
 import br.com.stagiun.tccstagiun.model.service.AcompanhamentoService;
@@ -18,14 +19,27 @@ public class AcompanhamentoImpl implements AcompanhamentoService {
     private AcompanhamentoRepository acompanhamentoRepository;
 
     @Override
-    public Acompanhamento salvar(Acompanhamento acompanhamento) {
+    public Acompanhamento salvar(Acompanhamento acompanhamento) throws ResourceFoundException {
+        Optional<Acompanhamento> existeAcompanhamento = findById(acompanhamento.getId());
+
+        if(existeAcompanhamento.isPresent()) {
+            throw new ResourceFoundException("Acompanhamento já encontrado!");
+        }
+
         return acompanhamentoRepository.save(acompanhamento);
     }
 
     @Override
-    public Acompanhamento editar(Long id, Acompanhamento acompanhamento) {
-        acompanhamento.setId(id);
-        return acompanhamentoRepository.save(acompanhamento);
+    public Acompanhamento editar(Long id, Acompanhamento acompanhamento) throws ResourceFoundException{
+        Optional<Acompanhamento> existeAcompanhamento = findById(id);
+
+        if(!existeAcompanhamento.isPresent()) {
+            throw new ResourceFoundException("Acompanhamento não encontrado!");
+        }
+
+        Acompanhamento updateAcompanhamento = existeAcompanhamento.get();
+        updateAcompanhamento.update(id, acompanhamento);
+        return acompanhamentoRepository.save(updateAcompanhamento);
     }
 
     @Override

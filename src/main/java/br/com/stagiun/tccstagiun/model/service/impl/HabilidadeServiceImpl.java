@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Habilidade;
 import br.com.stagiun.tccstagiun.model.repository.HabilidadeRepository;
 import br.com.stagiun.tccstagiun.model.service.HabilidadeService;
@@ -16,14 +17,27 @@ public class HabilidadeServiceImpl implements HabilidadeService {
     private HabilidadeRepository habilidadeRepository;
 
     @Override
-    public Habilidade salvar(Habilidade habilidade) {
+    public Habilidade salvar(Habilidade habilidade) throws ResourceFoundException {
+        Optional<Habilidade> existeHabilidade = findById(habilidade.getId());
+
+        if (existeHabilidade.isPresent()) {
+            throw new ResourceFoundException("Habilidade já encontrada!");
+        }
+
         return habilidadeRepository.save(habilidade);
     }
 
     @Override
-    public Habilidade editar(Long id, Habilidade habilidade) {
-        habilidade.setId(id);
-        return habilidadeRepository.save(habilidade);
+    public Habilidade editar(Long id, Habilidade habilidade) throws ResourceFoundException{
+        Optional<Habilidade> existeHabilidade = findById(id);
+
+        if (!existeHabilidade.isPresent()) {
+            throw new ResourceFoundException("Habilidade não encontrada!");
+        }
+
+        Habilidade updateHabilidade = existeHabilidade.get();
+        updateHabilidade.update(id, habilidade);
+        return habilidadeRepository.save(updateHabilidade);
     }
 
     @Override

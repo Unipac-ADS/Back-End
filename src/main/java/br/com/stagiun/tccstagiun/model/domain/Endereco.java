@@ -31,4 +31,12 @@ public class Endereco extends IdModel {
     @JoinColumn(name = "cep_id", referencedColumnName = "id")
     private Cep cep;
 
+    public void update(Long id, Endereco endereco) {
+        this.id = id;
+        this.tipo = endereco.getTipo();
+        this.rua = endereco.getRua();
+        this.numero = endereco.getNumero();
+        this.cep = endereco.getCep();
+    }
+
 }

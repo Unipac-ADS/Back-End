@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Turma;
 import br.com.stagiun.tccstagiun.model.repository.TurmaRepository;
 import br.com.stagiun.tccstagiun.model.service.TurmaService;
@@ -16,14 +17,27 @@ public class TurmaServiceImpl implements TurmaService {
     private TurmaRepository turmaRepository;
 
     @Override
-    public Turma salvar(Turma turma) {
+    public Turma salvar(Turma turma) throws ResourceFoundException {
+        Optional<Turma> existeTurma = findById(turma.getId());
+
+        if (existeTurma.isPresent()) {
+            throw new ResourceFoundException("Turma já encontrada!");
+        }
+
         return turmaRepository.save(turma);
     }
 
     @Override
-    public Turma editar(Long id, Turma turma) {
-        turma.setId(id);
-        return turmaRepository.save(turma);
+    public Turma editar(Long id, Turma turma) throws ResourceFoundException{
+        Optional<Turma> existeTurma = findById(id);
+
+        if (!existeTurma.isPresent()) {
+            throw new ResourceFoundException("Turma não encontrada!");
+        }
+
+        Turma updateTurma = existeTurma.get();
+        updateTurma.update(id, turma);
+        return turmaRepository.save(updateTurma);
     }
 
     @Override

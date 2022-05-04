@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Cep;
 import br.com.stagiun.tccstagiun.model.repository.CepRepository;
 import br.com.stagiun.tccstagiun.model.service.CepService;
@@ -18,14 +19,27 @@ public class CepServiceImpl implements CepService {
     private CepRepository cepRepository;
 
     @Override
-    public Cep salvar(Cep cep) {
+    public Cep salvar(Cep cep) throws ResourceFoundException {
+        Optional<Cep> existeCep = findById(cep.getId());
+
+        if (existeCep.isPresent()) {
+            throw new ResourceFoundException("CEP já encontrado!");
+        }
+
         return cepRepository.save(cep);
     }
 
     @Override
-    public Cep editar(Long id, Cep cep) {
-        cep.setId(id);
-        return cepRepository.save(cep);
+    public Cep editar(Long id, Cep cep) throws ResourceFoundException {
+        Optional<Cep> existeCep = findById(id);
+
+        if (!existeCep.isPresent()) {
+            throw new ResourceFoundException("CEP não encontrado!");
+        }
+
+        Cep updateCep = existeCep.get();
+        updateCep.update(id, cep);
+        return cepRepository.save(updateCep);
     }
 
     @Override

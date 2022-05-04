@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Idioma;
 import br.com.stagiun.tccstagiun.model.repository.IdiomaRepository;
 import br.com.stagiun.tccstagiun.model.service.IdiomaService;
@@ -16,14 +17,27 @@ public class IdiomaServiceImpl implements IdiomaService {
     private IdiomaRepository idiomaRepository;
 
     @Override
-    public Idioma salvar(Idioma idioma) {
+    public Idioma salvar(Idioma idioma) throws ResourceFoundException {
+        Optional<Idioma> existeIdioma = findById(idioma.getId());
+
+        if (existeIdioma.isPresent()) {
+            throw new ResourceFoundException("Idioma já encontrado!");
+        }
+
         return idiomaRepository.save(idioma);
     }
 
     @Override
-    public Idioma editar(Long id, Idioma idioma) {
-        idioma.setId(id);
-        return idiomaRepository.save(idioma);
+    public Idioma editar(Long id, Idioma idioma) throws ResourceFoundException{
+        Optional<Idioma> existeIdioma = findById(id);
+
+        if (!existeIdioma.isPresent()) {
+            throw new ResourceFoundException("Idioma não encontrado!");
+        }
+
+        Idioma updateIdioma = existeIdioma.get();
+        updateIdioma.update(id, idioma);
+        return idiomaRepository.save(updateIdioma);
     }
 
     @Override

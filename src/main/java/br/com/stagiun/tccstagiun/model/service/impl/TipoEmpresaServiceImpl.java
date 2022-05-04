@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.TipoEmpresa;
 import br.com.stagiun.tccstagiun.model.repository.TipoEmpresaRepository;
 import br.com.stagiun.tccstagiun.model.service.TipoEmpresaService;
@@ -16,14 +17,27 @@ public class TipoEmpresaServiceImpl implements TipoEmpresaService {
     private TipoEmpresaRepository tipoEmpresaRepository;
 
     @Override
-    public TipoEmpresa salvar(TipoEmpresa tipoEmpresa) {
+    public TipoEmpresa salvar(TipoEmpresa tipoEmpresa) throws ResourceFoundException {
+        Optional<TipoEmpresa> existeTipoEmpresa = findById(tipoEmpresa.getId());
+
+        if (existeTipoEmpresa.isPresent()) {
+            throw new ResourceFoundException("Tipo Empresa já encontrada!");
+        }
+
         return tipoEmpresaRepository.save(tipoEmpresa);
     }
 
     @Override
-    public TipoEmpresa editar(Long id, TipoEmpresa tipoEmpresa) {
-        tipoEmpresa.setId(id);
-        return tipoEmpresaRepository.save(tipoEmpresa);
+    public TipoEmpresa editar(Long id, TipoEmpresa tipoEmpresa) throws ResourceFoundException{
+        Optional<TipoEmpresa> existeTipoEmpresa = findById(id);
+
+        if (!existeTipoEmpresa.isPresent()) {
+            throw new ResourceFoundException("Tipo Empresa não encontrado!");
+        }
+
+        TipoEmpresa updateTipoEmpresa = existeTipoEmpresa.get();
+        updateTipoEmpresa.update(id, tipoEmpresa);
+        return tipoEmpresaRepository.save(updateTipoEmpresa);
     }
 
     @Override

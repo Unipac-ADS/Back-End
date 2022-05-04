@@ -2,6 +2,8 @@ package br.com.stagiun.tccstagiun.model.service;
 
 import br.com.stagiun.tccstagiun.model.domain.Faculdade;
 
-public interface FaculdadeService extends CrudService<Faculdade, Long> {
+import java.util.Optional;
 
+public interface FaculdadeService extends CrudService<Faculdade, Long> {
+    Optional<Faculdade> findById(Long id);
 }

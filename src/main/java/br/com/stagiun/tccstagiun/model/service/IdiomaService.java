@@ -2,6 +2,8 @@ package br.com.stagiun.tccstagiun.model.service;
 
 import br.com.stagiun.tccstagiun.model.domain.Idioma;
 
-public interface IdiomaService extends CrudService<Idioma, Long> {
+import java.util.Optional;
 
+public interface IdiomaService extends CrudService<Idioma, Long> {
+    Optional<Idioma> findById(Long id);
 }

@@ -20,4 +20,10 @@ public class TipoEmpresa extends IdModel {
 
     @Column(nullable = false)
     private String descricao;
+
+    public void update(Long id, TipoEmpresa tipoEmpresa) {
+        this.id = id;
+        this.descricao = tipoEmpresa.getDescricao();
+    }
+
 }

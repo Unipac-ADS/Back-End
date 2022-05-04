@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Empresa;
 import br.com.stagiun.tccstagiun.model.repository.EmpresaRepository;
 import br.com.stagiun.tccstagiun.model.service.EmpresaService;
@@ -18,14 +19,27 @@ public class EmpresaImpl implements EmpresaService {
     private EmpresaRepository empresaRepository;
 
     @Override
-    public Empresa salvar(Empresa empresa) {
+    public Empresa salvar(Empresa empresa) throws ResourceFoundException {
+        Optional<Empresa> existeEmpresa = findByCnpj(empresa.getCnpj());
+
+        if (existeEmpresa.isPresent()) {
+            throw new ResourceFoundException("Empresa já encontrada!");
+        }
+
         return empresaRepository.save(empresa);
     }
 
     @Override
-    public Empresa editar(Long id, Empresa empresa) {
-        empresa.setId(id);
-        return empresaRepository.save(empresa);
+    public Empresa editar(Long id, Empresa empresa) throws ResourceFoundException {
+        Optional<Empresa> existeEmpresa = findById(id);
+
+        if (!existeEmpresa.isPresent()) {
+            throw new ResourceFoundException("Empresa não encontrada!");
+        }
+
+        Empresa updateEmpresa = existeEmpresa.get();
+        updateEmpresa.update(id, empresa);
+        return empresaRepository.save(updateEmpresa);
     }
 
     @Override
@@ -41,5 +55,10 @@ public class EmpresaImpl implements EmpresaService {
     @Override
     public void delete(Long id) {
         empresaRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Empresa> findByCnpj(Integer cnpj) {
+        return empresaRepository.findByCnpj(cnpj);
     }
 }
