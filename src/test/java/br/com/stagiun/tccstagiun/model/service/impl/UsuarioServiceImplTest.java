@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Usuario;
 import br.com.stagiun.tccstagiun.model.repository.UsuarioRepository;
 import br.com.stagiun.tccstagiun.model.service.UsuarioService;
@@ -21,7 +22,11 @@ class UsuarioServiceImplTest {
 
         UsuarioServiceImpl usuarioService = new UsuarioServiceImpl();
 
-        usuarioService.salvar(usuario);
+        try {
+            usuarioService.salvar(usuario);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
