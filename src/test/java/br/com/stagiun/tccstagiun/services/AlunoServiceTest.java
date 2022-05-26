@@ -4,14 +4,13 @@ import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import br.com.stagiun.tccstagiun.model.repository.AlunoRepository;
 import br.com.stagiun.tccstagiun.model.service.impl.AlunoServiceImpl;
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,6 +23,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @Profile("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AlunoServiceTest {
 
     @InjectMocks
@@ -37,6 +37,11 @@ public class AlunoServiceTest {
     private Aluno getAluno() {
         return Aluno.builder()
                 .nome("Brasil")
+                .matricula("ADS001")
+                .cpf(1245683215)
+                .telefone(32564748)
+                .email("brteste@hotmail.com")
+                .curriculo("cvteste1")
                 .build();
     }
 
@@ -73,6 +78,11 @@ public class AlunoServiceTest {
         Optional<Aluno> aluno = alunoService.findById(1L);
 
         assertEquals("Brasil", aluno.get().getNome());
+        assertEquals("ADS001", aluno.get().getMatricula());
+        assertEquals(1245683215, aluno.get().getCpf());
+        assertEquals(32564748, aluno.get().getTelefone());
+        assertEquals("brteste@hotmail.com", aluno.get().getEmail());
+        assertEquals("cvteste1", aluno.get().getCurriculo());
     }
 
     @Test
@@ -83,6 +93,11 @@ public class AlunoServiceTest {
         Optional<Aluno> result = alunoService.findById(1l);
 
         assertEquals("Brasil", aluno.getNome());
+        assertEquals("ADS001", aluno.getMatricula());
+        assertEquals(1245683215, aluno.getCpf());
+        assertEquals(32564748, aluno.getTelefone());
+        assertEquals("brteste@hotmail.com", aluno.getEmail());
+        assertEquals("cvteste1", aluno.getCurriculo());
     }
 
     @Test
@@ -102,5 +117,10 @@ public class AlunoServiceTest {
         Aluno result = alunoService.salvar(aluno);
 
         assertEquals("Brasil", result.getNome());
+        assertEquals("ADS001", result.getMatricula());
+        assertEquals(1245683215, result.getCpf());
+        assertEquals(32564748, result.getTelefone());
+        assertEquals("brteste@hotmail.com", result.getEmail());
+        assertEquals("cvteste1", result.getCurriculo());
     }
 }

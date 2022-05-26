@@ -1,9 +1,9 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
 @Profile("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AlunoRepositoryTest {
 
     @Autowired
@@ -42,6 +42,11 @@ public class AlunoRepositoryTest {
     private Aluno getAluno() {
         return Aluno.builder()
                 .nome("Brasil")
+                .matricula("ADS001")
+                .cpf(1245683215)
+                .telefone(32564748)
+                .email("brteste@hotmail.com")
+                .curriculo("cvteste1")
                 .build();
     }
 
@@ -61,9 +66,12 @@ public class AlunoRepositoryTest {
     public void should_store_a_aluno() {
         Aluno aluno = alunoRepository.save(getAluno());
 
-        assertThat(aluno).hasFieldOrPropertyWithValue("name","Brasil");
-        assertThat(aluno).hasFieldOrPropertyWithValue("acronym","BR");
-        assertThat(aluno).hasFieldOrPropertyWithValue("alunoCode",55);
+        assertThat(aluno).hasFieldOrPropertyWithValue("nome","Brasil");
+        assertThat(aluno).hasFieldOrPropertyWithValue("matricula","ADS001");
+        assertThat(aluno).hasFieldOrPropertyWithValue("cpf",1245683215);
+        assertThat(aluno).hasFieldOrPropertyWithValue("telefone",32564748);
+        assertThat(aluno).hasFieldOrPropertyWithValue("email","brteste@hotmail.com");
+        assertThat(aluno).hasFieldOrPropertyWithValue("curriculo","cvteste1");
     }
 
     @Test
@@ -118,7 +126,12 @@ public class AlunoRepositoryTest {
         allCountries.forEachRemaining(c -> countries.add(c));
 
         assertEquals(countries.size(), 3);
-        assertThat(countries).extracting("name").contains("Brasil");
+        assertThat(countries).extracting("nome").contains("Brasil");
+        assertThat(countries).extracting("matricula").contains("ADS001");
+        assertThat(countries).extracting("cpf").contains(1245683215);
+        assertThat(countries).extracting("telefone").contains(32564748);
+        assertThat(countries).extracting("email").contains("brteste@hotmail.com");
+        assertThat(countries).extracting("curriculo").contains("cvteste1");
     }
 
     /**

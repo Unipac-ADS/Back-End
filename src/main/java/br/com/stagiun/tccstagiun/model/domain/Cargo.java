@@ -48,7 +48,7 @@ public class Cargo extends IdModel {
         this.beneficios = cargo.getBeneficios();
         this.salario = cargo.getSalario();
         this.habilidades_desejadas = cargo.getHabilidades_desejadas();
-        this.competencias_desejadas = getCompetencias_desejadas();
+        this.competencias_desejadas = cargo.getCompetencias_desejadas();
     }
 
 }
