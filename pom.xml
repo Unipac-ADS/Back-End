@@ -61,9 +61,14 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
 			<version>4.5.1</version>
+=======
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+>>>>>>> origin/main
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
