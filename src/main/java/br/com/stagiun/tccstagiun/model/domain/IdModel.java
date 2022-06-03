@@ -69,6 +69,6 @@ public abstract class IdModel implements Serializable {
     @LastModifiedDate
     @Getter
     @Setter
-    private LocalDateTime lastModifiedDate;
+    private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
 }
