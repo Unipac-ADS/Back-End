@@ -1,7 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
-import br.com.stagiun.tccstagiun.model.domain.Empresa;
 import br.com.stagiun.tccstagiun.model.domain.Endereco;
 import br.com.stagiun.tccstagiun.model.repository.EnderecoRepository;
 import br.com.stagiun.tccstagiun.model.service.EnderecoService;
@@ -21,7 +20,7 @@ public class EnderecoServiceImpl implements EnderecoService {
 
     @Override
     public Endereco salvar(Endereco endereco) throws ResourceFoundException {
-        Optional<Endereco> existeEndereco = findById(endereco.getId());
+        Optional<Endereco> existeEndereco = findByRua(endereco.getRua());
 
         if (existeEndereco.isPresent()) {
             throw new ResourceFoundException("Endereço já encontrado!");
@@ -51,6 +50,11 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     public Optional<Endereco> findById(Long id) {
         return enderecoRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Endereco> findByRua(String rua) {
+        return enderecoRepository.findByRua(rua);
     }
 
     @Override

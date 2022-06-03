@@ -18,7 +18,7 @@ public class PaisServiceImpl implements PaisService {
 
     @Override
     public Pais salvar(Pais pais) throws ResourceFoundException {
-        Optional<Pais> existePais = findById(pais.getId());
+        Optional<Pais> existePais = findByDescricao(pais.getDescricao());
 
         if (existePais.isPresent()) {
             throw new ResourceFoundException("País já encontrado!");
@@ -48,6 +48,11 @@ public class PaisServiceImpl implements PaisService {
     @Override
     public Optional<Pais> findById(Long id) {
         return paisRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Pais> findByDescricao(String  descricao) {
+        return paisRepository.findByDescricao(descricao);
     }
 
     @Override

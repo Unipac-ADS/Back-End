@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/enderecos")
+@RequestMapping("/v1/enderecos")
 public class EnderecoResources {
 
     @Autowired

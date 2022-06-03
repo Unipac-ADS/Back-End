@@ -20,7 +20,7 @@ public class EstadoServiceImpl implements EstadoService {
 
     @Override
     public Estado salvar(Estado estado) throws ResourceFoundException {
-        Optional<Estado> existeEstado = findById(estado.getId());
+        Optional<Estado> existeEstado = findByDescricao(estado.getDescricao());
 
         if (existeEstado.isPresent()) {
             throw new ResourceFoundException("Estado já encontrado!");
@@ -50,6 +50,11 @@ public class EstadoServiceImpl implements EstadoService {
     @Override
     public Optional<Estado> findById(Long id) {
         return estadoRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Estado> findByDescricao(String descricao) {
+        return estadoRepository.findByDescricao(descricao);
     }
 
     @Override

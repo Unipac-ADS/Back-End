@@ -20,7 +20,7 @@ public class CidadeServiceImpl implements CidadeService {
 
     @Override
     public Cidade salvar(Cidade cidade) throws ResourceFoundException {
-        Optional<Cidade> existeCidade = findById(cidade.getId());
+        Optional<Cidade> existeCidade = findByDescricao(cidade.getDescricao());
 
         if (existeCidade.isPresent()) {
             throw new ResourceFoundException("Cidade já encontrada!");
@@ -50,6 +50,11 @@ public class CidadeServiceImpl implements CidadeService {
     @Override
     public Optional<Cidade> findById(Long id) {
         return cidadeRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Cidade> findByDescricao(String descricap) {
+        return cidadeRepository.findByDescricao(descricap);
     }
 
     @Override

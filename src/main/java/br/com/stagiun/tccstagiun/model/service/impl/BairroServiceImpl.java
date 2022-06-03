@@ -20,7 +20,7 @@ public class BairroServiceImpl implements BairroService {
 
     @Override
     public Bairro salvar(Bairro bairro) throws ResourceFoundException {
-        Optional<Bairro> existeBairro = findById(bairro.getId());
+        Optional<Bairro> existeBairro = findByDescricao(bairro.getDescricao());
 
         if (existeBairro.isPresent()) {
             throw new ResourceFoundException("Bairro já encontrado!");
@@ -51,6 +51,12 @@ public class BairroServiceImpl implements BairroService {
     public Optional<Bairro> findById(Long id) {
         return bairroRepository.findById(id);
     }
+
+    @Override
+    public Optional<Bairro> findByDescricao(String descricao) {
+        return bairroRepository.findByDescricao(descricao);
+    }
+
 
     @Override
     public void delete(Long id) {

@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface EstadoService extends CrudService<Estado, Long> {
     Optional<Estado> findById(Long id);
+    Optional<Estado> findByDescricao(String descricao);
 }

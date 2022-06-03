@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/cargos")
+@RequestMapping("/v1/cargos")
 public class CargoResources {
 
     @Autowired

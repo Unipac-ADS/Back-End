@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/cursos")
+@RequestMapping("/v1/cursos")
 public class CursoResources {
 
     @Autowired

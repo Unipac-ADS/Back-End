@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/paises")
+@RequestMapping("/v1/paises")
 public class PaisResources {
 
     @Autowired

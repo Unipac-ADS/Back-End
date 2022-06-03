@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CepRepository extends JpaRepository<Cep, Long> {
     Optional<Cep> findById(Long id);
+    Optional<Cep> findByDescricao(String descricao);
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/ceps")
+@RequestMapping("/v1/ceps")
 public class CepResources {
 
     @Autowired

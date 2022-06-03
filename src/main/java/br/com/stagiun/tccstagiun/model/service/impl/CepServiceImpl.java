@@ -20,7 +20,7 @@ public class CepServiceImpl implements CepService {
 
     @Override
     public Cep salvar(Cep cep) throws ResourceFoundException {
-        Optional<Cep> existeCep = findById(cep.getId());
+        Optional<Cep> existeCep = findByDescricao(cep.getDescricao());
 
         if (existeCep.isPresent()) {
             throw new ResourceFoundException("CEP já encontrado!");
@@ -50,6 +50,11 @@ public class CepServiceImpl implements CepService {
     @Override
     public Optional<Cep> findById(Long id) {
         return cepRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Cep> findByDescricao(String descricao) {
+        return cepRepository.findByDescricao(descricao);
     }
 
     @Override

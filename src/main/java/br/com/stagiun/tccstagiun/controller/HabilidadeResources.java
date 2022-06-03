@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/habilidades")
+@RequestMapping("/v1/habilidades")
 public class HabilidadeResources {
 
     @Autowired

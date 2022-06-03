@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/dicas")
+@RequestMapping("/v1/dicas")
 public class DicaResources {
 
     @Autowired

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/turmas")
+@RequestMapping("/v1/turmas")
 public class TurmaResources {
 
     @Autowired

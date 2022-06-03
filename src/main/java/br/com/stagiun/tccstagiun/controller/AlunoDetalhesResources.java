@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/alunosDetalhes")
+@RequestMapping("/v1/alunosDetalhes")
 public class AlunoDetalhesResources {
 
     @Autowired

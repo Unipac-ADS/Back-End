@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/usuariosperfis")
+@RequestMapping("/v1/usuariosperfis")
 public class UsuarioPerfilResources {
 
     @Autowired

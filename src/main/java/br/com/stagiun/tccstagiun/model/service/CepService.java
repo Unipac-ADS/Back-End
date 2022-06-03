@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface CepService extends CrudService<Cep, Long> {
     Optional<Cep> findById(Long id);
+
+    Optional<Cep> findByDescricao(String descricao);
 }

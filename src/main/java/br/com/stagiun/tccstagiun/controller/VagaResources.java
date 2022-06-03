@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/vagas")
+@RequestMapping("/v1/vagas")
 public class VagaResources {
 
     @Autowired

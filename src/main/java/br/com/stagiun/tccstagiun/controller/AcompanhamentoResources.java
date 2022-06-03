@@ -15,7 +15,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api/v1/acompanhamentos")
+@RequestMapping("/v1/acompanhamentos")
 public class AcompanhamentoResources {
 
     @Autowired
