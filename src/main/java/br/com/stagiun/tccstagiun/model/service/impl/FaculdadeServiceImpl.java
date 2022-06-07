@@ -18,12 +18,6 @@ public class FaculdadeServiceImpl implements FaculdadeService {
 
     @Override
     public Faculdade salvar(Faculdade faculdade) throws ResourceFoundException {
-        Optional<Faculdade> existeFaculdade = findById(faculdade.getId());
-
-        if (existeFaculdade.isPresent()) {
-            throw new ResourceFoundException("Faculdade já encontrada!");
-        }
-
         return faculdadeRepository.save(faculdade);
     }
 

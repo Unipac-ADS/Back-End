@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CargoRepository extends JpaRepository<Cargo, Long> {
     Optional<Cargo> findById(Long id);
+    Optional<Cargo> findByDescricao(String descricao);
 }

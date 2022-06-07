@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface CargoService extends CrudService<Cargo, Long> {
     Optional<Cargo> findById(Long id);
+    Optional<Cargo> findByDescricao(String descricao);
 }

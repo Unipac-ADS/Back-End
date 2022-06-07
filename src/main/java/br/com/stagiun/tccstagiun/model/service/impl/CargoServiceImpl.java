@@ -20,7 +20,7 @@ public class CargoServiceImpl implements CargoService {
 
     @Override
     public Cargo salvar(Cargo cargo) throws ResourceFoundException {
-        Optional<Cargo> existeCargo = findById(cargo.getId());
+        Optional<Cargo> existeCargo = findByDescricao(cargo.getDescricao());
 
         if (existeCargo.isPresent()) {
             throw new ResourceFoundException("Cargo já encontrado!");
@@ -50,6 +50,11 @@ public class CargoServiceImpl implements CargoService {
     @Override
     public Optional<Cargo> findById(Long id) {
         return cargoRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Cargo> findByDescricao(String descricao) {
+        return cargoRepository.findByDescricao(descricao);
     }
 
     @Override
