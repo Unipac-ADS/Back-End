@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @Data
 public class Vaga extends IdModel {
-
+    ///teste
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
