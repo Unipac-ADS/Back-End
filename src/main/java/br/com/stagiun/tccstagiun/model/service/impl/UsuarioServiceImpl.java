@@ -20,8 +20,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario salvar(Usuario usuario) throws ResourceFoundException {
-        Optional<Usuario> existeUsuario = findById(usuario.getId());
-
+        Optional<Usuario> existeUsuario = findByNome(usuario.getNome());
+        
         if (existeUsuario.isPresent()) {
             throw new ResourceFoundException("Usuário já encontrado");
         }
@@ -50,6 +50,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Optional<Usuario> findById(Long id) {
         return usuarioRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Usuario> findByNome(String nome) {
+        return usuarioRepository.findByNome(nome);
     }
 
     @Override

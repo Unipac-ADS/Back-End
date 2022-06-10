@@ -33,10 +33,10 @@ public class Aluno extends IdModel {
     private String matricula;
 
     @Column(nullable = false)
-    private Integer cpf;
+    private Long cpf;
 
     @Column(nullable = false)
-    private Integer telefone;
+    private Long telefone;
 
     @Column
     private String email;

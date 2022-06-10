@@ -19,16 +19,13 @@ public class Vaga extends IdModel {
     private Long id;
 
     @Column(nullable = false)
-    private Integer aplicado;
-
-    @Column(nullable = false)
     private Double amount;
 
-    @Column(nullable = false)
-    private String data_oferta_inicio;
+    @Column(nullable = false, name = "data_oferta_inicio")
+    private String dataOfertaInicio;
 
-    @Column
-    private String data_oferta_fim;
+    @Column(name = "data_oferta_fim")
+    private String dataOfertaFim;
 
     @Column(nullable = false)
     private String nome;
@@ -43,10 +40,9 @@ public class Vaga extends IdModel {
 
     public void update(Long id, Vaga vaga) {
         this.id = id;
-        this.aplicado = vaga.getAplicado();
         this.amount = vaga.getAmount();;
-        this.data_oferta_inicio = vaga.getData_oferta_inicio();
-        this.data_oferta_fim = vaga.getData_oferta_fim();
+        this.dataOfertaInicio = vaga.getDataOfertaInicio();
+        this.dataOfertaFim = vaga.getDataOfertaFim();
         this.nome = vaga.getNome();
         this.cargo = vaga.getCargo();
         this.empresa = vaga.getEmpresa();

@@ -20,12 +20,6 @@ public class AplicacaoAlunoVagaImpl implements AplicacaoAlunoVagaService {
 
     @Override
     public AplicacaoAlunoVaga salvar(AplicacaoAlunoVaga aplicacaoAlunoVaga) throws ResourceFoundException {
-        Optional<AplicacaoAlunoVaga> existeAplicacaoAlunoVaga = findById(aplicacaoAlunoVaga.getId());
-
-        if (existeAplicacaoAlunoVaga.isPresent()) {
-            throw new ResourceFoundException("Aplicação para vaga já encontrada!");
-        }
-
         return aplicacaoAlunoVagaRepository.save(aplicacaoAlunoVaga);
     }
 

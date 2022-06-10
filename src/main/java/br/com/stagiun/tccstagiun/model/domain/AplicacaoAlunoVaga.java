@@ -19,8 +19,8 @@ public class AplicacaoAlunoVaga extends IdModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String data_aplicacao;
+    @Column(nullable = false, name = "data_aplicacao")
+    private String dataAplicacao;
 
     @ManyToOne
     @JoinColumn(name = "vaga_id", referencedColumnName = "id")
@@ -32,7 +32,7 @@ public class AplicacaoAlunoVaga extends IdModel{
 
     public void update(Long id, AplicacaoAlunoVaga aplicacaoAlunoVaga) {
         this.id = id;
-        this.data_aplicacao = aplicacaoAlunoVaga.getData_aplicacao();
+        this.dataAplicacao = aplicacaoAlunoVaga.getDataAplicacao();
         this.vaga = aplicacaoAlunoVaga.getVaga();
         this.aluno = aplicacaoAlunoVaga.getAluno();
     }

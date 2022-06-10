@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface VagaService extends CrudService<Vaga, Long> {
     Optional<Vaga> findById(Long id);
+
+    Optional<Vaga> findByNome(String nome);
 }

@@ -34,11 +34,11 @@ public class Cargo extends IdModel {
     @Column
     private BigDecimal salario;
 
-    @Column
-    private String habilidades_desejadas;
+    @Column(name = "habilidades_desejadas")
+    private String habilidadesDesejadas;
 
-    @Column
-    private String competencias_desejadas;
+    @Column(name = "competencias_desejadas")
+    private String competenciasDesejadas;
 
     public void update(Long id, Cargo cargo) {
         this.id = id;
@@ -47,8 +47,8 @@ public class Cargo extends IdModel {
         this.area_atuacao = cargo.getArea_atuacao();
         this.beneficios = cargo.getBeneficios();
         this.salario = cargo.getSalario();
-        this.habilidades_desejadas = cargo.getHabilidades_desejadas();
-        this.competencias_desejadas = cargo.getCompetencias_desejadas();
+        this.habilidadesDesejadas = cargo.getHabilidadesDesejadas();
+        this.competenciasDesejadas = cargo.getCompetenciasDesejadas();
     }
 
 }

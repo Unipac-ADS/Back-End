@@ -18,7 +18,7 @@ public class VagaServiceImpl implements VagaService {
 
     @Override
     public Vaga salvar(Vaga vaga) throws ResourceFoundException {
-        Optional<Vaga> existeVaga = findById(vaga.getId());
+        Optional<Vaga> existeVaga = findByNome(vaga.getNome());
 
         if (existeVaga.isPresent()) {
             throw new ResourceFoundException("Vaga já encontrada!");
@@ -48,6 +48,11 @@ public class VagaServiceImpl implements VagaService {
     @Override
     public Optional<Vaga> findById(Long id) {
         return vagaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Vaga> findByNome(String nome) {
+        return vagaRepository.findByNome(nome);
     }
 
     @Override

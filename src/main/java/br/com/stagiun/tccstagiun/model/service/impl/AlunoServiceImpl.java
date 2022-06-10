@@ -52,7 +52,7 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public Optional<Aluno> findByCpf(Integer cpf) {
+    public Optional<Aluno> findByCpf(Long cpf) {
         return alunoRepository.findByCpf(cpf);
     }
 

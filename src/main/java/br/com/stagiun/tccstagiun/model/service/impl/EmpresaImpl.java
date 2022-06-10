@@ -34,7 +34,7 @@ public class EmpresaImpl implements EmpresaService {
         Optional<Empresa> existeEmpresa = findById(id);
 
         if (!existeEmpresa.isPresent()) {
-            throw new ResourceFoundException("Empresa não encontrada!");
+            throw new ResourceFoundException("Empresa jã esta cadastrada!");
         }
 
         Empresa updateEmpresa = existeEmpresa.get();
@@ -58,7 +58,7 @@ public class EmpresaImpl implements EmpresaService {
     }
 
     @Override
-    public Optional<Empresa> findByCnpj(Integer cnpj) {
+    public Optional<Empresa> findByCnpj(Long cnpj) {
         return empresaRepository.findByCnpj(cnpj);
     }
 }

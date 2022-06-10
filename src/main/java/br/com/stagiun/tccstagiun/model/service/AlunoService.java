@@ -5,5 +5,5 @@ import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import java.util.Optional;
 
 public interface AlunoService extends CrudService<Aluno, Long> {
-    Optional<Aluno> findByCpf(Integer cpf);
+    Optional<Aluno> findByCpf(Long cpf);
 }

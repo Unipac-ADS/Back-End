@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface UsuarioService extends CrudService<Usuario, Long> {
     Optional<Usuario> findById(Long id);
+
+    Optional<Usuario> findByNome(String nome);
 }

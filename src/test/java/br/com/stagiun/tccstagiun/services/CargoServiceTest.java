@@ -42,8 +42,8 @@ public class CargoServiceTest {
                 .area_atuacao("Web")
                 .beneficios("Tudo")
                 //        .salario(new BigDecimal("5.9"))
-                .habilidades_desejadas("Inglês")
-                .competencias_desejadas("HTML/CSS, JavaScript, React/Angular")
+                .habilidadesDesejadas("Inglês")
+                .competenciasDesejadas("HTML/CSS, JavaScript, React/Angular")
                 .build();
     }
 
@@ -84,8 +84,8 @@ public class CargoServiceTest {
         assertEquals("Web", cargo.get().getArea_atuacao());
         assertEquals("Tudo", cargo.get().getBeneficios());
         //    assertEquals("5.9", cargo.get().getSalario());
-        assertEquals("Inglês", cargo.get().getHabilidades_desejadas());
-        assertEquals("HTML/CSS, JavaScript, React/Angular", cargo.get().getCompetencias_desejadas());
+        assertEquals("Inglês", cargo.get().getHabilidadesDesejadas());
+        assertEquals("HTML/CSS, JavaScript, React/Angular", cargo.get().getCompetenciasDesejadas());
     }
 
     @Test
@@ -100,8 +100,8 @@ public class CargoServiceTest {
         assertEquals("Web", cargo.getArea_atuacao());
         assertEquals("Tudo", cargo.getBeneficios());
         //    assertEquals("5.9", cargo.getSalario());
-        assertEquals("Inglês", cargo.getHabilidades_desejadas());
-        assertEquals("HTML/CSS, JavaScript, React/Angular", cargo.getCompetencias_desejadas());
+        assertEquals("Inglês", cargo.getHabilidadesDesejadas());
+        assertEquals("HTML/CSS, JavaScript, React/Angular", cargo.getCompetenciasDesejadas());
     }
 
     @Test
@@ -125,7 +125,7 @@ public class CargoServiceTest {
         assertEquals("Web", result.getArea_atuacao());
         assertEquals("Tudo", result.getBeneficios());
         //    assertEquals("5.9", result.getSalario());
-        assertEquals("Inglês", result.getHabilidades_desejadas());
-        assertEquals("HTML/CSS, JavaScript, React/Angular", result.getCompetencias_desejadas());
+        assertEquals("Inglês", result.getHabilidadesDesejadas());
+        assertEquals("HTML/CSS, JavaScript, React/Angular", result.getCompetenciasDesejadas());
     }
 }

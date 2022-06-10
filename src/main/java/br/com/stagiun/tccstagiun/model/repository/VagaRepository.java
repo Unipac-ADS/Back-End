@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface VagaRepository extends JpaRepository<Vaga, Long> {
     Optional<Vaga> findById(Long id);
+    Optional<Vaga> findByNome(String nome);
 }

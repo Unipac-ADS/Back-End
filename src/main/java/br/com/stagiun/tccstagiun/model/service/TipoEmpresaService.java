@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface TipoEmpresaService extends CrudService<TipoEmpresa, Long> {
     Optional<TipoEmpresa> findById(Long id);
+
+    Optional<TipoEmpresa> findByDescricao(String descricao);
 }

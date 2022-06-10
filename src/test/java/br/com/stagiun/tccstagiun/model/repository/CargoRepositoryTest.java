@@ -48,8 +48,8 @@ public class CargoRepositoryTest {
                 .area_atuacao("Web")
                 .beneficios("Tudo")
                 //        .salario(new BigDecimal("5.9"))
-                .habilidades_desejadas("Inglês")
-                .competencias_desejadas("HTML/CSS, JavaScript, React/Angular")
+                .habilidadesDesejadas("Inglês")
+                .competenciasDesejadas("HTML/CSS, JavaScript, React/Angular")
                 .build();
     }
 

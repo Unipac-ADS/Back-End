@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/tipoEmpresas")
+@RequestMapping("/v1/tipo-empresas")
 public class TipoEmpresaResources {
 
     @Autowired

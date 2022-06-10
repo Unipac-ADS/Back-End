@@ -18,7 +18,7 @@ public class TipoEmpresaServiceImpl implements TipoEmpresaService {
 
     @Override
     public TipoEmpresa salvar(TipoEmpresa tipoEmpresa) throws ResourceFoundException {
-        Optional<TipoEmpresa> existeTipoEmpresa = findById(tipoEmpresa.getId());
+        Optional<TipoEmpresa> existeTipoEmpresa = findByDescricao(tipoEmpresa.getDescricao());
 
         if (existeTipoEmpresa.isPresent()) {
             throw new ResourceFoundException("Tipo Empresa já encontrada!");
@@ -48,6 +48,11 @@ public class TipoEmpresaServiceImpl implements TipoEmpresaService {
     @Override
     public Optional<TipoEmpresa> findById(Long id) {
         return tipoEmpresaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<TipoEmpresa> findByDescricao(String descricao) {
+        return tipoEmpresaRepository.findByDescricao(descricao);
     }
 
     @Override

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
-    Optional<Aluno> findByCpf(Integer cpf);
+    Optional<Aluno> findByCpf(Long cpf);
 }
