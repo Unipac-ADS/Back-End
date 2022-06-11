@@ -27,17 +27,17 @@ public class AlunoDetalhes  extends IdModel {
     @JoinColumn(name = "turma_id" ,referencedColumnName = "id" )
     private Turma turma;
 
-    @Column(nullable = false)
-    private String ano_de_inicio_curso;
+    @Column(nullable = false, name = "ano_de_inicio_curso")
+    private String anoDeInicioCurso;
 
-    @Column
-    private String ano_de_conclusao_curso;
+    @Column(name = "ano_de_conclusao_curso")
+    private String anoDeConclusaoCurso;
 
     @Column(nullable = false)
     private String experiencia;
 
-    @Column(nullable = false)
-    private String info_adicionais;
+    @Column(nullable = false, name = "info_adicionais")
+    private String infoAdicionais;
 
     @Column(nullable = false)
     private Integer deficiencia;
@@ -60,17 +60,17 @@ public class AlunoDetalhes  extends IdModel {
     @Column
     private String facebook;
 
-    @Column
-    private String file_curriculo;
+    @Column(name = "file_curriculo")
+    private String fileCurriculo;
 
     public void update (Long id, AlunoDetalhes alunoDetalhes) {
         this.id = id;
         this.aluno = alunoDetalhes.getAluno();
         this.turma = alunoDetalhes.getTurma();
-        this.ano_de_inicio_curso = alunoDetalhes.getAno_de_inicio_curso();
-        this.ano_de_conclusao_curso = alunoDetalhes.getAno_de_conclusao_curso();
+        this.anoDeInicioCurso = alunoDetalhes.getAnoDeInicioCurso();
+        this.anoDeConclusaoCurso = alunoDetalhes.getAnoDeConclusaoCurso();
         this.experiencia = alunoDetalhes.getExperiencia();
-        this.info_adicionais = alunoDetalhes.getInfo_adicionais();
+        this.infoAdicionais = alunoDetalhes.getInfoAdicionais();
         this.deficiencia = alunoDetalhes.getDeficiencia();
         this.sobre = alunoDetalhes.getSobre();
         this.linkedin = alunoDetalhes.getLinkedin();
@@ -78,7 +78,7 @@ public class AlunoDetalhes  extends IdModel {
         this.instagram = alunoDetalhes.getInstagram();
         this.twitter = alunoDetalhes.getTwitter();
         this.facebook = alunoDetalhes.getFacebook();
-        this.file_curriculo = alunoDetalhes.getFile_curriculo();
+        this.fileCurriculo = alunoDetalhes.getFileCurriculo();
     }
 
 }

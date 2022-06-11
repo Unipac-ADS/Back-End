@@ -7,7 +7,6 @@ import br.com.stagiun.tccstagiun.model.service.PerfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ public class PerfilServiceImpl implements PerfilService {
 
     @Override
     public Perfil salvar(Perfil perfil) throws ResourceFoundException {
-        Optional<Perfil> existePerfil = findById(perfil.getId());
+        Optional<Perfil> existePerfil = findByDescricao(perfil.getDescricao());
 
         if (existePerfil.isPresent()) {
             throw new ResourceFoundException("Pefil já encontrado");
@@ -49,6 +48,11 @@ public class PerfilServiceImpl implements PerfilService {
     @Override
     public Optional<Perfil> findById(Long id) {
         return perfilRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Perfil> findByDescricao(String descricao) {
+        return perfilRepository.findByDescricao(descricao);
     }
 
     @Override

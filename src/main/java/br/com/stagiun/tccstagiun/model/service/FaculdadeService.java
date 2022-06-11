@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface FaculdadeService extends CrudService<Faculdade, Long> {
     Optional<Faculdade> findById(Long id);
+
+    Optional<Faculdade> findByNome(String nome);
 }

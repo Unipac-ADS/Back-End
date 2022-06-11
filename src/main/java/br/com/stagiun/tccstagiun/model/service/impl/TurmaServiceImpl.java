@@ -18,7 +18,7 @@ public class TurmaServiceImpl implements TurmaService {
 
     @Override
     public Turma salvar(Turma turma) throws ResourceFoundException {
-        Optional<Turma> existeTurma = findById(turma.getId());
+        Optional<Turma> existeTurma = findByDescricao(turma.getDescricao());
 
         if (existeTurma.isPresent()) {
             throw new ResourceFoundException("Turma já encontrada!");
@@ -48,6 +48,11 @@ public class TurmaServiceImpl implements TurmaService {
     @Override
     public Optional<Turma> findById(Long id) {
         return turmaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Turma> findByDescricao(String descricao) {
+        return turmaRepository.findByDescricao(descricao);
     }
 
     @Override

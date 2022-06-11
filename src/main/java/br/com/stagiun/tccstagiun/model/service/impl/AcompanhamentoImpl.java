@@ -20,12 +20,6 @@ public class AcompanhamentoImpl implements AcompanhamentoService {
 
     @Override
     public Acompanhamento salvar(Acompanhamento acompanhamento) throws ResourceFoundException {
-        Optional<Acompanhamento> existeAcompanhamento = findById(acompanhamento.getId());
-
-        if(existeAcompanhamento.isPresent()) {
-            throw new ResourceFoundException("Acompanhamento já encontrado!");
-        }
-
         return acompanhamentoRepository.save(acompanhamento);
     }
 

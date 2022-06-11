@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface DicaRepository extends JpaRepository<Dica, Long> {
     Optional<Dica> findById(Long id);
+    Optional<Dica> findByTitulo(String titulo);
+
 }

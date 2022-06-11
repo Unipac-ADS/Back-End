@@ -1,6 +1,7 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
+import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhes;
 import br.com.stagiun.tccstagiun.model.repository.AlunoDetalhesRepository;
 import br.com.stagiun.tccstagiun.model.service.AlunoDetalhesService;
@@ -20,7 +21,7 @@ public class AlunoDetalhesImpl implements AlunoDetalhesService {
 
     @Override
     public AlunoDetalhes salvar(AlunoDetalhes alunoDetalhes) throws ResourceFoundException {
-        Optional<AlunoDetalhes> existeAlunoDetalhes = findById(alunoDetalhes.getId());
+        Optional<AlunoDetalhes> existeAlunoDetalhes = findByAluno(alunoDetalhes.getAluno());
 
         if (existeAlunoDetalhes.isPresent()) {
             throw new ResourceFoundException("Aluno detalhes já encontrado!");
@@ -50,6 +51,11 @@ public class AlunoDetalhesImpl implements AlunoDetalhesService {
     @Override
     public Optional<AlunoDetalhes> findById(Long id) {
         return alunoDetalhesRepository.findById(id);
+    }
+
+    @Override
+    public Optional<AlunoDetalhes> findByAluno(Aluno aluno) {
+        return alunoDetalhesRepository.findByAluno(aluno);
     }
 
     @Override

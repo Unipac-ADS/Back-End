@@ -1,7 +1,6 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
-import br.com.stagiun.tccstagiun.model.domain.Cidade;
 import br.com.stagiun.tccstagiun.model.domain.Curso;
 import br.com.stagiun.tccstagiun.model.repository.CursoRepository;
 import br.com.stagiun.tccstagiun.model.service.CursoService;
@@ -21,7 +20,7 @@ public class CursoServiceImpl implements CursoService {
 
     @Override
     public Curso salvar(Curso curso) throws ResourceFoundException {
-        Optional<Curso> existeCurso = findById(curso.getId());
+        Optional<Curso> existeCurso = findByDescricao(curso.getDescricao());
 
         if (existeCurso.isPresent()) {
             throw new ResourceFoundException("Curso já encontrado!");
@@ -51,6 +50,11 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public Optional<Curso> findById(Long id) {
         return cursoRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Curso> findByDescricao(String descricao) {
+        return cursoRepository.findByDescricao(descricao);
     }
 
     @Override

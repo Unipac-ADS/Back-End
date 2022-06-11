@@ -1,6 +1,7 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
+import br.com.stagiun.tccstagiun.model.domain.Cidade;
 import br.com.stagiun.tccstagiun.model.domain.Faculdade;
 import br.com.stagiun.tccstagiun.model.repository.FaculdadeRepository;
 import br.com.stagiun.tccstagiun.model.service.FaculdadeService;
@@ -18,6 +19,13 @@ public class FaculdadeServiceImpl implements FaculdadeService {
 
     @Override
     public Faculdade salvar(Faculdade faculdade) throws ResourceFoundException {
+
+        Optional<Faculdade> existeCidade = findByNome(faculdade.getNome());
+
+        if (existeCidade.isPresent()) {
+            throw new ResourceFoundException("Cidade já encontrada!");
+        }
+
         return faculdadeRepository.save(faculdade);
     }
 
@@ -42,6 +50,11 @@ public class FaculdadeServiceImpl implements FaculdadeService {
     @Override
     public Optional<Faculdade> findById(Long id) {
         return faculdadeRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Faculdade> findByNome(String nome) {
+        return faculdadeRepository.findByNome(nome);
     }
 
     @Override

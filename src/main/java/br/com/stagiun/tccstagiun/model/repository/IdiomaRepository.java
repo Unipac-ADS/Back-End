@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface IdiomaRepository extends JpaRepository<Idioma, Long> {
     Optional<Idioma> findById(Long id);
+    Optional<Idioma> findByNome(String nome);
 }

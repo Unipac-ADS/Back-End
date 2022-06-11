@@ -18,7 +18,7 @@ public class IdiomaServiceImpl implements IdiomaService {
 
     @Override
     public Idioma salvar(Idioma idioma) throws ResourceFoundException {
-        Optional<Idioma> existeIdioma = findById(idioma.getId());
+        Optional<Idioma> existeIdioma = findByNome(idioma.getNome());
 
         if (existeIdioma.isPresent()) {
             throw new ResourceFoundException("Idioma já encontrado!");
@@ -48,6 +48,11 @@ public class IdiomaServiceImpl implements IdiomaService {
     @Override
     public Optional<Idioma> findById(Long id) {
         return idiomaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Idioma> findByNome(String nome) {
+        return idiomaRepository.findByNome(nome);
     }
 
     @Override

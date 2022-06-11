@@ -20,7 +20,7 @@ public class DicaImpl implements DicaService {
 
     @Override
     public Dica salvar(Dica dica) throws ResourceFoundException {
-        Optional<Dica> existeDica = findById(dica.getId());
+        Optional<Dica> existeDica = findByTitulo(dica.getTitulo());
 
         if (existeDica.isPresent()) {
             throw new ResourceFoundException("Dica já encontrada!");
@@ -50,6 +50,11 @@ public class DicaImpl implements DicaService {
     @Override
     public Optional<Dica> findById(Long id) {
         return dicaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Dica> findByTitulo(String titulo) {
+        return dicaRepository.findByTitulo(titulo);
     }
 
     @Override

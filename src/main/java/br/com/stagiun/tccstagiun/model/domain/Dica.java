@@ -24,11 +24,11 @@ public class Dica extends IdModel {
     @Column(nullable = false)
     private String descricao;
 
-    @Column
-    private String links_uteis;
+    @Column(name = "links_uteis")
+    private String linksUteis;
 
-    @Column(nullable = true)
-    private String data_publicacao;
+    @Column(nullable = true, name = "data_publicacao")
+    private String dataPublicacao;
 
     @ManyToOne
     @JoinColumn(name = "cargo_store_id",referencedColumnName = "id")
@@ -38,8 +38,8 @@ public class Dica extends IdModel {
         this.id = id;
         this.titulo = dica.getTitulo();
         this.descricao = dica.getDescricao();
-        this.links_uteis = dica.getLinks_uteis();
-        this.data_publicacao = dica.getData_publicacao();
+        this.linksUteis = dica.getLinksUteis();
+        this.dataPublicacao = dica.getDataPublicacao();
         this.cargo = dica.getCargo();
     }
 

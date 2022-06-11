@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface TurmaService extends CrudService<Turma, Long> {
     Optional<Turma> findById(Long id);
+
+    Optional<Turma> findByDescricao(String descricao);
 }

@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface FaculdadeRepository extends JpaRepository<Faculdade, Long> {
     Optional<Faculdade> findById(Long id);
+    Optional<Faculdade> findByNome(String nome);
 }

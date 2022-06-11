@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface DicaService extends CrudService<Dica, Long> {
     Optional<Dica> findById(Long id);
+
+    Optional<Dica> findByTitulo(String titulo);
 }

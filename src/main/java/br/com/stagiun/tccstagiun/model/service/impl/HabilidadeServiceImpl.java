@@ -18,7 +18,7 @@ public class HabilidadeServiceImpl implements HabilidadeService {
 
     @Override
     public Habilidade salvar(Habilidade habilidade) throws ResourceFoundException {
-        Optional<Habilidade> existeHabilidade = findById(habilidade.getId());
+        Optional<Habilidade> existeHabilidade = findByNome(habilidade.getNome());
 
         if (existeHabilidade.isPresent()) {
             throw new ResourceFoundException("Habilidade já encontrada!");
@@ -48,6 +48,12 @@ public class HabilidadeServiceImpl implements HabilidadeService {
     @Override
     public Optional<Habilidade> findById(Long id) {
         return habilidadeRepository.findById(id);
+    }
+
+
+    @Override
+    public Optional<Habilidade> findByNome(String nome) {
+        return habilidadeRepository.findByNome(nome);
     }
 
     @Override

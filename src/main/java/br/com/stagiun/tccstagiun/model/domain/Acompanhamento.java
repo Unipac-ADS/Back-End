@@ -20,7 +20,7 @@ public class Acompanhamento extends IdModel {
     private Long id;
 
     @Column(nullable = false)
-    private String data_aplicacao;
+    private String dataAplicacao;
 
     @ManyToOne
     @JoinColumn(name = "aplicacao_aluno_vaga_id", referencedColumnName = "id")
@@ -28,7 +28,7 @@ public class Acompanhamento extends IdModel {
 
     public void update(Long id, Acompanhamento acompanhamento) {
         this.id = id;
-        this.data_aplicacao = acompanhamento.getData_aplicacao();
+        this.dataAplicacao = acompanhamento.getDataAplicacao();
         this.aplicacaoAlunoVaga = acompanhamento.getAplicacaoAlunoVaga();
     }
 

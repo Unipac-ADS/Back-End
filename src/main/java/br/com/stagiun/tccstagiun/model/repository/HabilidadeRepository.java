@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface HabilidadeRepository extends JpaRepository<Habilidade, Long> {
     Optional<Habilidade> findById(Long id);
+    Optional<Habilidade> findByNome(String nome);
 }
