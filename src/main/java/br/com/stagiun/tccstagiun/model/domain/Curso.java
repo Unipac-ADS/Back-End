@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cursd", schema = "sis_vaga")
+@Table(name = "curso", schema = "sis_vaga")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
