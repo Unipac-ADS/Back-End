@@ -37,10 +37,10 @@ public class EmpresaServiceTest {
 
     private Empresa getEmpresa() {
         return Empresa.builder()
-                .nome_fantasia("Stagiun")
-                .razao_social("ADS-Stagiun")
-                .cnpj(22244455)
-                .telefone(32324545)
+                .nomeFantasia("Stagiun")
+                .razaoSocial("ADS-Stagiun")
+                .cnpj(22244455L)
+                .telefone(32324545L)
                 .email("stagiun@gmail.com")
                 .build();
     }
@@ -77,8 +77,8 @@ public class EmpresaServiceTest {
 
         Optional<Empresa> empresa = empresaService.findById(1L);
 
-        assertEquals("Stagiun", empresa.get().getNome_fantasia());
-        assertEquals("ADS-Stagiun", empresa.get().getRazao_social());
+        assertEquals("Stagiun", empresa.get().getNomeFantasia());
+        assertEquals("ADS-Stagiun", empresa.get().getRazaoSocial());
         assertEquals(22244455, empresa.get().getCnpj());
         assertEquals(32324545, empresa.get().getTelefone());
         assertEquals("stagiun@gmail.com", empresa.get().getEmail());
@@ -91,8 +91,8 @@ public class EmpresaServiceTest {
 
         Optional<Empresa> result = empresaService.findById(1L);
 
-        assertEquals("Stagiun", empresa.getNome_fantasia());
-        assertEquals("ADS-Stagiun", empresa.getRazao_social());
+        assertEquals("Stagiun", empresa.getNomeFantasia());
+        assertEquals("ADS-Stagiun", empresa.getRazaoSocial());
         assertEquals(22244455, empresa.getCnpj());
         assertEquals(32324545, empresa.getTelefone());
         assertEquals("stagiun@gmail.com", empresa.getEmail());
@@ -114,8 +114,8 @@ public class EmpresaServiceTest {
         when(empresaService.salvar(empresa)).thenReturn(empresa);
         Empresa result = empresaService.salvar(empresa);
 
-        assertEquals("Stagiun", result.getNome_fantasia());
-        assertEquals("ADS-Stagiun", result.getRazao_social());
+        assertEquals("Stagiun", result.getNomeFantasia());
+        assertEquals("ADS-Stagiun", result.getRazaoSocial());
         assertEquals(22244455, result.getCnpj());
         assertEquals(32324545, result.getTelefone());
         assertEquals("stagiun@gmail.com", result.getEmail());

@@ -38,8 +38,8 @@ public class DicaServiceTest {
         return Dica.builder()
                 .titulo("Como virar um ninja em Java")
                 .descricao("Aprenda o que estudar para se tornar um ninja")
-                .links_uteis("links")
-                .data_publicacao("25/05/2022")
+                .linksUteis("links")
+                .dataPublicacao("25/05/2022")
                 .build();
     }
 
@@ -77,8 +77,8 @@ public class DicaServiceTest {
 
         assertEquals("Como virar um ninja em Java", dica.get().getTitulo());
         assertEquals("Aprenda o que estudar para se tornar um ninja", dica.get().getDescricao());
-        assertEquals("links", dica.get().getLinks_uteis());
-        assertEquals("25/05/2022", dica.get().getData_publicacao());
+        assertEquals("links", dica.get().getLinksUteis());
+        assertEquals("25/05/2022", dica.get().getDataPublicacao());
     }
 
     @Test
@@ -90,8 +90,8 @@ public class DicaServiceTest {
 
         assertEquals("Como virar um ninja em Java", dica.getTitulo());
         assertEquals("Aprenda o que estudar para se tornar um ninja", dica.getDescricao());
-        assertEquals("links", dica.getLinks_uteis());
-        assertEquals("25/05/2022", dica.getData_publicacao());
+        assertEquals("links", dica.getLinksUteis());
+        assertEquals("25/05/2022", dica.getDataPublicacao());
     }
 
     @Test
@@ -112,7 +112,7 @@ public class DicaServiceTest {
 
         assertEquals("Como virar um ninja em Java", result.getTitulo());
         assertEquals("Aprenda o que estudar para se tornar um ninja", result.getDescricao());
-        assertEquals("links", result.getLinks_uteis());
-        assertEquals("25/05/2022", result.getData_publicacao());
+        assertEquals("links", result.getLinksUteis());
+        assertEquals("25/05/2022", result.getDataPublicacao());
     }
 }

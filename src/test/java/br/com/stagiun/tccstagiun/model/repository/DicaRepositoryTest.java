@@ -44,8 +44,8 @@ public class DicaRepositoryTest {
         return Dica.builder()
                 .titulo("Como virar um ninja em Java")
                 .descricao("Aprenda o que estudar para se tornar um ninja")
-                .links_uteis("links")
-                .data_publicacao("25/05/2022")
+                .linksUteis("links")
+                .dataPublicacao("25/05/2022")
                 .build();
     }
 

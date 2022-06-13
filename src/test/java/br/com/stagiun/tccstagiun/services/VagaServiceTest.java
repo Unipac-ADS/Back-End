@@ -37,10 +37,9 @@ public class VagaServiceTest {
 
     private Vaga getVaga() {
         return Vaga.builder()
-                .aplicado(1)
                 .amount(20D)
-                .data_oferta_inicio("26/05/2022")
-                .data_oferta_fim("30/05/2022")
+                .dataOfertaInicio("26/05/2022")
+                .dataOfertaFim("30/05/2022")
                 .nome("Vaga Desenvolvedor Java")
                 .build();
     }
@@ -77,10 +76,10 @@ public class VagaServiceTest {
 
         Optional<Vaga> vaga = vagaService.findById(1L);
 
-        assertEquals(1, vaga.get().getAplicado());
+        assertEquals(1, vaga.get().getId());
         assertEquals(20D, vaga.get().getAmount());
-        assertEquals("26/05/2022", vaga.get().getData_oferta_inicio());
-        assertEquals("30/05/2022", vaga.get().getData_oferta_fim());
+        assertEquals("26/05/2022", vaga.get().getDataOfertaInicio());
+        assertEquals("30/05/2022", vaga.get().getDataOfertaFim());
         assertEquals("Vaga Desenvolvedor Java", vaga.get().getNome());
     }
 
@@ -91,10 +90,10 @@ public class VagaServiceTest {
 
         Optional<Vaga> result = vagaService.findById(1L);
 
-        assertEquals(1, vaga.getAplicado());
+        assertEquals(1, vaga.getId());
         assertEquals(20D, vaga.getAmount());
-        assertEquals("26/05/2022", vaga.getData_oferta_inicio());
-        assertEquals("30/05/2022", vaga.getData_oferta_fim());
+        assertEquals("26/05/2022", vaga.getDataOfertaInicio());
+        assertEquals("30/05/2022", vaga.getDataOfertaFim());
         assertEquals("Vaga Desenvolvedor Java", vaga.getNome());
     }
 
@@ -114,10 +113,10 @@ public class VagaServiceTest {
         when(vagaService.salvar(vaga)).thenReturn(vaga);
         Vaga result = vagaService.salvar(vaga);
 
-        assertEquals(1, result.getAplicado());
+        assertEquals(1, result.getId());
         assertEquals(20D, result.getAmount());
-        assertEquals("26/05/2022", result.getData_oferta_inicio());
-        assertEquals("30/05/2022", result.getData_oferta_fim());
+        assertEquals("26/05/2022", result.getDataOfertaInicio());
+        assertEquals("30/05/2022", result.getDataOfertaFim());
         assertEquals("Vaga Desenvolvedor Java", result.getNome());
     }
 }

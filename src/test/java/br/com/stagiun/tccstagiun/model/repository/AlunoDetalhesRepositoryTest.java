@@ -42,17 +42,17 @@ public class AlunoDetalhesRepositoryTest {
 
     private AlunoDetalhes getAlunoDetalhes() {
         return AlunoDetalhes.builder()
-                .ano_de_inicio_curso("07/02/2020")
-                .ano_de_conclusao_curso("17/07/2022")
+                .anoDeInicioCurso("07/02/2020")
+                .anoDeConclusaoCurso("17/07/2022")
                 .experiencia("Dev Full Stack")
-                .info_adicionais("Full Stack")
+                .infoAdicionais("Full Stack")
                 .deficiencia(0)
                 .sobre("Full Stack")
                 .linkedin("linkedin.com/in/thor")
                 .github("github/thor")
                 .instagram("Thor Filho de Odin")
                 .twitter("Thor Filho de Odin")
-                .file_curriculo("CvThor")
+                .fileCurriculo("CvThor")
                 .build();
     }
 

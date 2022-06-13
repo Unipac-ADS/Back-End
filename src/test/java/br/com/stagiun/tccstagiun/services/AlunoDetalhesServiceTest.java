@@ -37,17 +37,17 @@ public class AlunoDetalhesServiceTest {
 
     private AlunoDetalhes getAlunoDetalhes() {
         return AlunoDetalhes.builder()
-                .ano_de_inicio_curso("07/02/2020")
-                .ano_de_conclusao_curso("17/07/2022")
+                .anoDeInicioCurso("07/02/2020")
+                .anoDeConclusaoCurso("17/07/2022")
                 .experiencia("Dev Full Stack")
-                .info_adicionais("Full Stack")
+                .infoAdicionais("Full Stack")
                 .deficiencia(0)
                 .sobre("Full Stack")
                 .linkedin("linkedin.com/in/thor")
                 .github("github/thor")
                 .instagram("Thor Filho de Odin")
                 .twitter("Thor Filho de Odin")
-                .file_curriculo("CvThor")
+                .fileCurriculo("CvThor")
                 .build();
     }
 
@@ -83,17 +83,17 @@ public class AlunoDetalhesServiceTest {
 
         Optional<AlunoDetalhes> alunoDetalhes = alunoDetalhesService.findById(1L);
 
-        assertEquals("07/02/2020", alunoDetalhes.get().getAno_de_inicio_curso());
-        assertEquals("17/07/2022", alunoDetalhes.get().getAno_de_conclusao_curso());
+        assertEquals("07/02/2020", alunoDetalhes.get().getAnoDeInicioCurso());
+        assertEquals("17/07/2022", alunoDetalhes.get().getAnoDeConclusaoCurso());
         assertEquals("Dev Full Stack", alunoDetalhes.get().getExperiencia());
-        assertEquals("Full Stack", alunoDetalhes.get().getInfo_adicionais());
+        assertEquals("Full Stack", alunoDetalhes.get().getInfoAdicionais());
         assertEquals(0, alunoDetalhes.get().getDeficiencia());
         assertEquals("Full Stack", alunoDetalhes.get().getSobre());
         assertEquals("linkedin.com/in/thor", alunoDetalhes.get().getLinkedin());
         assertEquals("github/thor", alunoDetalhes.get().getGithub());
         assertEquals("Thor Filho de Odin", alunoDetalhes.get().getInstagram());
         assertEquals("Thor Filho de Odin", alunoDetalhes.get().getTwitter());
-        assertEquals("CvThor", alunoDetalhes.get().getFile_curriculo());
+        assertEquals("CvThor", alunoDetalhes.get().getFileCurriculo());
 
     }
 
@@ -104,17 +104,17 @@ public class AlunoDetalhesServiceTest {
 
         Optional<AlunoDetalhes> result = alunoDetalhesService.findById(1L);
 
-        assertEquals("07/02/2020", alunoDetalhes.getAno_de_inicio_curso());
-        assertEquals("17/07/2022", alunoDetalhes.getAno_de_conclusao_curso());
+        assertEquals("07/02/2020", alunoDetalhes.getAnoDeInicioCurso());
+        assertEquals("17/07/2022", alunoDetalhes.getAnoDeConclusaoCurso());
         assertEquals("Dev Full Stack", alunoDetalhes.getExperiencia());
-        assertEquals("Full Stack", alunoDetalhes.getInfo_adicionais());
+        assertEquals("Full Stack", alunoDetalhes.getInfoAdicionais());
         assertEquals(0, alunoDetalhes.getDeficiencia());
         assertEquals("Full Stack", alunoDetalhes.getSobre());
         assertEquals("linkedin.com/in/thor", alunoDetalhes.getLinkedin());
         assertEquals("github/thor", alunoDetalhes.getGithub());
         assertEquals("Thor Filho de Odin", alunoDetalhes.getInstagram());
         assertEquals("Thor Filho de Odin", alunoDetalhes.getTwitter());
-        assertEquals("CvThor", alunoDetalhes.getFile_curriculo());
+        assertEquals("CvThor", alunoDetalhes.getFileCurriculo());
     }
 
     @Test
@@ -133,16 +133,16 @@ public class AlunoDetalhesServiceTest {
         when(alunoDetalhesService.salvar(alunoDetalhes)).thenReturn(alunoDetalhes);
         AlunoDetalhes result = alunoDetalhesService.salvar(alunoDetalhes);
 
-        assertEquals("07/02/2020", result.getAno_de_inicio_curso());
-        assertEquals("17/07/2022", result.getAno_de_conclusao_curso());
+        assertEquals("07/02/2020", result.getAnoDeInicioCurso());
+        assertEquals("17/07/2022", result.getAnoDeConclusaoCurso());
         assertEquals("Dev Full Stack", result.getExperiencia());
-        assertEquals("Full Stack", result.getInfo_adicionais());
+        assertEquals("Full Stack", result.getSobre());
         assertEquals(0, result.getDeficiencia());
         assertEquals("Full Stack", result.getSobre());
         assertEquals("linkedin.com/in/thor", result.getLinkedin());
         assertEquals("github/thor", result.getGithub());
         assertEquals("Thor Filho de Odin", result.getInstagram());
         assertEquals("Thor Filho de Odin", result.getTwitter());
-        assertEquals("CvThor", result.getFile_curriculo());
+        assertEquals("CvThor", result.getFileCurriculo());
     }
 }

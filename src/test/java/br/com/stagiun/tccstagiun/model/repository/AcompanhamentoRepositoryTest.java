@@ -42,7 +42,7 @@ public class AcompanhamentoRepositoryTest {
 
     private Acompanhamento getAcompanhamento() {
         return Acompanhamento.builder()
-                .data_aplicacao("26/05/2022")
+                .dataAplicacao("26/05/2022")
                 .build();
     }
 

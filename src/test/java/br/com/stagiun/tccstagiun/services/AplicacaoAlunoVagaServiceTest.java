@@ -37,7 +37,7 @@ public class AplicacaoAlunoVagaServiceTest {
 
     private AplicacaoAlunoVaga getAplicacaoAlunoVaga() {
         return AplicacaoAlunoVaga.builder()
-                .data_aplicacao("30/04/2022")
+                .dataAplicacao("30/04/2022")
                 .build();
     }
 
@@ -73,7 +73,7 @@ public class AplicacaoAlunoVagaServiceTest {
 
         Optional<AplicacaoAlunoVaga> aplicacaoAlunoVaga = aplicacaoAlunoVagaService.findById(1L);
 
-        assertEquals("30/04/2022", aplicacaoAlunoVaga.get().getData_aplicacao());
+        assertEquals("30/04/2022", aplicacaoAlunoVaga.get().getDataAplicacao());
 
     }
 
@@ -84,7 +84,7 @@ public class AplicacaoAlunoVagaServiceTest {
 
         Optional<AplicacaoAlunoVaga> result = aplicacaoAlunoVagaService.findById(1L);
 
-        assertEquals("30/04/2022", aplicacaoAlunoVaga.getData_aplicacao());
+        assertEquals("30/04/2022", aplicacaoAlunoVaga.getDataAplicacao());
     }
 
     @Test
@@ -103,6 +103,6 @@ public class AplicacaoAlunoVagaServiceTest {
         when(aplicacaoAlunoVagaService.salvar(aplicacaoAlunoVaga)).thenReturn(aplicacaoAlunoVaga);
         AplicacaoAlunoVaga result = aplicacaoAlunoVagaService.salvar(aplicacaoAlunoVaga);
 
-        assertEquals("30/04/2022", result.getData_aplicacao());
+        assertEquals("30/04/2022", result.getDataAplicacao());
     }
 }

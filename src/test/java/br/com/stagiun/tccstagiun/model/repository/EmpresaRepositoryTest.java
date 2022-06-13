@@ -41,10 +41,10 @@ public class EmpresaRepositoryTest {
 
     private Empresa getEmpresa() {
         return Empresa.builder()
-                .nome_fantasia("Stagiun")
-                .razao_social("ADS-Stagiun")
-                .cnpj(22244455)
-                .telefone(32324545)
+                .nomeFantasia("Stagiun")
+                .razaoSocial("ADS-Stagiun")
+                .cnpj(22244455L)
+                .telefone(32324545L)
                 .email("stagiun@gmail.com")
                 .build();
     }

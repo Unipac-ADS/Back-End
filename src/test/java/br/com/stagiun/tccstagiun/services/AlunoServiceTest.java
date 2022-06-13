@@ -38,8 +38,8 @@ public class AlunoServiceTest {
         return Aluno.builder()
                 .nome("Brasil")
                 .matricula("ADS001")
-                .cpf(1245683215)
-                .telefone(32564748)
+                .cpf(1245683215L)
+                .telefone(32564748L)
                 .email("brteste@hotmail.com")
                 .curriculo("cvteste1")
                 .build();

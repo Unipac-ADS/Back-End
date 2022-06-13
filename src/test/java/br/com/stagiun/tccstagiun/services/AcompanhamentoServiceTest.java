@@ -37,7 +37,7 @@ public class AcompanhamentoServiceTest {
 
     private Acompanhamento getAcompanhamento() {
         return Acompanhamento.builder()
-                .data_aplicacao("26/05/2022")
+                .dataAplicacao("26/05/2022")
                 .build();
     }
 
@@ -73,7 +73,7 @@ public class AcompanhamentoServiceTest {
 
         Optional<Acompanhamento> acompanhamento = acompanhamentoService.findById(1L);
 
-        assertEquals("26/05/2022", acompanhamento.get().getData_aplicacao());
+        assertEquals("26/05/2022", acompanhamento.get().getDataAplicacao());
 
     }
 
@@ -84,7 +84,7 @@ public class AcompanhamentoServiceTest {
 
         Optional<Acompanhamento> result = acompanhamentoService.findById(1L);
 
-        assertEquals("26/05/2022", acompanhamento.getData_aplicacao());
+        assertEquals("26/05/2022", acompanhamento.getDataAplicacao());
     }
 
     @Test
@@ -103,6 +103,6 @@ public class AcompanhamentoServiceTest {
         when(acompanhamentoService.salvar(acompanhamento)).thenReturn(acompanhamento);
         Acompanhamento result = acompanhamentoService.salvar(acompanhamento);
 
-        assertEquals("26/05/2022", result.getData_aplicacao());
+        assertEquals("26/05/2022", result.getDataAplicacao());
     }
 }

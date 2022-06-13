@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(AlunoResources.class)
 //@Profile("Test")
 @Slf4j
-public class AlunoResourcesTes {
+public class AlunoResourcesTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,8 +60,8 @@ public class AlunoResourcesTes {
         String alunoJson = getAlunoJson();
 
         Aluno aluno = getAluno();
-        when(service.findById(id)).thenReturn(Optional.ofNullable(aluno));
-        mockMvc.perform(get("/api/v1/alunos/{id}", id))
+        when(service.findById(id)).thenReturn(Optional.of(aluno));
+        mockMvc.perform(get("/v1/alunos/{id}", id))
                 .andDo(print())
                 .andExpect(content().json(alunoJson))
                 .andExpect(status().isOk());
@@ -70,7 +70,7 @@ public class AlunoResourcesTes {
     @Test
     public void find_by_countries_and_thenStatus204() throws Exception {
         Long id = 1L;
-        mockMvc.perform(get("/api/v1/alunos/{id}", id)).andDo(print()).andExpect(status().isNoContent());
+        mockMvc.perform(get("/v1/alunos/{id}", id)).andDo(print()).andExpect(status().isNoContent());
     }
 
     @Test
@@ -87,19 +87,19 @@ public class AlunoResourcesTes {
         alunoList.add(aluno3);
 
         when(service.list()).thenReturn(alunoList);
-        mockMvc.perform(get("/api/v1/alunos"))
+        mockMvc.perform(get("/v1/alunos"))
                 .andDo(print())
                 .andExpect(content().json("[{\"nome\":\"Brasil\"},{\"nome\":\"Antonio\"},{\"nome\":\"Lua\"}]"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void givenCountries_whenSaveStudent_thenStatus201() throws Exception {
+    public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
         Aluno aluno = getAluno();
         String alunoJson = getAlunoJson();
 
         when(this.service.salvar(aluno)).thenReturn(aluno);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/v1/alunos").accept(MediaType.APPLICATION_JSON).content(alunoJson).contentType(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/alunos").accept(MediaType.APPLICATION_JSON).content(alunoJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -108,13 +108,13 @@ public class AlunoResourcesTes {
     }
 
     @Test
-    public void givenCountries_whenUpdateStudent_thenStatus200() throws Exception {
+    public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
         Aluno aluno = getAluno();
         String alunoJson = getAlunoJson();
 
         when(service.editar(id, aluno)).thenReturn(aluno);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/v1/alunos/{id}", id).accept(MediaType.APPLICATION_JSON).content(alunoJson).contentType(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/alunos/{id}", id).accept(MediaType.APPLICATION_JSON).content(alunoJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();

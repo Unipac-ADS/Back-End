@@ -42,7 +42,7 @@ public class AplicacaoAlunoVagaRepositoryTest {
 
     private AplicacaoAlunoVaga getAplicacaoAlunoVaga() {
         return AplicacaoAlunoVaga.builder()
-                .data_aplicacao("30/04/2022")
+                .dataAplicacao("30/04/2022")
                 .build();
     }
 
