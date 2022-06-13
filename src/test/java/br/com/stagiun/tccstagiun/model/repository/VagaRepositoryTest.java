@@ -41,10 +41,9 @@ public class VagaRepositoryTest {
 
     private Vaga getVaga() {
         return Vaga.builder()
-                .aplicado(1)
                 .amount(20D)
-                .data_oferta_inicio("26/05/2022")
-                .data_oferta_fim("30/05/2022")
+                .dataOfertaInicio("26/05/2022")
+                .dataOfertaFim("30/05/2022")
                 .nome("Vaga Desenvolvedor Java")
                 .build();
     }

@@ -42,22 +42,21 @@ public class AlunoDetalhes  extends IdModel {
     @Column(nullable = false)
     private Integer deficiencia;
 
-    @Column
     private String sobre;
 
-    @Column
+    @Column(name = "linkedin_user")
     private String linkedin;
 
-    @Column
+    @Column(name = "github_user")
     private String github;
 
-    @Column
+    @Column(name = "instagram_user")
     private String instagram;
 
-    @Column
+    @Column(name = "twitter_user")
     private String twitter;
 
-    @Column
+    @Column(name = "facebook_user")
     private String facebook;
 
     @Column(name = "file_curriculo")
