@@ -3,8 +3,8 @@ package br.com.stagiun.tccstagiun.model.service.impl;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhe;
-import br.com.stagiun.tccstagiun.model.repository.AlunoDetalhesRepository;
-import br.com.stagiun.tccstagiun.model.service.AlunoDetalhesService;
+import br.com.stagiun.tccstagiun.model.repository.AlunoDetalheRepository;
+import br.com.stagiun.tccstagiun.model.service.AlunoDetalheService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,10 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class AlunoDetalhesImpl implements AlunoDetalhesService {
+public class AlunoDetalheImpl implements AlunoDetalheService {
 
     @Autowired
-    private AlunoDetalhesRepository alunoDetalhesRepository;
+    private AlunoDetalheRepository alunoDetalheRepository;
 
     @Override
     public AlunoDetalhe salvar(AlunoDetalhe alunoDetalhes) throws ResourceFoundException {
@@ -27,7 +27,7 @@ public class AlunoDetalhesImpl implements AlunoDetalhesService {
             throw new ResourceFoundException("Aluno detalhes já encontrado!");
         }
 
-        return alunoDetalhesRepository.save(alunoDetalhes);
+        return alunoDetalheRepository.save(alunoDetalhes);
     }
 
     @Override
@@ -40,27 +40,27 @@ public class AlunoDetalhesImpl implements AlunoDetalhesService {
 
         AlunoDetalhe updateAlunoDetalhes = existeAlunoDetalhes.get();
         updateAlunoDetalhes.update(id, alunoDetalhes);
-        return alunoDetalhesRepository.save(updateAlunoDetalhes);
+        return alunoDetalheRepository.save(updateAlunoDetalhes);
     }
 
     @Override
     public List<AlunoDetalhe> list() {
-        return alunoDetalhesRepository.findAll();
+        return alunoDetalheRepository.findAll();
     }
 
     @Override
     public Optional<AlunoDetalhe> findById(Long id) {
-        return alunoDetalhesRepository.findById(id);
+        return alunoDetalheRepository.findById(id);
     }
 
     @Override
     public Optional<AlunoDetalhe> findByAluno(Aluno aluno) {
-        return alunoDetalhesRepository.findByAluno(aluno);
+        return alunoDetalheRepository.findByAluno(aluno);
     }
 
     @Override
     public void delete(Long id) {
-        alunoDetalhesRepository.deleteById(id);
+        alunoDetalheRepository.deleteById(id);
     }
 }
 

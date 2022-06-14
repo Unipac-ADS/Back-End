@@ -2,7 +2,6 @@ package br.com.stagiun.tccstagiun.services;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Acompanhamento;
-import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import br.com.stagiun.tccstagiun.model.repository.AcompanhamentoRepository;
 import br.com.stagiun.tccstagiun.model.service.impl.AcompanhamentoImpl;
 import org.junit.jupiter.api.BeforeAll;

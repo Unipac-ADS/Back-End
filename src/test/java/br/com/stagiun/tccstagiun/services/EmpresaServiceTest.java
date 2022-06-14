@@ -1,7 +1,6 @@
 package br.com.stagiun.tccstagiun.services;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
-import br.com.stagiun.tccstagiun.model.domain.Dica;
 import br.com.stagiun.tccstagiun.model.domain.Empresa;
 import br.com.stagiun.tccstagiun.model.repository.EmpresaRepository;
 import br.com.stagiun.tccstagiun.model.service.impl.EmpresaImpl;

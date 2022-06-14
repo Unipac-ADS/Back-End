@@ -3,7 +3,7 @@ package br.com.stagiun.tccstagiun.resources;
 import br.com.stagiun.tccstagiun.controller.AlunoDetalheResources;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhe;
-import br.com.stagiun.tccstagiun.model.service.AlunoDetalhesService;
+import br.com.stagiun.tccstagiun.model.service.AlunoDetalheService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class AlunoDetalheResourcesTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private AlunoDetalhesService service;
+    private AlunoDetalheService service;
 
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 

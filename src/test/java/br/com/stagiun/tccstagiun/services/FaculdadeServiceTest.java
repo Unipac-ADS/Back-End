@@ -1,7 +1,6 @@
 package br.com.stagiun.tccstagiun.services;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
-import br.com.stagiun.tccstagiun.model.domain.Estado;
 import br.com.stagiun.tccstagiun.model.domain.Faculdade;
 import br.com.stagiun.tccstagiun.model.repository.FaculdadeRepository;
 import br.com.stagiun.tccstagiun.model.service.impl.FaculdadeServiceImpl;

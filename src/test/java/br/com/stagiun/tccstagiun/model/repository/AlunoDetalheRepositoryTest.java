@@ -2,22 +2,16 @@ package br.com.stagiun.tccstagiun.model.repository;
 
 import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhe;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.validation.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class AlunoDetalheRepositoryTest {
 
     @Autowired
-    private AlunoDetalhesRepository alunoDetalhesRepository;
+    private AlunoDetalheRepository alunoDetalheRepository;
 
     private AlunoDetalhe getAlunoDetalhes() {
         return AlunoDetalhe.builder()
@@ -59,13 +53,13 @@ public class AlunoDetalheRepositoryTest {
 
     @Test
     public void should_find_no_alunoDetalhes_if_repository_is_empty() {
-        Iterable<AlunoDetalhe> seeds = alunoDetalhesRepository.findAll();
+        Iterable<AlunoDetalhe> seeds = alunoDetalheRepository.findAll();
         assertThat(seeds).isEmpty();
     }
 
     @Disabled
     public void should_store_a_acompanhamento() {
-        AlunoDetalhe alunoDetalhes = alunoDetalhesRepository.save(getAlunoDetalhes());
+        AlunoDetalhe alunoDetalhes = alunoDetalheRepository.save(getAlunoDetalhes());
 
         assertThat(alunoDetalhes).hasFieldOrPropertyWithValue("ano_de_inicio_curso", "07/02/2020");
         assertThat(alunoDetalhes).hasFieldOrPropertyWithValue("ano_de_conclusao_curso", "17/07/2022");
@@ -89,15 +83,15 @@ public class AlunoDetalheRepositoryTest {
     @Test
     public void should_found_store_a_alunoDetalhes() {
         AlunoDetalhe alunoDetalhes = getAlunoDetalhes();
-        alunoDetalhesRepository.save(alunoDetalhes);
+        alunoDetalheRepository.save(alunoDetalhes);
 
-        Optional<AlunoDetalhe> found = alunoDetalhesRepository.findById(alunoDetalhes.getId());
+        Optional<AlunoDetalhe> found = alunoDetalheRepository.findById(alunoDetalhes.getId());
         assertThat(found.get()).isEqualTo(alunoDetalhes);
     }
 
     @Test
     public void should_found_null_alunoDetalhes() {
-        Optional<AlunoDetalhe> fromDb = alunoDetalhesRepository.findById(1L);
+        Optional<AlunoDetalhe> fromDb = alunoDetalheRepository.findById(1L);
         assertThat(fromDb).isEmpty();
         assertFalse(fromDb.isPresent());
     }
@@ -105,15 +99,15 @@ public class AlunoDetalheRepositoryTest {
     @Test
     public void whenFindById_thenReturnAlunoDetalhes() {
         AlunoDetalhe alunoDetalhes = getAlunoDetalhes();
-        alunoDetalhesRepository.save(alunoDetalhes);
+        alunoDetalheRepository.save(alunoDetalhes);
 
-        AlunoDetalhe fromDb = alunoDetalhesRepository.findById(alunoDetalhes.getId()).orElse(null);
+        AlunoDetalhe fromDb = alunoDetalheRepository.findById(alunoDetalhes.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(alunoDetalhes);
     }
 
     @Test
     public void whenInvalidId_thenReturnNull() {
-        AlunoDetalhe fromDb = alunoDetalhesRepository.findById(-11L).orElse(null);
+        AlunoDetalhe fromDb = alunoDetalheRepository.findById(-11L).orElse(null);
         assertThat(fromDb).isNull();
     }
 
@@ -123,11 +117,11 @@ public class AlunoDetalheRepositoryTest {
         AlunoDetalhe alunoDetalhes2 = getAlunoDetalhes();
         AlunoDetalhe alunoDetalhes3 = getAlunoDetalhes();
 
-        alunoDetalhesRepository.save(alunoDetalhes);
-        alunoDetalhesRepository.save(alunoDetalhes2);
-        alunoDetalhesRepository.save(alunoDetalhes3);
+        alunoDetalheRepository.save(alunoDetalhes);
+        alunoDetalheRepository.save(alunoDetalhes2);
+        alunoDetalheRepository.save(alunoDetalhes3);
 
-        Iterator<AlunoDetalhe> allCountries = alunoDetalhesRepository.findAll().iterator();
+        Iterator<AlunoDetalhe> allCountries = alunoDetalheRepository.findAll().iterator();
         List<AlunoDetalhe> countries = new ArrayList<>();
         allCountries.forEachRemaining(c -> countries.add(c));
 

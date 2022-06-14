@@ -47,20 +47,12 @@ public class TurmaResourcesTest {
 
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
-    public Curso getCurso() {
-        return Curso.builder().id(1L).descricao("Analise de Sistema").faculdade(domainMock.getFaculdade()).build();
-    }
-
-    private Turma getTurma() {
-        return Turma.builder().id(1L).descricao("3B").periodo(2).curso(getCurso()).build();
-    }
-
     @Test
     public void find_by_countries_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
         String turmaJson = getTurmaJson();
 
-        Turma turma = getTurma();
+        Turma turma = domainMock.getTurma();
         when(service.findById(id)).thenReturn(Optional.of(turma));
         mockMvc.perform(get("/v1/turmas/{id}", id))
                 .andDo(print())
@@ -78,19 +70,19 @@ public class TurmaResourcesTest {
     public void find_by_countries_and_thenStatus200_and_all_turma() throws Exception {
         List<Turma> turmaList = new ArrayList<>();
 
-        Turma turma = getTurma();
+        Turma turma = domainMock.getTurma();
         turmaList.add(turma);
 
         when(service.list()).thenReturn(turmaList);
         mockMvc.perform(get("/v1/turmas"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"descricao\":\"3B\",\"periodo\":2,\"curso\":{\"id\":1,\"descricao\":\"Analise de Sistema\",\"faculdade\":{\"id\":1,\"nome\":\"Unipac\"}}}]"))
+                .andExpect(content().json("[{\"id\":1,\"descricao\":\"3B\",\"periodo\":1,\"curso\":{\"id\":1,\"descricao\":\"Analise de Sistema\",\"faculdade\":{\"id\":1,\"nome\":\"Unipac\"}}}]"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Turma turma = getTurma();
+        Turma turma = domainMock.getTurma();
         String turmaJson = getTurmaJson();
 
         when(this.service.salvar(turma)).thenReturn(turma);
@@ -105,7 +97,7 @@ public class TurmaResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Turma turma = getTurma();
+        Turma turma = domainMock.getTurma();
         String turmaJson = getTurmaJson();
 
         when(service.editar(id, turma)).thenReturn(turma);
@@ -119,7 +111,7 @@ public class TurmaResourcesTest {
 
     private String getTurmaJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(getTurma());
+        return mapper.writeValueAsString(domainMock.getTurma());
     }
 
 }

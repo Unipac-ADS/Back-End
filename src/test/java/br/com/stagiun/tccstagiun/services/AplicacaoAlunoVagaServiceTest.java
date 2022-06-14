@@ -1,7 +1,6 @@
 package br.com.stagiun.tccstagiun.services;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
-import br.com.stagiun.tccstagiun.model.domain.Acompanhamento;
 import br.com.stagiun.tccstagiun.model.domain.AplicacaoAlunoVaga;
 import br.com.stagiun.tccstagiun.model.repository.AplicacaoAlunoVagaRepository;
 import br.com.stagiun.tccstagiun.model.service.impl.AplicacaoAlunoVagaImpl;

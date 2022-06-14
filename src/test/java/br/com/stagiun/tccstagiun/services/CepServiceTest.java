@@ -1,7 +1,6 @@
 package br.com.stagiun.tccstagiun.services;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
-import br.com.stagiun.tccstagiun.model.domain.Bairro;
 import br.com.stagiun.tccstagiun.model.domain.Cep;
 import br.com.stagiun.tccstagiun.model.repository.CepRepository;
 import br.com.stagiun.tccstagiun.model.service.impl.CepServiceImpl;

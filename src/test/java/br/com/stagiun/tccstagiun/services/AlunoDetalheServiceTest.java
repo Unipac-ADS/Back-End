@@ -2,8 +2,8 @@ package br.com.stagiun.tccstagiun.services;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhe;
-import br.com.stagiun.tccstagiun.model.repository.AlunoDetalhesRepository;
-import br.com.stagiun.tccstagiun.model.service.impl.AlunoDetalhesImpl;
+import br.com.stagiun.tccstagiun.model.repository.AlunoDetalheRepository;
+import br.com.stagiun.tccstagiun.model.service.impl.AlunoDetalheImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -27,10 +27,10 @@ import static org.mockito.Mockito.*;
 public class AlunoDetalheServiceTest {
 
     @InjectMocks
-    AlunoDetalhesImpl alunoDetalhesService;
+    AlunoDetalheImpl alunoDetalhesService;
 
     @Mock
-    AlunoDetalhesRepository alunoDetalhesRepository;
+    AlunoDetalheRepository alunoDetalheRepository;
 
     //public ExpectedException thrown = ExpectedException.none();
 
@@ -67,18 +67,18 @@ public class AlunoDetalheServiceTest {
         list.add(alunoDetalhes1);
         list.add(alunoDetalhes2);
 
-        when(alunoDetalhesRepository.findAll()).thenReturn(list);
+        when(alunoDetalheRepository.findAll()).thenReturn(list);
 
         // test
         List<AlunoDetalhe> urls = alunoDetalhesService.list();
 
         assertEquals(3, urls.size());
-        verify(alunoDetalhesRepository, times(1)).findAll();
+        verify(alunoDetalheRepository, times(1)).findAll();
     }
 
     @Test
     public void getAlunoDetalhesByIdTest() {
-        when(alunoDetalhesRepository.findById(1L)).thenReturn(Optional.of(getAlunoDetalhes()));
+        when(alunoDetalheRepository.findById(1L)).thenReturn(Optional.of(getAlunoDetalhes()));
 
         Optional<AlunoDetalhe> alunoDetalhes = alunoDetalhesService.findById(1L);
 
@@ -121,7 +121,7 @@ public class AlunoDetalheServiceTest {
         AlunoDetalhe url = getAlunoDetalhes();
         alunoDetalhesService.salvar(url);
 
-        verify(alunoDetalhesRepository, times(1)).save(url);
+        verify(alunoDetalheRepository, times(1)).save(url);
     }
 
     @Test

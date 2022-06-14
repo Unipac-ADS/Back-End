@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AlunoDetalhesRepository extends JpaRepository<AlunoDetalhe, Long> {
+public interface AlunoDetalheRepository extends JpaRepository<AlunoDetalhe, Long> {
     Optional<AlunoDetalhe> findById(Long id);
     Optional<AlunoDetalhe> findByAluno(Aluno aluno);
 

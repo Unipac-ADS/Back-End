@@ -67,7 +67,7 @@ public class PaisResourcesTest {
     }
 
     @Test
-    public void find_by_countries_and_thenStatus200_and_all_pais() throws Exception {
+    public void find_by_countries_and_thenStatus200_and_all_paises() throws Exception {
         List<Pais> paisList = new ArrayList<>();
 
         Pais pais = domainMock.getPais();

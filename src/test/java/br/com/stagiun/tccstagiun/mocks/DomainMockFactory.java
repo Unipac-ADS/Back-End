@@ -94,7 +94,7 @@ public class DomainMockFactory {
         return Curso.builder().id(1L).descricao("Analise de Sistema").faculdade(getFaculdade()).build();
     }
 
-    private Turma getTurma() {
+    public Turma getTurma() {
         return Turma.builder().id(1l).curso(getCurso()).periodo(1).descricao("3B").build();
     }
 
