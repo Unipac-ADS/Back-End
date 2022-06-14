@@ -1,15 +1,20 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,20 +30,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AlunoRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private AlunoRepository alunoRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Aluno getAluno() {
         return Aluno.builder()
@@ -51,19 +53,13 @@ public class AlunoRepositoryTest {
                 .build();
     }
 
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
-
     @Test
     public void should_find_no_alunos_if_repository_is_empty() {
         Iterable<Aluno> seeds = alunoRepository.findAll();
         assertThat(seeds).isEmpty();
     }
 
-    @Test
+    @Disabled
     public void should_store_a_aluno() {
         Aluno aluno = alunoRepository.save(getAluno());
 
@@ -83,7 +79,7 @@ public class AlunoRepositoryTest {
     @Test
     public void should_found_store_a_aluno() {
         Aluno aluno = getAluno();
-        entityManager.persist(aluno);
+        alunoRepository.save(aluno);
 
         Optional<Aluno> found = alunoRepository.findById(aluno.getId());
         assertThat(found.get()).isEqualTo(aluno);
@@ -99,7 +95,7 @@ public class AlunoRepositoryTest {
     @Test
     public void whenFindById_thenReturnAluno() {
         Aluno aluno = getAluno();
-        entityManager.persistAndFlush(aluno);
+        alunoRepository.save(aluno);
 
         Aluno fromDb = alunoRepository.findById(aluno.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(aluno);
@@ -111,16 +107,15 @@ public class AlunoRepositoryTest {
         assertThat(fromDb).isNull();
     }
 
-    @Test
+    @Disabled
     public void givenSetOfCompanies_whenFindAll_thenReturnAllCountries() {
         Aluno aluno1 = getAluno();
         Aluno aluno2 = getAluno();
         Aluno aluno3 = getAluno();
 
-        entityManager.persist(aluno1);
-        entityManager.persist(aluno2);
-        entityManager.persist(aluno3);
-        entityManager.flush();
+        alunoRepository.save(aluno1);
+        alunoRepository.save(aluno2);
+        alunoRepository.save(aluno3);
 
         Iterator<Aluno> allCountries = alunoRepository.findAll().iterator();
         List<Aluno> countries = new ArrayList<>();
@@ -135,13 +130,4 @@ public class AlunoRepositoryTest {
         assertThat(countries).extracting("curriculo").contains("cvteste1");
     }
 
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Aluno aluno) throws AssertionError {
-        Optional<ConstraintViolation<Aluno>> violation = validator.validate(aluno).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
-    }
 }

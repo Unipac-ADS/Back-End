@@ -1,14 +1,18 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.TipoEmpresa;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,31 +28,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TipoEmpresaRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private TipoEmpresaRepository tipoEmpresaRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private TipoEmpresa getTipoEmpresa() {
         return TipoEmpresa.builder()
                 .descricao("Tecnologia")
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -72,7 +67,7 @@ public class TipoEmpresaRepositoryTest {
     @Test
     public void should_found_store_a_tipoEmpresa() {
         TipoEmpresa tipoEmpresa = getTipoEmpresa();
-        entityManager.persist(tipoEmpresa);
+        tipoEmpresaRepository.save(tipoEmpresa);
 
         Optional<TipoEmpresa> found = tipoEmpresaRepository.findById(tipoEmpresa.getId());
         assertThat(found.get()).isEqualTo(tipoEmpresa);
@@ -88,7 +83,7 @@ public class TipoEmpresaRepositoryTest {
     @Test
     public void whenFindById_thenReturnTipoEmpresa() {
         TipoEmpresa tipoEmpresa = getTipoEmpresa();
-        entityManager.persistAndFlush(tipoEmpresa);
+        tipoEmpresaRepository.save(tipoEmpresa);
 
         TipoEmpresa fromDb = tipoEmpresaRepository.findById(tipoEmpresa.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(tipoEmpresa);
@@ -106,10 +101,9 @@ public class TipoEmpresaRepositoryTest {
         TipoEmpresa tipoEmpresa1 = getTipoEmpresa();
         TipoEmpresa tipoEmpresa2 = getTipoEmpresa();
 
-        entityManager.persist(tipoEmpresa);
-        entityManager.persist(tipoEmpresa1);
-        entityManager.persist(tipoEmpresa2);
-        entityManager.flush();
+        tipoEmpresaRepository.save(tipoEmpresa);
+        tipoEmpresaRepository.save(tipoEmpresa1);
+        tipoEmpresaRepository.save(tipoEmpresa2);
 
         Iterator<TipoEmpresa> allCountries = tipoEmpresaRepository.findAll().iterator();
         List<TipoEmpresa> countries = new ArrayList<>();
@@ -119,13 +113,4 @@ public class TipoEmpresaRepositoryTest {
         assertThat(countries).extracting("descricao").contains("Tecnologia");
     }
 
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(TipoEmpresa tipoEmpresa) throws AssertionError {
-        Optional<ConstraintViolation<TipoEmpresa>> violation = validator.validate(tipoEmpresa).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
-    }
 }

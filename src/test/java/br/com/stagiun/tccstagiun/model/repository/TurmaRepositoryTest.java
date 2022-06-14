@@ -1,14 +1,18 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Turma;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,32 +28,23 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TurmaRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private TurmaRepository turmaRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Turma getTurma() {
         return Turma.builder()
                 .descricao("ADS")
                 .periodo(5)
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -74,7 +69,7 @@ public class TurmaRepositoryTest {
     @Test
     public void should_found_store_a_turma() {
         Turma turma = getTurma();
-        entityManager.persist(turma);
+        turmaRepository.save(turma);
 
         Optional<Turma> found = turmaRepository.findById(turma.getId());
         assertThat(found.get()).isEqualTo(turma);
@@ -90,7 +85,7 @@ public class TurmaRepositoryTest {
     @Test
     public void whenFindById_thenReturnTurma() {
         Turma turma = getTurma();
-        entityManager.persistAndFlush(turma);
+        turmaRepository.save(turma);
 
         Turma fromDb = turmaRepository.findById(turma.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(turma);
@@ -108,10 +103,9 @@ public class TurmaRepositoryTest {
         Turma turma1 = getTurma();
         Turma turma2 = getTurma();
 
-        entityManager.persist(turma);
-        entityManager.persist(turma1);
-        entityManager.persist(turma2);
-        entityManager.flush();
+        turmaRepository.save(turma);
+        turmaRepository.save(turma1);
+        turmaRepository.save(turma2);
 
         Iterator<Turma> allCountries = turmaRepository.findAll().iterator();
         List<Turma> countries = new ArrayList<>();
@@ -122,13 +116,4 @@ public class TurmaRepositoryTest {
         assertThat(countries).extracting("periodo").contains(5);
     }
 
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Turma turma) throws AssertionError {
-        Optional<ConstraintViolation<Turma>> violation = validator.validate(turma).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
-    }
 }

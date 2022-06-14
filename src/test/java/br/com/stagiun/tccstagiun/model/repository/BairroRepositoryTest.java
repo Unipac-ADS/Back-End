@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Acompanhamento;
 import br.com.stagiun.tccstagiun.model.domain.Bairro;
 import org.junit.jupiter.api.BeforeAll;
@@ -7,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,31 +29,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BairroRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private BairroRepository bairroRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Bairro getBairro() {
         return Bairro.builder()
                 .descricao("AP")
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -74,7 +69,7 @@ public class BairroRepositoryTest {
     @Test
     public void should_found_store_a_bairro() {
         Bairro bairro = getBairro();
-        entityManager.persist(bairro);
+        bairroRepository.save(bairro);
 
         Optional<Bairro> found = bairroRepository.findById(bairro.getId());
         assertThat(found.get()).isEqualTo(bairro);
@@ -90,7 +85,7 @@ public class BairroRepositoryTest {
     @Test
     public void whenFindById_thenReturnBairro() {
         Bairro bairro = getBairro();
-        entityManager.persistAndFlush(bairro);
+        bairroRepository.save(bairro);
 
         Bairro fromDb = bairroRepository.findById(bairro.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(bairro);
@@ -108,10 +103,9 @@ public class BairroRepositoryTest {
         Bairro bairro1 = getBairro();
         Bairro bairro2 = getBairro();
 
-        entityManager.persist(bairro);
-        entityManager.persist(bairro1);
-        entityManager.persist(bairro2);
-        entityManager.flush();
+        bairroRepository.save(bairro);
+        bairroRepository.save(bairro1);
+        bairroRepository.save(bairro2);
 
         Iterator<Bairro> allCountries = bairroRepository.findAll().iterator();
         List<Bairro> countries = new ArrayList<>();
@@ -119,15 +113,5 @@ public class BairroRepositoryTest {
 
         assertEquals(countries.size(), 3);
         assertThat(countries).extracting("descricao").contains("AP");
-    }
-
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Bairro bairro) throws AssertionError {
-        Optional<ConstraintViolation<Bairro>> violation = validator.validate(bairro).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
     }
 }

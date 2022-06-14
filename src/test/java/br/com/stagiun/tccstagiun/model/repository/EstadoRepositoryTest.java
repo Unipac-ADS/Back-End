@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Estado;
 import br.com.stagiun.tccstagiun.model.domain.Pais;
 import org.junit.jupiter.api.BeforeAll;
@@ -7,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,31 +29,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EstadoRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private EstadoRepository estadoRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Estado getEstado() {
         return Estado.builder()
                 .descricao("Minas Gerais")
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -73,7 +68,7 @@ public class EstadoRepositoryTest {
     @Test
     public void should_found_store_a_estado() {
         Estado estado = getEstado();
-        entityManager.persist(estado);
+        estadoRepository.save(estado);
 
         Optional<Estado> found = estadoRepository.findById(estado.getId());
         assertThat(found.get()).isEqualTo(estado);
@@ -89,7 +84,7 @@ public class EstadoRepositoryTest {
     @Test
     public void whenFindById_thenReturnEstado() {
         Estado estado = getEstado();
-        entityManager.persistAndFlush(estado);
+        estadoRepository.save(estado);
 
         Estado fromDb = estadoRepository.findById(estado.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(estado);
@@ -107,10 +102,9 @@ public class EstadoRepositoryTest {
         Estado estado1 = getEstado();
         Estado estado2 = getEstado();
 
-        entityManager.persist(estado);
-        entityManager.persist(estado1);
-        entityManager.persist(estado2);
-        entityManager.flush();
+        estadoRepository.save(estado);
+        estadoRepository.save(estado1);
+        estadoRepository.save(estado2);
 
         Iterator<Estado> allCountries = estadoRepository.findAll().iterator();
         List<Estado> countries = new ArrayList<>();
@@ -118,15 +112,5 @@ public class EstadoRepositoryTest {
 
         assertEquals(countries.size(), 3);
         assertThat(countries).extracting("descricao").contains("Minas Gerais");
-    }
-
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Estado estado) throws AssertionError {
-        Optional<ConstraintViolation<Estado>> violation = validator.validate(estado).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
     }
 }

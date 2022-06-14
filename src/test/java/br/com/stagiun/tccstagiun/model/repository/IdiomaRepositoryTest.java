@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Habilidade;
 import br.com.stagiun.tccstagiun.model.domain.Idioma;
 import org.junit.jupiter.api.BeforeAll;
@@ -7,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,31 +29,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class IdiomaRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private IdiomaRepository idiomaRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Idioma getIdioma() {
         return Idioma.builder()
                 .nome("Inglês")
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -73,7 +68,7 @@ public class IdiomaRepositoryTest {
     @Test
     public void should_found_store_a_idioma() {
         Idioma idioma = getIdioma();
-        entityManager.persist(idioma);
+        idiomaRepository.save(idioma);
 
         Optional<Idioma> found = idiomaRepository.findById(idioma.getId());
         assertThat(found.get()).isEqualTo(idioma);
@@ -89,7 +84,7 @@ public class IdiomaRepositoryTest {
     @Test
     public void whenFindById_thenReturnIdioma() {
         Idioma idioma = getIdioma();
-        entityManager.persistAndFlush(idioma);
+        idiomaRepository.save(idioma);
 
         Idioma fromDb = idiomaRepository.findById(idioma.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(idioma);
@@ -107,11 +102,9 @@ public class IdiomaRepositoryTest {
         Idioma idioma1 = getIdioma();
         Idioma idioma2 = getIdioma();
 
-        entityManager.persist(idioma);
-        entityManager.persist(idioma1);
-        entityManager.persist(idioma2);
-        entityManager.flush();
-
+        idiomaRepository.save(idioma);
+        idiomaRepository.save(idioma1);
+        idiomaRepository.save(idioma2);
         Iterator<Idioma> allCountries = idiomaRepository.findAll().iterator();
         List<Idioma> countries = new ArrayList<>();
         allCountries.forEachRemaining(c -> countries.add(c));
@@ -120,13 +113,4 @@ public class IdiomaRepositoryTest {
         assertThat(countries).extracting("nome").contains("Inglês");
     }
 
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Idioma idioma) throws AssertionError {
-        Optional<ConstraintViolation<Idioma>> violation = validator.validate(idioma).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
-    }
 }

@@ -1,14 +1,20 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Pais;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,31 +30,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PaisRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private PaisRepository paisRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Pais getPais() {
         return Pais.builder()
                 .descricao("Brasil")
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -72,7 +69,7 @@ public class PaisRepositoryTest {
     @Test
     public void should_found_store_a_pais() {
         Pais pais = getPais();
-        entityManager.persist(pais);
+        paisRepository.save(pais);
 
         Optional<Pais> found = paisRepository.findById(pais.getId());
         assertThat(found.get()).isEqualTo(pais);
@@ -88,7 +85,7 @@ public class PaisRepositoryTest {
     @Test
     public void whenFindById_thenReturnPais() {
         Pais pais = getPais();
-        entityManager.persistAndFlush(pais);
+        paisRepository.save(pais);
 
         Pais fromDb = paisRepository.findById(pais.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(pais);
@@ -106,10 +103,9 @@ public class PaisRepositoryTest {
         Pais pais1 = getPais();
         Pais pais2 = getPais();
 
-        entityManager.persist(pais);
-        entityManager.persist(pais1);
-        entityManager.persist(pais2);
-        entityManager.flush();
+        paisRepository.save(pais);
+        paisRepository.save(pais1);
+        paisRepository.save(pais2);
 
         Iterator<Pais> allCountries = paisRepository.findAll().iterator();
         List<Pais> countries = new ArrayList<>();
@@ -119,13 +115,4 @@ public class PaisRepositoryTest {
         assertThat(countries).extracting("descricao").contains("Brasil");
     }
 
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Pais pais) throws AssertionError {
-        Optional<ConstraintViolation<Pais>> violation = validator.validate(pais).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
-    }
 }

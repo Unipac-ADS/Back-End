@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Bairro;
 import br.com.stagiun.tccstagiun.model.domain.Cep;
 import org.junit.jupiter.api.BeforeAll;
@@ -7,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,31 +29,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CepRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private CepRepository cepRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Cep getCep() {
         return Cep.builder()
                 .descricao("48688-125")
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -74,7 +69,7 @@ public class CepRepositoryTest {
     @Test
     public void should_found_store_a_cep() {
         Cep cep = getCep();
-        entityManager.persist(cep);
+        cepRepository.save(cep);
 
         Optional<Cep> found = cepRepository.findById(cep.getId());
         assertThat(found.get()).isEqualTo(cep);
@@ -90,7 +85,7 @@ public class CepRepositoryTest {
     @Test
     public void whenFindById_thenReturnCep() {
         Cep cep = getCep();
-        entityManager.persistAndFlush(cep);
+        cepRepository.save(cep);
 
         Cep fromDb = cepRepository.findById(cep.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(cep);
@@ -108,10 +103,9 @@ public class CepRepositoryTest {
         Cep cep1 = getCep();
         Cep cep2 = getCep();
 
-        entityManager.persist(cep);
-        entityManager.persist(cep1);
-        entityManager.persist(cep2);
-        entityManager.flush();
+        cepRepository.save(cep);
+        cepRepository.save(cep1);
+        cepRepository.save(cep2);
 
         Iterator<Cep> allCountries = cepRepository.findAll().iterator();
         List<Cep> countries = new ArrayList<>();
@@ -119,15 +113,5 @@ public class CepRepositoryTest {
 
         assertEquals(countries.size(), 3);
         assertThat(countries).extracting("descricao").contains("48688-125");
-    }
-
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Cep cep) throws AssertionError {
-        Optional<ConstraintViolation<Cep>> violation = validator.validate(cep).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
     }
 }

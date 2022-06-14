@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Cidade;
 import br.com.stagiun.tccstagiun.model.domain.Curso;
 import br.com.stagiun.tccstagiun.model.domain.Faculdade;
@@ -8,9 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -26,31 +30,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CursoRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private CursoRepository cursoRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Curso getCurso() {
         return Curso.builder()
                 .descricao("Análise e Desenvolvimento de Sistemas")
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -74,7 +69,7 @@ public class CursoRepositoryTest {
     @Test
     public void should_found_store_a_curso() {
         Curso curso = getCurso();
-        entityManager.persist(curso);
+        cursoRepository.save(curso);
 
         Optional<Curso> found = cursoRepository.findById(curso.getId());
         assertThat(found.get()).isEqualTo(curso);
@@ -90,7 +85,7 @@ public class CursoRepositoryTest {
     @Test
     public void whenFindById_thenReturnCurso() {
         Curso curso = getCurso();
-        entityManager.persistAndFlush(curso);
+        cursoRepository.save(curso);
 
         Curso fromDb = cursoRepository.findById(curso.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(curso);
@@ -108,10 +103,9 @@ public class CursoRepositoryTest {
         Curso curso1 = getCurso();
         Curso curso2 = getCurso();
 
-        entityManager.persist(curso);
-        entityManager.persist(curso1);
-        entityManager.persist(curso2);
-        entityManager.flush();
+        cursoRepository.save(curso);
+        cursoRepository.save(curso1);
+        cursoRepository.save(curso2);
 
         Iterator<Curso> allCountries = cursoRepository.findAll().iterator();
         List<Curso> countries = new ArrayList<>();
@@ -122,13 +116,4 @@ public class CursoRepositoryTest {
         assertThat(countries).extracting("descricao").contains("Análise e Desenvolvimento de Sistemas");
     }
 
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Curso curso) throws AssertionError {
-        Optional<ConstraintViolation<Curso>> violation = validator.validate(curso).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
-    }
 }

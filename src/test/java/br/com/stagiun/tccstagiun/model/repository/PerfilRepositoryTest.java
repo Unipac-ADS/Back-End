@@ -1,14 +1,18 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
+import br.com.stagiun.tccstagiun.TccApplication;
 import br.com.stagiun.tccstagiun.model.domain.Perfil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,31 +28,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:test.properties")
-@Profile("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ContextConfiguration(classes = { TccApplication.class})
+//@ImportAutoConfiguration(RefreshAutoConfiguration.class)
+@ActiveProfiles(value = "local")
+//@TestPropertySource(locations = "classpath:test.properties")
+//@Profile("test")
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PerfilRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private PerfilRepository perfilRepository;
-
-    private Validator validator;
-
-    //public ExpectedException thrown = ExpectedException.none();
 
     private Perfil getPerfil() {
         return Perfil.builder()
                 .descricao("Aluno")
                 .build();
-    }
-
-    @BeforeAll
-    public void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
     }
 
     @Test
@@ -72,7 +67,7 @@ public class PerfilRepositoryTest {
     @Test
     public void should_found_store_a_perfil() {
         Perfil perfil = getPerfil();
-        entityManager.persist(perfil);
+        perfilRepository.save(perfil);
 
         Optional<Perfil> found = perfilRepository.findById(perfil.getId());
         assertThat(found.get()).isEqualTo(perfil);
@@ -88,7 +83,7 @@ public class PerfilRepositoryTest {
     @Test
     public void whenFindById_thenReturnPerfil() {
         Perfil perfil = getPerfil();
-        entityManager.persistAndFlush(perfil);
+        perfilRepository.save(perfil);
 
         Perfil fromDb = perfilRepository.findById(perfil.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(perfil);
@@ -106,10 +101,9 @@ public class PerfilRepositoryTest {
         Perfil perfil1 = getPerfil();
         Perfil perfil2 = getPerfil();
 
-        entityManager.persist(perfil);
-        entityManager.persist(perfil1);
-        entityManager.persist(perfil2);
-        entityManager.flush();
+        perfilRepository.save(perfil);
+        perfilRepository.save(perfil1);
+        perfilRepository.save(perfil2);
 
         Iterator<Perfil> allCountries = perfilRepository.findAll().iterator();
         List<Perfil> countries = new ArrayList<>();
@@ -119,13 +113,4 @@ public class PerfilRepositoryTest {
         assertThat(countries).extracting("descricao").contains("Aluno");
     }
 
-    /**
-     * Simulates the behaviour of bean-validation e.g. @NotNull
-     */
-    private void validateBean(Perfil perfil) throws AssertionError {
-        Optional<ConstraintViolation<Perfil>> violation = validator.validate(perfil).stream().findFirst();
-        if (violation.isPresent()) {
-            throw new ValidationException(violation.get().getMessage());
-        }
-    }
 }
