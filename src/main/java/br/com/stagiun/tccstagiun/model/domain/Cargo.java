@@ -25,8 +25,8 @@ public class Cargo extends IdModel {
     @Column
     private String experiencia;
 
-    @Column
-    private String area_atuacao;
+    @Column(name = "area_atuacao")
+    private String areaAtuacao;
 
     @Column
     private String beneficios;
@@ -44,7 +44,7 @@ public class Cargo extends IdModel {
         this.id = id;
         this.descricao = cargo.getDescricao();
         this.experiencia = cargo.getExperiencia();
-        this.area_atuacao = cargo.getArea_atuacao();
+        this.areaAtuacao = cargo.getAreaAtuacao();
         this.beneficios = cargo.getBeneficios();
         this.salario = cargo.getSalario();
         this.habilidadesDesejadas = cargo.getHabilidadesDesejadas();

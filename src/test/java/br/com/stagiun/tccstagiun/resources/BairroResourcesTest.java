@@ -1,6 +1,7 @@
 package br.com.stagiun.tccstagiun.resources;
 
 import br.com.stagiun.tccstagiun.controller.BairroResources;
+import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Bairro;
 import br.com.stagiun.tccstagiun.model.domain.Cidade;
 import br.com.stagiun.tccstagiun.model.domain.Estado;
@@ -44,39 +45,14 @@ public class BairroResourcesTest {
     @MockBean
     private BairroService service;
 
-    private Cidade getCidadeUberlandia() {
-        return Cidade.builder().id(1L).descricao
-                ("Uberlandia").build();
-    }
-
-    private Cidade getCidadeUberaba() {
-        return Cidade.builder().id(2L).descricao
-                ("Uberaba").build();
-    }
-
-    private Cidade getCidadeAraguar() {
-        return Cidade.builder().id(3L).descricao
-                ("Araguar").build();
-    }
-
-    private Bairro getBairro() {
-        return Bairro.builder().descricao("Centro").cidade(getCidadeUberlandia()).build();
-    }
-
-    private Bairro getBairro2() {
-        return Bairro.builder().descricao("Centro").cidade(getCidadeUberaba()).build();
-    }
-
-    private Bairro getBairro3() {
-        return Bairro.builder().descricao("Centro").cidade(getCidadeAraguar()).build();
-    }
+    private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
     @Test
     public void find_by_countries_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
         String bairroJson = getBairroJson();
 
-        Bairro bairro = getBairro();
+        Bairro bairro = domainMock.getBairro();
         when(service.findById(id)).thenReturn(Optional.of(bairro));
         mockMvc.perform(get("/v1/bairros/{id}", id))
                 .andDo(print())
@@ -94,13 +70,13 @@ public class BairroResourcesTest {
     public void find_by_countries_and_thenStatus200_and_all_bairro() throws Exception {
         List<Bairro> bairroList = new ArrayList<>();
 
-        Bairro bairro = getBairro();
+        Bairro bairro = domainMock.getBairro();
         bairroList.add(bairro);
 
-        Bairro bairro2 = getBairro2();
+        Bairro bairro2 = domainMock.getBairro2();
         bairroList.add(bairro2);
 
-        Bairro bairro3 = getBairro3();
+        Bairro bairro3 = domainMock.getBairro3();
         bairroList.add(bairro3);
 
         when(service.list()).thenReturn(bairroList);
@@ -112,7 +88,7 @@ public class BairroResourcesTest {
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Bairro bairro = getBairro();
+        Bairro bairro = domainMock.getBairro();
         String bairroJson = getBairroJson();
 
         when(this.service.salvar(bairro)).thenReturn(bairro);
@@ -127,7 +103,7 @@ public class BairroResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Bairro bairro = getBairro();
+        Bairro bairro = domainMock.getBairro();
         String bairroJson = getBairroJson();
 
         when(service.editar(id, bairro)).thenReturn(bairro);
@@ -141,7 +117,7 @@ public class BairroResourcesTest {
 
     private String getBairroJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(getBairro());
+        return mapper.writeValueAsString(domainMock.getBairro());
     }
 
 }

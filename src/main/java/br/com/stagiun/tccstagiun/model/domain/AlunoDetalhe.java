@@ -13,7 +13,7 @@ import javax.persistence.*;
 @ToString(callSuper = true, of = { "description" })
 @Builder
 @Data
-public class AlunoDetalhes  extends IdModel {
+public class AlunoDetalhe extends IdModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,7 +62,7 @@ public class AlunoDetalhes  extends IdModel {
     @Column(name = "file_curriculo")
     private String fileCurriculo;
 
-    public void update (Long id, AlunoDetalhes alunoDetalhes) {
+    public void update (Long id, AlunoDetalhe alunoDetalhes) {
         this.id = id;
         this.aluno = alunoDetalhes.getAluno();
         this.turma = alunoDetalhes.getTurma();

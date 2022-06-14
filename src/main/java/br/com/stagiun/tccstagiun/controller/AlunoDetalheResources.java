@@ -1,7 +1,7 @@
 package br.com.stagiun.tccstagiun.controller;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
-import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhes;
+import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhe;
 import br.com.stagiun.tccstagiun.model.service.AlunoDetalhesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +14,15 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/aluno-detalhes")
-public class AlunoDetalhesResources {
+public class AlunoDetalheResources {
 
     @Autowired
     private AlunoDetalhesService alunoDetalhesService;
 
     @GetMapping
     @ResponseBody
-    public  ResponseEntity<List<AlunoDetalhes>> list() {
-        List<AlunoDetalhes> list = alunoDetalhesService.list();
+    public  ResponseEntity<List<AlunoDetalhe>> list() {
+        List<AlunoDetalhe> list = alunoDetalhesService.list();
 
         if (!list.isEmpty()) {
             return ResponseEntity.ok(list);
@@ -33,8 +33,8 @@ public class AlunoDetalhesResources {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public  ResponseEntity<AlunoDetalhes> findById(@PathVariable("id") Long id){
-        Optional<AlunoDetalhes> alunoDetalhes = alunoDetalhesService.findById(id);
+    public  ResponseEntity<AlunoDetalhe> findById(@PathVariable("id") Long id){
+        Optional<AlunoDetalhe> alunoDetalhes = alunoDetalhesService.findById(id);
 
         if (alunoDetalhes.isPresent()) {
             return ResponseEntity.ok(alunoDetalhes.get());
@@ -45,8 +45,8 @@ public class AlunoDetalhesResources {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<AlunoDetalhes> salvar(@RequestBody AlunoDetalhes alunoDetalhes) throws ResourceFoundException {
-        AlunoDetalhes alunoDetalhesCadastrado = alunoDetalhesService.salvar(alunoDetalhes);
+    public ResponseEntity<AlunoDetalhe> salvar(@RequestBody AlunoDetalhe alunoDetalhes) throws ResourceFoundException {
+        AlunoDetalhe alunoDetalhesCadastrado = alunoDetalhesService.salvar(alunoDetalhes);
 
         if (alunoDetalhesCadastrado != null) {
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(alunoDetalhesCadastrado.getId()).toUri();
@@ -58,8 +58,8 @@ public class AlunoDetalhesResources {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public  ResponseEntity<AlunoDetalhes> editar(@PathVariable("id") Long id, @RequestBody AlunoDetalhes alunoDetalhes) throws ResourceFoundException {
-        AlunoDetalhes alunoDetalhesEditado = alunoDetalhesService.editar(id, alunoDetalhes);
+    public  ResponseEntity<AlunoDetalhe> editar(@PathVariable("id") Long id, @RequestBody AlunoDetalhe alunoDetalhes) throws ResourceFoundException {
+        AlunoDetalhe alunoDetalhesEditado = alunoDetalhesService.editar(id, alunoDetalhes);
 
         if(alunoDetalhesEditado != null) {
             return ResponseEntity.ok(alunoDetalhesEditado);

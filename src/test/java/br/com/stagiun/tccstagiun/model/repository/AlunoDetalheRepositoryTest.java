@@ -1,7 +1,6 @@
 package br.com.stagiun.tccstagiun.model.repository;
 
-import br.com.stagiun.tccstagiun.model.domain.Acompanhamento;
-import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhes;
+import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhe;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -28,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @TestPropertySource(locations = "classpath:test.properties")
 @Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AlunoDetalhesRepositoryTest {
+public class AlunoDetalheRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -40,8 +39,8 @@ public class AlunoDetalhesRepositoryTest {
 
     //public ExpectedException thrown = ExpectedException.none();
 
-    private AlunoDetalhes getAlunoDetalhes() {
-        return AlunoDetalhes.builder()
+    private AlunoDetalhe getAlunoDetalhes() {
+        return AlunoDetalhe.builder()
                 .anoDeInicioCurso("07/02/2020")
                 .anoDeConclusaoCurso("17/07/2022")
                 .experiencia("Dev Full Stack")
@@ -64,13 +63,13 @@ public class AlunoDetalhesRepositoryTest {
 
     @Test
     public void should_find_no_alunoDetalhes_if_repository_is_empty() {
-        Iterable<AlunoDetalhes> seeds = alunoDetalhesRepository.findAll();
+        Iterable<AlunoDetalhe> seeds = alunoDetalhesRepository.findAll();
         assertThat(seeds).isEmpty();
     }
 
     @Test
     public void should_store_a_acompanhamento() {
-        AlunoDetalhes alunoDetalhes = alunoDetalhesRepository.save(getAlunoDetalhes());
+        AlunoDetalhe alunoDetalhes = alunoDetalhesRepository.save(getAlunoDetalhes());
 
         assertThat(alunoDetalhes).hasFieldOrPropertyWithValue( "ano_de_inicio_curso","07/02/2020");
         assertThat(alunoDetalhes).hasFieldOrPropertyWithValue( "ano_de_conclusao_curso","17/07/2022");
@@ -93,48 +92,48 @@ public class AlunoDetalhesRepositoryTest {
 
     @Test
     public void should_found_store_a_alunoDetalhes() {
-        AlunoDetalhes alunoDetalhes = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes = getAlunoDetalhes();
         entityManager.persist(alunoDetalhes);
 
-        Optional<AlunoDetalhes> found = alunoDetalhesRepository.findById(alunoDetalhes.getId());
+        Optional<AlunoDetalhe> found = alunoDetalhesRepository.findById(alunoDetalhes.getId());
         assertThat(found.get()).isEqualTo(alunoDetalhes);
     }
 
     @Test
     public void should_found_null_alunoDetalhes() {
-        Optional<AlunoDetalhes> fromDb = alunoDetalhesRepository.findById(1L);
+        Optional<AlunoDetalhe> fromDb = alunoDetalhesRepository.findById(1L);
         assertThat(fromDb).isEmpty();
         assertFalse(fromDb.isPresent());
     }
 
     @Test
     public void whenFindById_thenReturnAlunoDetalhes() {
-        AlunoDetalhes alunoDetalhes = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes = getAlunoDetalhes();
         entityManager.persistAndFlush(alunoDetalhes);
 
-        AlunoDetalhes fromDb = alunoDetalhesRepository.findById(alunoDetalhes.getId()).orElse(null);
+        AlunoDetalhe fromDb = alunoDetalhesRepository.findById(alunoDetalhes.getId()).orElse(null);
         assertThat(fromDb).isEqualTo(alunoDetalhes);
     }
 
     @Test
     public void whenInvalidId_thenReturnNull() {
-        AlunoDetalhes fromDb = alunoDetalhesRepository.findById(-11L).orElse(null);
+        AlunoDetalhe fromDb = alunoDetalhesRepository.findById(-11L).orElse(null);
         assertThat(fromDb).isNull();
     }
 
     @Test
     public void givenSetOfCompanies_whenFindAll_thenReturnAllCountries() {
-        AlunoDetalhes alunoDetalhes = getAlunoDetalhes();
-        AlunoDetalhes alunoDetalhes2 = getAlunoDetalhes();
-        AlunoDetalhes alunoDetalhes3 = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes2 = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes3 = getAlunoDetalhes();
 
         entityManager.persist(alunoDetalhes);
         entityManager.persist(alunoDetalhes2);
         entityManager.persist(alunoDetalhes3);
         entityManager.flush();
 
-        Iterator<AlunoDetalhes> allCountries = alunoDetalhesRepository.findAll().iterator();
-        List<AlunoDetalhes> countries = new ArrayList<>();
+        Iterator<AlunoDetalhe> allCountries = alunoDetalhesRepository.findAll().iterator();
+        List<AlunoDetalhe> countries = new ArrayList<>();
         allCountries.forEachRemaining(c -> countries.add(c));
 
         assertEquals(countries.size(), 3);
@@ -155,8 +154,8 @@ public class AlunoDetalhesRepositoryTest {
     /**
      * Simulates the behaviour of bean-validation e.g. @NotNull
      */
-    private void validateBean(AlunoDetalhes alunoDetalhes) throws AssertionError {
-        Optional<ConstraintViolation<AlunoDetalhes>> violation = validator.validate(alunoDetalhes).stream().findFirst();
+    private void validateBean(AlunoDetalhe alunoDetalhes) throws AssertionError {
+        Optional<ConstraintViolation<AlunoDetalhe>> violation = validator.validate(alunoDetalhes).stream().findFirst();
         if (violation.isPresent()) {
             throw new ValidationException(violation.get().getMessage());
         }

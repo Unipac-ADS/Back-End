@@ -39,7 +39,7 @@ public class CargoServiceTest {
         return Cargo.builder()
                 .descricao("Dev Front-End")
                 .experiencia("Júnior")
-                .area_atuacao("Web")
+                .areaAtuacao("Web")
                 .beneficios("Tudo")
                 //        .salario(new BigDecimal("5.9"))
                 .habilidadesDesejadas("Inglês")
@@ -81,7 +81,7 @@ public class CargoServiceTest {
 
         assertEquals("Dev Front-End", cargo.get().getDescricao());
         assertEquals("Júnior", cargo.get().getExperiencia());
-        assertEquals("Web", cargo.get().getArea_atuacao());
+        assertEquals("Web", cargo.get().getAreaAtuacao());
         assertEquals("Tudo", cargo.get().getBeneficios());
         //    assertEquals("5.9", cargo.get().getSalario());
         assertEquals("Inglês", cargo.get().getHabilidadesDesejadas());
@@ -97,7 +97,7 @@ public class CargoServiceTest {
 
         assertEquals("Dev Front-End", cargo.getDescricao());
         assertEquals("Júnior", cargo.getExperiencia());
-        assertEquals("Web", cargo.getArea_atuacao());
+        assertEquals("Web", cargo.getAreaAtuacao());
         assertEquals("Tudo", cargo.getBeneficios());
         //    assertEquals("5.9", cargo.getSalario());
         assertEquals("Inglês", cargo.getHabilidadesDesejadas());
@@ -122,7 +122,7 @@ public class CargoServiceTest {
 
         assertEquals("Dev Front-End", result.getDescricao());
         assertEquals("Júnior", result.getExperiencia());
-        assertEquals("Web", result.getArea_atuacao());
+        assertEquals("Web", result.getAreaAtuacao());
         assertEquals("Tudo", result.getBeneficios());
         //    assertEquals("5.9", result.getSalario());
         assertEquals("Inglês", result.getHabilidadesDesejadas());

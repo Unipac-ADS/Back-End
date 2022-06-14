@@ -1,6 +1,7 @@
 package br.com.stagiun.tccstagiun.resources;
 
 import br.com.stagiun.tccstagiun.controller.AlunoResources;
+import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
 import br.com.stagiun.tccstagiun.model.service.AlunoService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,24 +43,14 @@ public class AlunoResourcesTest {
     @MockBean
     private AlunoService service;
 
-    private Aluno getAluno() {
-        return Aluno.builder().nome("Brasil").build();
-    }
-
-    private Aluno getAluno2() {
-        return Aluno.builder().nome("Antonio").build();
-    }
-
-    private Aluno getAluno3() {
-        return Aluno.builder().nome("Lua").build();
-    }
+    private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
     @Test
     public void find_by_student_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
         String alunoJson = getAlunoJson();
 
-        Aluno aluno = getAluno();
+        Aluno aluno = domainMock.getAluno();
         when(service.findById(id)).thenReturn(Optional.of(aluno));
         mockMvc.perform(get("/v1/alunos/{id}", id))
                 .andDo(print())
@@ -77,13 +68,13 @@ public class AlunoResourcesTest {
     public void find_by_countries_and_thenStatus200_and_all_aluno() throws Exception {
         List<Aluno> alunoList = new ArrayList<>();
 
-        Aluno aluno = getAluno();
+        Aluno aluno = domainMock.getAluno();
         alunoList.add(aluno);
 
-        Aluno aluno2 = getAluno2();
+        Aluno aluno2 = domainMock.getAluno2();
         alunoList.add(aluno2);
 
-        Aluno aluno3 = getAluno3();
+        Aluno aluno3 = domainMock.getAluno3();
         alunoList.add(aluno3);
 
         when(service.list()).thenReturn(alunoList);
@@ -95,7 +86,7 @@ public class AlunoResourcesTest {
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Aluno aluno = getAluno();
+        Aluno aluno = domainMock.getAluno();
         String alunoJson = getAlunoJson();
 
         when(this.service.salvar(aluno)).thenReturn(aluno);
@@ -110,7 +101,7 @@ public class AlunoResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Aluno aluno = getAluno();
+        Aluno aluno = domainMock.getAluno();
         String alunoJson = getAlunoJson();
 
         when(service.editar(id, aluno)).thenReturn(aluno);
@@ -124,7 +115,7 @@ public class AlunoResourcesTest {
 
     private String getAlunoJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(getAluno());
+        return mapper.writeValueAsString(domainMock.getAluno());
     }
 
 }

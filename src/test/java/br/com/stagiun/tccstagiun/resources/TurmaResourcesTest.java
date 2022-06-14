@@ -1,10 +1,11 @@
 package br.com.stagiun.tccstagiun.resources;
 
-import br.com.stagiun.tccstagiun.controller.EstadoResources;
+import br.com.stagiun.tccstagiun.controller.TurmaResources;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
-import br.com.stagiun.tccstagiun.model.domain.Estado;
-import br.com.stagiun.tccstagiun.model.domain.Pais;
-import br.com.stagiun.tccstagiun.model.service.EstadoService;
+import br.com.stagiun.tccstagiun.model.domain.Curso;
+import br.com.stagiun.tccstagiun.model.domain.Faculdade;
+import br.com.stagiun.tccstagiun.model.domain.Turma;
+import br.com.stagiun.tccstagiun.model.service.TurmaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -34,64 +35,66 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(EstadoResources.class)
+@WebMvcTest(TurmaResources.class)
 //@Profile("Test")
 @Slf4j
-public class EstadoResourcesTest {
+public class TurmaResourcesTest {
 
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private EstadoService service;
+    private TurmaService service;
 
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
+
+    public Curso getCurso() {
+        return Curso.builder().id(1L).descricao("Analise de Sistema").faculdade(domainMock.getFaculdade()).build();
+    }
+
+    private Turma getTurma() {
+        return Turma.builder().id(1L).descricao("3B").periodo(2).curso(getCurso()).build();
+    }
 
     @Test
     public void find_by_countries_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
-        String estadoJson = getEstadoJson();
+        String turmaJson = getTurmaJson();
 
-        Estado estado = domainMock.getEstado();
-        when(service.findById(id)).thenReturn(Optional.of(estado));
-        mockMvc.perform(get("/v1/estados/{id}", id))
+        Turma turma = getTurma();
+        when(service.findById(id)).thenReturn(Optional.of(turma));
+        mockMvc.perform(get("/v1/turmas/{id}", id))
                 .andDo(print())
-                .andExpect(content().json(estadoJson))
+                .andExpect(content().json(turmaJson))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void find_by_countries_and_thenStatus204() throws Exception {
         Long id = 1L;
-        mockMvc.perform(get("/v1/estados/{id}", id)).andDo(print()).andExpect(status().isNoContent());
+        mockMvc.perform(get("/v1/turmas/{id}", id)).andDo(print()).andExpect(status().isNoContent());
     }
 
     @Test
-    public void find_by_countries_and_thenStatus200_and_all_estado() throws Exception {
-        List<Estado> estadoList = new ArrayList<>();
+    public void find_by_countries_and_thenStatus200_and_all_turma() throws Exception {
+        List<Turma> turmaList = new ArrayList<>();
 
-        Estado estado = domainMock.getEstado();
-        estadoList.add(estado);
+        Turma turma = getTurma();
+        turmaList.add(turma);
 
-        Estado estado2 = domainMock.getEstado2();
-        estadoList.add(estado2);
-
-        Estado estado3 = domainMock.getEstado3();
-        estadoList.add(estado3);
-
-        when(service.list()).thenReturn(estadoList);
-        mockMvc.perform(get("/v1/estados"))
+        when(service.list()).thenReturn(turmaList);
+        mockMvc.perform(get("/v1/turmas"))
                 .andDo(print())
-                .andExpect(content().json("[{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}},{\"descricao\":\"São Paulo\",\"pais\":{\"descricao\":\"Brasil\"}},{\"descricao\":\"Parana\",\"pais\":{\"descricao\":\"Brasil\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"descricao\":\"3B\",\"periodo\":2,\"curso\":{\"id\":1,\"descricao\":\"Analise de Sistema\",\"faculdade\":{\"id\":1,\"nome\":\"Unipac\"}}}]"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Estado estado = domainMock.getEstado();
-        String estadoJson = getEstadoJson();
+        Turma turma = getTurma();
+        String turmaJson = getTurmaJson();
 
-        when(this.service.salvar(estado)).thenReturn(estado);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/estados").accept(MediaType.APPLICATION_JSON).content(estadoJson).contentType(MediaType.APPLICATION_JSON);
+        when(this.service.salvar(turma)).thenReturn(turma);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/turmas").accept(MediaType.APPLICATION_JSON).content(turmaJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -102,11 +105,11 @@ public class EstadoResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Estado estado = domainMock.getEstado();
-        String estadoJson = getEstadoJson();
+        Turma turma = getTurma();
+        String turmaJson = getTurmaJson();
 
-        when(service.editar(id, estado)).thenReturn(estado);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/estados/{id}", id).accept(MediaType.APPLICATION_JSON).content(estadoJson).contentType(MediaType.APPLICATION_JSON);
+        when(service.editar(id, turma)).thenReturn(turma);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/turmas/{id}", id).accept(MediaType.APPLICATION_JSON).content(turmaJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -114,9 +117,9 @@ public class EstadoResourcesTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-    private String getEstadoJson() throws JsonProcessingException {
+    private String getTurmaJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(domainMock.getEstado());
+        return mapper.writeValueAsString(getTurma());
     }
 
 }

@@ -1,10 +1,9 @@
 package br.com.stagiun.tccstagiun.resources;
 
-import br.com.stagiun.tccstagiun.controller.EstadoResources;
+import br.com.stagiun.tccstagiun.controller.VagaResources;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
-import br.com.stagiun.tccstagiun.model.domain.Estado;
-import br.com.stagiun.tccstagiun.model.domain.Pais;
-import br.com.stagiun.tccstagiun.model.service.EstadoService;
+import br.com.stagiun.tccstagiun.model.domain.Vaga;
+import br.com.stagiun.tccstagiun.model.service.VagaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -34,64 +33,58 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(EstadoResources.class)
+@WebMvcTest(VagaResources.class)
 //@Profile("Test")
 @Slf4j
-public class EstadoResourcesTest {
+public class VagaResourcesTest {
 
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private EstadoService service;
+    private VagaService service;
 
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
     @Test
     public void find_by_countries_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
-        String estadoJson = getEstadoJson();
+        String tipoVagaJson = getVagaJson();
 
-        Estado estado = domainMock.getEstado();
-        when(service.findById(id)).thenReturn(Optional.of(estado));
-        mockMvc.perform(get("/v1/estados/{id}", id))
+        Vaga tipoVaga = domainMock.getVaga();
+        when(service.findById(id)).thenReturn(Optional.of(tipoVaga));
+        mockMvc.perform(get("/v1/vagas/{id}", id))
                 .andDo(print())
-                .andExpect(content().json(estadoJson))
+                .andExpect(content().json(tipoVagaJson))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void find_by_countries_and_thenStatus204() throws Exception {
         Long id = 1L;
-        mockMvc.perform(get("/v1/estados/{id}", id)).andDo(print()).andExpect(status().isNoContent());
+        mockMvc.perform(get("/v1/vagas/{id}", id)).andDo(print()).andExpect(status().isNoContent());
     }
 
     @Test
-    public void find_by_countries_and_thenStatus200_and_all_estado() throws Exception {
-        List<Estado> estadoList = new ArrayList<>();
+    public void find_by_countries_and_thenStatus200_and_all_tipoVaga() throws Exception {
+        List<Vaga> tipoVagaList = new ArrayList<>();
 
-        Estado estado = domainMock.getEstado();
-        estadoList.add(estado);
+        Vaga tipoVaga = domainMock.getVaga();
+        tipoVagaList.add(tipoVaga);
 
-        Estado estado2 = domainMock.getEstado2();
-        estadoList.add(estado2);
-
-        Estado estado3 = domainMock.getEstado3();
-        estadoList.add(estado3);
-
-        when(service.list()).thenReturn(estadoList);
-        mockMvc.perform(get("/v1/estados"))
+        when(service.list()).thenReturn(tipoVagaList);
+        mockMvc.perform(get("/v1/vagas"))
                 .andDo(print())
-                .andExpect(content().json("[{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}},{\"descricao\":\"São Paulo\",\"pais\":{\"descricao\":\"Brasil\"}},{\"descricao\":\"Parana\",\"pais\":{\"descricao\":\"Brasil\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"amount\":333.0,\"dataOfertaInicio\":\"2001-01-01 12:45:09\",\"dataOfertaFim\":\"2001-01-01 12:45:09\",\"nome\":\"dfasdfasdf2\",\"cargo\":{\"id\":1,\"descricao\":\"Unipac\",\"experiencia\":\"Junior3223\",\"areaAtuacao\":\"mpmpmp\",\"beneficios\":\"nao tem\",\"salario\":2999.0,\"competenciasDesejadas\":\"Nenhuma\"},\"empresa\":{\"id\":1,\"tipoEmpresa\":{\"id\":1,\"descricao\":\"Tecnologia\"},\"usuario\":{\"id\":1,\"nome\":\"root\",\"email\":\"root@localhos.com\",\"senha\":\"123456\"},\"endereco\":{\"id\":1,\"tipo\":\"Av\",\"rua\":\"Afonso Pena\",\"numero\":\"323\",\"cep\":{\"id\":1,\"descricao\":\"Uberlandia\"}},\"nomeFantasia\":\"Empresa X\",\"razaoSocial\":\"Empresa X 23\",\"cnpj\":341423,\"telefone\":3242343,\"email\":\"rogerio@fon.com\"}}]"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Estado estado = domainMock.getEstado();
-        String estadoJson = getEstadoJson();
+        Vaga tipoVaga = domainMock.getVaga();
+        String tipoVagaJson = getVagaJson();
 
-        when(this.service.salvar(estado)).thenReturn(estado);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/estados").accept(MediaType.APPLICATION_JSON).content(estadoJson).contentType(MediaType.APPLICATION_JSON);
+        when(this.service.salvar(tipoVaga)).thenReturn(tipoVaga);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/vagas").accept(MediaType.APPLICATION_JSON).content(tipoVagaJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -102,11 +95,11 @@ public class EstadoResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Estado estado = domainMock.getEstado();
-        String estadoJson = getEstadoJson();
+        Vaga tipoVaga = domainMock.getVaga();
+        String tipoVagaJson = getVagaJson();
 
-        when(service.editar(id, estado)).thenReturn(estado);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/estados/{id}", id).accept(MediaType.APPLICATION_JSON).content(estadoJson).contentType(MediaType.APPLICATION_JSON);
+        when(service.editar(id, tipoVaga)).thenReturn(tipoVaga);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/vagas/{id}", id).accept(MediaType.APPLICATION_JSON).content(tipoVagaJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -114,9 +107,9 @@ public class EstadoResourcesTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-    private String getEstadoJson() throws JsonProcessingException {
+    private String getVagaJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(domainMock.getEstado());
+        return mapper.writeValueAsString(domainMock.getVaga());
     }
 
 }

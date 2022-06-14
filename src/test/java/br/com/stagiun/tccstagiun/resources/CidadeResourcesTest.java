@@ -1,6 +1,7 @@
 package br.com.stagiun.tccstagiun.resources;
 
 import br.com.stagiun.tccstagiun.controller.CidadeResources;
+import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Cidade;
 import br.com.stagiun.tccstagiun.model.domain.Estado;
 import br.com.stagiun.tccstagiun.model.domain.Pais;
@@ -44,29 +45,14 @@ public class CidadeResourcesTest {
     @MockBean
     private CidadeService service;
 
-    private Estado getEstado() {
-        return Estado.builder().id(1L).descricao
-                ("Minas Gerais").build();
-    }
-
-    private Cidade getCidade() {
-        return Cidade.builder().descricao("Ubelandia").estado(getEstado()).build();
-    }
-
-    private Cidade getCidade2() {
-        return Cidade.builder().descricao("Uberaba").estado(getEstado()).build();
-    }
-
-    private Cidade getCidade3() {
-        return Cidade.builder().descricao("Araguari").estado(getEstado()).build();
-    }
+    private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
     @Test
     public void find_by_countries_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
         String cidadeJson = getCidadeJson();
 
-        Cidade cidade = getCidade();
+        Cidade cidade = domainMock.getCidade();
         when(service.findById(id)).thenReturn(Optional.of(cidade));
         mockMvc.perform(get("/v1/cidades/{id}", id))
                 .andDo(print())
@@ -84,25 +70,25 @@ public class CidadeResourcesTest {
     public void find_by_countries_and_thenStatus200_and_all_cidade() throws Exception {
         List<Cidade> cidadeList = new ArrayList<>();
 
-        Cidade cidade = getCidade();
+        Cidade cidade = domainMock.getCidade();
         cidadeList.add(cidade);
 
-        Cidade cidade2 = getCidade2();
+        Cidade cidade2 = domainMock.getCidade2();
         cidadeList.add(cidade2);
 
-        Cidade cidade3 = getCidade3();
+        Cidade cidade3 = domainMock.getCidade3();
         cidadeList.add(cidade3);
 
         when(service.list()).thenReturn(cidadeList);
         mockMvc.perform(get("/v1/cidades"))
                 .andDo(print())
-                .andExpect(content().json("[{\"descricao\":\"Ubelandia\",\"estado\":{\"id\":1,\"descricao\":\"Minas Gerais\"}},{\"descricao\":\"Uberaba\",\"estado\":{\"id\":1,\"descricao\":\"Minas Gerais\"}},{\"descricao\":\"Araguari\",\"estado\":{\"id\":1,\"descricao\":\"Minas Gerais\"}}]"))
+                .andExpect(content().json("[{\"descricao\":\"Ubelandia\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}},{\"descricao\":\"Uberaba\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}},{\"descricao\":\"Araguari\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}}]"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Cidade cidade = getCidade();
+        Cidade cidade = domainMock.getCidade();
         String cidadeJson = getCidadeJson();
 
         when(this.service.salvar(cidade)).thenReturn(cidade);
@@ -117,7 +103,7 @@ public class CidadeResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Cidade cidade = getCidade();
+        Cidade cidade = domainMock.getCidade();
         String cidadeJson = getCidadeJson();
 
         when(service.editar(id, cidade)).thenReturn(cidade);
@@ -131,7 +117,7 @@ public class CidadeResourcesTest {
 
     private String getCidadeJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(getCidade());
+        return mapper.writeValueAsString(domainMock.getCidade());
     }
 
 }

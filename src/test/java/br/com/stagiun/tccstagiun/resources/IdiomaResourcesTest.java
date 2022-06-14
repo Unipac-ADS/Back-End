@@ -1,10 +1,9 @@
 package br.com.stagiun.tccstagiun.resources;
 
-import br.com.stagiun.tccstagiun.controller.EstadoResources;
+import br.com.stagiun.tccstagiun.controller.IdiomaResources;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
-import br.com.stagiun.tccstagiun.model.domain.Estado;
-import br.com.stagiun.tccstagiun.model.domain.Pais;
-import br.com.stagiun.tccstagiun.model.service.EstadoService;
+import br.com.stagiun.tccstagiun.model.domain.Idioma;
+import br.com.stagiun.tccstagiun.model.service.IdiomaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -34,64 +33,58 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(EstadoResources.class)
+@WebMvcTest(IdiomaResources.class)
 //@Profile("Test")
 @Slf4j
-public class EstadoResourcesTest {
+public class IdiomaResourcesTest {
 
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private EstadoService service;
+    private IdiomaService service;
 
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
     @Test
     public void find_by_countries_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
-        String estadoJson = getEstadoJson();
+        String tipoIdiomaJson = getIdiomaJson();
 
-        Estado estado = domainMock.getEstado();
-        when(service.findById(id)).thenReturn(Optional.of(estado));
-        mockMvc.perform(get("/v1/estados/{id}", id))
+        Idioma tipoIdioma = domainMock.getIdioma();
+        when(service.findById(id)).thenReturn(Optional.of(tipoIdioma));
+        mockMvc.perform(get("/v1/idiomas/{id}", id))
                 .andDo(print())
-                .andExpect(content().json(estadoJson))
+                .andExpect(content().json(tipoIdiomaJson))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void find_by_countries_and_thenStatus204() throws Exception {
         Long id = 1L;
-        mockMvc.perform(get("/v1/estados/{id}", id)).andDo(print()).andExpect(status().isNoContent());
+        mockMvc.perform(get("/v1/idiomas/{id}", id)).andDo(print()).andExpect(status().isNoContent());
     }
 
     @Test
-    public void find_by_countries_and_thenStatus200_and_all_estado() throws Exception {
-        List<Estado> estadoList = new ArrayList<>();
+    public void find_by_countries_and_thenStatus200_and_all_tipoIdioma() throws Exception {
+        List<Idioma> tipoIdiomaList = new ArrayList<>();
 
-        Estado estado = domainMock.getEstado();
-        estadoList.add(estado);
+        Idioma tipoIdioma = domainMock.getIdioma();
+        tipoIdiomaList.add(tipoIdioma);
 
-        Estado estado2 = domainMock.getEstado2();
-        estadoList.add(estado2);
-
-        Estado estado3 = domainMock.getEstado3();
-        estadoList.add(estado3);
-
-        when(service.list()).thenReturn(estadoList);
-        mockMvc.perform(get("/v1/estados"))
+        when(service.list()).thenReturn(tipoIdiomaList);
+        mockMvc.perform(get("/v1/idiomas"))
                 .andDo(print())
-                .andExpect(content().json("[{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}},{\"descricao\":\"São Paulo\",\"pais\":{\"descricao\":\"Brasil\"}},{\"descricao\":\"Parana\",\"pais\":{\"descricao\":\"Brasil\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"nome\":\"Ingles\",\"aluno\":{\"nome\":\"Brasil\"}}]"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Estado estado = domainMock.getEstado();
-        String estadoJson = getEstadoJson();
+        Idioma tipoIdioma = domainMock.getIdioma();
+        String tipoIdiomaJson = getIdiomaJson();
 
-        when(this.service.salvar(estado)).thenReturn(estado);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/estados").accept(MediaType.APPLICATION_JSON).content(estadoJson).contentType(MediaType.APPLICATION_JSON);
+        when(this.service.salvar(tipoIdioma)).thenReturn(tipoIdioma);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/idiomas").accept(MediaType.APPLICATION_JSON).content(tipoIdiomaJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -102,11 +95,11 @@ public class EstadoResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Estado estado = domainMock.getEstado();
-        String estadoJson = getEstadoJson();
+        Idioma tipoIdioma = domainMock.getIdioma();
+        String tipoIdiomaJson = getIdiomaJson();
 
-        when(service.editar(id, estado)).thenReturn(estado);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/estados/{id}", id).accept(MediaType.APPLICATION_JSON).content(estadoJson).contentType(MediaType.APPLICATION_JSON);
+        when(service.editar(id, tipoIdioma)).thenReturn(tipoIdioma);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/idiomas/{id}", id).accept(MediaType.APPLICATION_JSON).content(tipoIdiomaJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -114,9 +107,9 @@ public class EstadoResourcesTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-    private String getEstadoJson() throws JsonProcessingException {
+    private String getIdiomaJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(domainMock.getEstado());
+        return mapper.writeValueAsString(domainMock.getIdioma());
     }
 
 }

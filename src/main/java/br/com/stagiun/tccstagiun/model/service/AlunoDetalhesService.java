@@ -1,12 +1,12 @@
 package br.com.stagiun.tccstagiun.model.service;
 
 import br.com.stagiun.tccstagiun.model.domain.Aluno;
-import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhes;
+import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhe;
 
 import java.util.Optional;
 
-public interface AlunoDetalhesService extends CrudService<AlunoDetalhes, Long> {
-    Optional<AlunoDetalhes> findById(Long id);
+public interface AlunoDetalhesService extends CrudService<AlunoDetalhe, Long> {
+    Optional<AlunoDetalhe> findById(Long id);
 
-    Optional<AlunoDetalhes> findByAluno(Aluno aluno);
+    Optional<AlunoDetalhe> findByAluno(Aluno aluno);
 }

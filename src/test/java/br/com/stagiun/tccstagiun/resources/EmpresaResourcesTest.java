@@ -1,10 +1,9 @@
 package br.com.stagiun.tccstagiun.resources;
 
-import br.com.stagiun.tccstagiun.controller.EstadoResources;
+import br.com.stagiun.tccstagiun.controller.EmpresaResources;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
-import br.com.stagiun.tccstagiun.model.domain.Estado;
-import br.com.stagiun.tccstagiun.model.domain.Pais;
-import br.com.stagiun.tccstagiun.model.service.EstadoService;
+import br.com.stagiun.tccstagiun.model.domain.*;
+import br.com.stagiun.tccstagiun.model.service.EmpresaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -34,64 +33,58 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(EstadoResources.class)
+@WebMvcTest(EmpresaResources.class)
 //@Profile("Test")
 @Slf4j
-public class EstadoResourcesTest {
+public class EmpresaResourcesTest {
 
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private EstadoService service;
+    private EmpresaService service;
 
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
     @Test
     public void find_by_countries_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
-        String estadoJson = getEstadoJson();
+        String tipoEmpresaJson = getEmpresaJson();
 
-        Estado estado = domainMock.getEstado();
-        when(service.findById(id)).thenReturn(Optional.of(estado));
-        mockMvc.perform(get("/v1/estados/{id}", id))
+        Empresa tipoEmpresa = domainMock.getEmpresa();
+        when(service.findById(id)).thenReturn(Optional.of(tipoEmpresa));
+        mockMvc.perform(get("/v1/empresas/{id}", id))
                 .andDo(print())
-                .andExpect(content().json(estadoJson))
+                .andExpect(content().json(tipoEmpresaJson))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void find_by_countries_and_thenStatus204() throws Exception {
         Long id = 1L;
-        mockMvc.perform(get("/v1/estados/{id}", id)).andDo(print()).andExpect(status().isNoContent());
+        mockMvc.perform(get("/v1/empresas/{id}", id)).andDo(print()).andExpect(status().isNoContent());
     }
 
     @Test
-    public void find_by_countries_and_thenStatus200_and_all_estado() throws Exception {
-        List<Estado> estadoList = new ArrayList<>();
+    public void find_by_countries_and_thenStatus200_and_all_tipoEmpresa() throws Exception {
+        List<Empresa> tipoEmpresaList = new ArrayList<>();
 
-        Estado estado = domainMock.getEstado();
-        estadoList.add(estado);
+        Empresa tipoEmpresa = domainMock.getEmpresa();
+        tipoEmpresaList.add(tipoEmpresa);
 
-        Estado estado2 = domainMock.getEstado2();
-        estadoList.add(estado2);
-
-        Estado estado3 = domainMock.getEstado3();
-        estadoList.add(estado3);
-
-        when(service.list()).thenReturn(estadoList);
-        mockMvc.perform(get("/v1/estados"))
+        when(service.list()).thenReturn(tipoEmpresaList);
+        mockMvc.perform(get("/v1/empresas"))
                 .andDo(print())
-                .andExpect(content().json("[{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}},{\"descricao\":\"São Paulo\",\"pais\":{\"descricao\":\"Brasil\"}},{\"descricao\":\"Parana\",\"pais\":{\"descricao\":\"Brasil\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"tipoEmpresa\":{\"id\":1,\"descricao\":\"Tecnologia\"},\"usuario\":{\"id\":1,\"nome\":\"root\",\"email\":\"root@localhos.com\",\"senha\":\"123456\"},\"endereco\":{\"id\":1,\"tipo\":\"Av\",\"rua\":\"Afonso Pena\",\"numero\":\"323\",\"cep\":{\"id\":1,\"descricao\":\"Uberlandia\"}},\"nomeFantasia\":\"Empresa X\",\"razaoSocial\":\"Empresa X 23\",\"cnpj\":341423,\"telefone\":3242343,\"email\":\"rogerio@fon.com\"}]"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Estado estado = domainMock.getEstado();
-        String estadoJson = getEstadoJson();
+        Empresa tipoEmpresa = domainMock.getEmpresa();
+        String tipoEmpresaJson = getEmpresaJson();
 
-        when(this.service.salvar(estado)).thenReturn(estado);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/estados").accept(MediaType.APPLICATION_JSON).content(estadoJson).contentType(MediaType.APPLICATION_JSON);
+        when(this.service.salvar(tipoEmpresa)).thenReturn(tipoEmpresa);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/empresas").accept(MediaType.APPLICATION_JSON).content(tipoEmpresaJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -102,11 +95,11 @@ public class EstadoResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Estado estado = domainMock.getEstado();
-        String estadoJson = getEstadoJson();
+        Empresa tipoEmpresa = domainMock.getEmpresa();
+        String tipoEmpresaJson = getEmpresaJson();
 
-        when(service.editar(id, estado)).thenReturn(estado);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/estados/{id}", id).accept(MediaType.APPLICATION_JSON).content(estadoJson).contentType(MediaType.APPLICATION_JSON);
+        when(service.editar(id, tipoEmpresa)).thenReturn(tipoEmpresa);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/empresas/{id}", id).accept(MediaType.APPLICATION_JSON).content(tipoEmpresaJson).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         String content = response.getContentAsString();
@@ -114,9 +107,9 @@ public class EstadoResourcesTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-    private String getEstadoJson() throws JsonProcessingException {
+    private String getEmpresaJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(domainMock.getEstado());
+        return mapper.writeValueAsString(domainMock.getEmpresa());
     }
 
 }

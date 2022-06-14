@@ -1,6 +1,7 @@
 package br.com.stagiun.tccstagiun.resources;
 
 import br.com.stagiun.tccstagiun.controller.PaisResources;
+import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Pais;
 import br.com.stagiun.tccstagiun.model.domain.Pais;
 import br.com.stagiun.tccstagiun.model.service.PaisService;
@@ -44,24 +45,14 @@ public class PaisResourcesTest {
     @MockBean
     private PaisService service;
 
-    private Pais getPais() {
-        return Pais.builder().descricao("Brasil").build();
-    }
-
-    private Pais getPais2() {
-        return Pais.builder().descricao("USA").build();
-    }
-
-    private Pais getPais3() {
-        return Pais.builder().descricao("Mexico").build();
-    }
+    private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
     @Test
     public void find_by_countries_by_id_and_thenStatus200() throws Exception {
         Long id = 1L;
         String paisJson = getPaisJson();
 
-        Pais pais = getPais();
+        Pais pais = domainMock.getPais();
         when(service.findById(id)).thenReturn(Optional.of(pais));
         mockMvc.perform(get("/v1/paises/{id}", id))
                 .andDo(print())
@@ -79,13 +70,13 @@ public class PaisResourcesTest {
     public void find_by_countries_and_thenStatus200_and_all_pais() throws Exception {
         List<Pais> paisList = new ArrayList<>();
 
-        Pais pais = getPais();
+        Pais pais = domainMock.getPais();
         paisList.add(pais);
 
-        Pais pais2 = getPais2();
+        Pais pais2 = domainMock.getPais2();
         paisList.add(pais2);
 
-        Pais pais3 = getPais3();
+        Pais pais3 = domainMock.getPais3();
         paisList.add(pais3);
 
         when(service.list()).thenReturn(paisList);
@@ -97,7 +88,7 @@ public class PaisResourcesTest {
 
     @Test
     public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Pais pais = getPais();
+        Pais pais = domainMock.getPais();
         String paisJson = getPaisJson();
 
         when(this.service.salvar(pais)).thenReturn(pais);
@@ -112,7 +103,7 @@ public class PaisResourcesTest {
     @Test
     public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
         Long id = 1L;
-        Pais pais = getPais();
+        Pais pais = domainMock.getPais();
         String paisJson = getPaisJson();
 
         when(service.editar(id, pais)).thenReturn(pais);
@@ -126,7 +117,7 @@ public class PaisResourcesTest {
 
     private String getPaisJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(getPais());
+        return mapper.writeValueAsString(domainMock.getPais());
     }
 
 }

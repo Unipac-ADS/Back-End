@@ -45,7 +45,7 @@ public class CargoRepositoryTest {
         return Cargo.builder()
                 .descricao("Dev Front-End")
                 .experiencia("Júnior")
-                .area_atuacao("Web")
+                .areaAtuacao("Web")
                 .beneficios("Tudo")
                 //        .salario(new BigDecimal("5.9"))
                 .habilidadesDesejadas("Inglês")

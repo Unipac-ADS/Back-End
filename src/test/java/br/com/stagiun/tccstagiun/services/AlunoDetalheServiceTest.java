@@ -1,8 +1,7 @@
 package br.com.stagiun.tccstagiun.services;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
-import br.com.stagiun.tccstagiun.model.domain.Acompanhamento;
-import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhes;
+import br.com.stagiun.tccstagiun.model.domain.AlunoDetalhe;
 import br.com.stagiun.tccstagiun.model.repository.AlunoDetalhesRepository;
 import br.com.stagiun.tccstagiun.model.service.impl.AlunoDetalhesImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AlunoDetalhesServiceTest {
+public class AlunoDetalheServiceTest {
 
     @InjectMocks
     AlunoDetalhesImpl alunoDetalhesService;
@@ -35,8 +34,8 @@ public class AlunoDetalhesServiceTest {
 
     //public ExpectedException thrown = ExpectedException.none();
 
-    private AlunoDetalhes getAlunoDetalhes() {
-        return AlunoDetalhes.builder()
+    private AlunoDetalhe getAlunoDetalhes() {
+        return AlunoDetalhe.builder()
                 .anoDeInicioCurso("07/02/2020")
                 .anoDeConclusaoCurso("17/07/2022")
                 .experiencia("Dev Full Stack")
@@ -58,11 +57,11 @@ public class AlunoDetalhesServiceTest {
 
     @Test
     public void getAllEmployeesTest() {
-        List<AlunoDetalhes> list = new ArrayList<>();
+        List<AlunoDetalhe> list = new ArrayList<>();
 
-        AlunoDetalhes alunoDetalhes = getAlunoDetalhes();
-        AlunoDetalhes alunoDetalhes1 = getAlunoDetalhes();
-        AlunoDetalhes alunoDetalhes2 = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes1 = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes2 = getAlunoDetalhes();
 
         list.add(alunoDetalhes);
         list.add(alunoDetalhes1);
@@ -71,7 +70,7 @@ public class AlunoDetalhesServiceTest {
         when(alunoDetalhesRepository.findAll()).thenReturn(list);
 
         // test
-        List<AlunoDetalhes> urls = alunoDetalhesService.list();
+        List<AlunoDetalhe> urls = alunoDetalhesService.list();
 
         assertEquals(3, urls.size());
         verify(alunoDetalhesRepository, times(1)).findAll();
@@ -81,7 +80,7 @@ public class AlunoDetalhesServiceTest {
     public void getAlunoDetalhesByIdTest() {
         when(alunoDetalhesRepository.findById(1L)).thenReturn(Optional.of(getAlunoDetalhes()));
 
-        Optional<AlunoDetalhes> alunoDetalhes = alunoDetalhesService.findById(1L);
+        Optional<AlunoDetalhe> alunoDetalhes = alunoDetalhesService.findById(1L);
 
         assertEquals("07/02/2020", alunoDetalhes.get().getAnoDeInicioCurso());
         assertEquals("17/07/2022", alunoDetalhes.get().getAnoDeConclusaoCurso());
@@ -99,10 +98,10 @@ public class AlunoDetalhesServiceTest {
 
     @Test
     public void getFindAlunoDetalhesByShortIdTest() {
-        AlunoDetalhes alunoDetalhes = getAlunoDetalhes();
+        AlunoDetalhe alunoDetalhes = getAlunoDetalhes();
         when(alunoDetalhesService.findById(1L)).thenReturn(Optional.ofNullable(alunoDetalhes));
 
-        Optional<AlunoDetalhes> result = alunoDetalhesService.findById(1L);
+        Optional<AlunoDetalhe> result = alunoDetalhesService.findById(1L);
 
         assertEquals("07/02/2020", alunoDetalhes.getAnoDeInicioCurso());
         assertEquals("17/07/2022", alunoDetalhes.getAnoDeConclusaoCurso());
@@ -119,7 +118,7 @@ public class AlunoDetalhesServiceTest {
 
     @Test
     public void createAlunoDetalhesTest() throws ResourceFoundException {
-        AlunoDetalhes url = getAlunoDetalhes();
+        AlunoDetalhe url = getAlunoDetalhes();
         alunoDetalhesService.salvar(url);
 
         verify(alunoDetalhesRepository, times(1)).save(url);
@@ -127,11 +126,11 @@ public class AlunoDetalhesServiceTest {
 
     @Test
     public void createAndStoreAcompanhamentoTest() throws ResourceFoundException {
-        AlunoDetalhes alunoDetalhes = getAlunoDetalhes();
-        alunoDetalhesService.salvar(alunoDetalhes);
+        AlunoDetalhe alunoDetalhe = getAlunoDetalhes();
+        alunoDetalhesService.salvar(alunoDetalhe);
 
-        when(alunoDetalhesService.salvar(alunoDetalhes)).thenReturn(alunoDetalhes);
-        AlunoDetalhes result = alunoDetalhesService.salvar(alunoDetalhes);
+        when(alunoDetalhesService.salvar(alunoDetalhe)).thenReturn(alunoDetalhe);
+        AlunoDetalhe result = alunoDetalhesService.salvar(alunoDetalhe);
 
         assertEquals("07/02/2020", result.getAnoDeInicioCurso());
         assertEquals("17/07/2022", result.getAnoDeConclusaoCurso());
