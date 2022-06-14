@@ -1,80 +1,113 @@
 package br.com.stagiun.tccstagiun.model.service;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Empresa;
 import br.com.stagiun.tccstagiun.model.repository.EmpresaRepository;
+import br.com.stagiun.tccstagiun.model.service.impl.EmpresaImpl;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles(value = "local")
-@AutoConfigureMockMvc
+@Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class EmpresaServiceTest {
+public class EmpresaServiceTest {
+
+    @InjectMocks
+    EmpresaImpl empresaService;
 
     @Mock
     EmpresaRepository empresaRepository;
 
-    @MockBean
-    EmpresaService service;
+     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
-    private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
-
-    @Test
-    void find_by_countries_and_thenStatus200_and_all_empresaes() {
-        List<Empresa> empresaList = new ArrayList<>();
-
-        Empresa empresa = domainMock.getEmpresa();
-        empresaList.add(empresa);
-
-        when(service.list()).thenReturn(empresaList);
-        assertNotNull(service.list());
+    @BeforeAll
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void find_by_countries_by_id_and_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getAllEmployeesTest() {
+        List<Empresa> list = new ArrayList<>();
 
         Empresa empresa = domainMock.getEmpresa();
-        when(service.findById(id)).thenReturn(Optional.of(empresa));
-        assertNotNull(service.findById(id));
+        Empresa empresa1 = domainMock.getEmpresa();
+        Empresa empresa2 = domainMock.getEmpresa();
+
+        list.add(empresa);
+        list.add(empresa1);
+        list.add(empresa2);
+
+        when(empresaRepository.findAll()).thenReturn(list);
+
+        // test
+        List<Empresa> urls = empresaService.list();
+
+        assertEquals(3, urls.size());
+        verify(empresaRepository, times(1)).findAll();
     }
 
     @Test
-    public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Empresa empresa = domainMock.getEmpresa();
+    public void getEmpresaByIdTest() {
+        when(empresaRepository.findById(1L)).thenReturn(Optional.of(domainMock.getEmpresa()));
 
-        when(this.service.salvar(empresa)).thenReturn(empresa);
+        Optional<Empresa> empresa = empresaService.findById(1L);
 
-        Empresa empresaSalvo = this.service.salvar(empresa);
-        assertNotNull(empresaSalvo);
+        assertEquals("Stagiun", empresa.get().getNomeFantasia());
+        assertEquals("ADS-Stagiun", empresa.get().getRazaoSocial());
+        assertEquals(22244455, empresa.get().getCnpj());
+        assertEquals(32324545, empresa.get().getTelefone());
+        assertEquals("stagiun@gmail.com", empresa.get().getEmail());
     }
 
     @Test
-    public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getFindEmpresaByShortIdTest() {
         Empresa empresa = domainMock.getEmpresa();
+        when(empresaService.findById(1L)).thenReturn(Optional.ofNullable(empresa));
 
-        when(service.editar(id, empresa)).thenReturn(empresa);
+        Optional<Empresa> result = empresaService.findById(1L);
 
-        Empresa empresaAlterado = this.service.editar(id, empresa);
-        assertNotNull(empresaAlterado);
+        assertEquals("Stagiun", empresa.getNomeFantasia());
+        assertEquals("ADS-Stagiun", empresa.getRazaoSocial());
+        assertEquals(22244455, empresa.getCnpj());
+        assertEquals(32324545, empresa.getTelefone());
+        assertEquals("stagiun@gmail.com", empresa.getEmail());
     }
 
+    @Test
+    public void createEmpresaTest() throws ResourceFoundException {
+        Empresa url = domainMock.getEmpresa();
+        empresaService.salvar(url);
+
+        verify(empresaRepository, times(3)).save(url);
+    }
+
+    @Test
+    public void createAndStoreDicaTest() throws ResourceFoundException {
+        Empresa empresa = domainMock.getEmpresa();
+        empresaService.salvar(empresa);
+
+        when(empresaService.salvar(empresa)).thenReturn(empresa);
+        Empresa result = empresaService.salvar(empresa);
+
+        assertEquals("Stagiun", result.getNomeFantasia());
+        assertEquals("ADS-Stagiun", result.getRazaoSocial());
+        assertEquals(22244455, result.getCnpj());
+        assertEquals(32324545, result.getTelefone());
+        assertEquals("stagiun@gmail.com", result.getEmail());
+    }
 }

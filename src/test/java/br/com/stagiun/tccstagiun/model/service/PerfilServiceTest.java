@@ -1,6 +1,7 @@
-package br.com.stagiun.tccstagiun.services;
+package br.com.stagiun.tccstagiun.model.service;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
+import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Perfil;
 import br.com.stagiun.tccstagiun.model.repository.PerfilRepository;
 import br.com.stagiun.tccstagiun.model.service.impl.PerfilServiceImpl;
@@ -32,13 +33,7 @@ public class PerfilServiceTest {
     @Mock
     PerfilRepository perfilRepository;
 
-    //public ExpectedException thrown = ExpectedException.none();
-
-    private Perfil getPerfil() {
-        return Perfil.builder()
-                .descricao("Aluno")
-                .build();
-    }
+    private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
     @BeforeAll
     public void init() {
@@ -49,9 +44,9 @@ public class PerfilServiceTest {
     public void getAllEmployeesTest() {
         List<Perfil> list = new ArrayList<>();
 
-        Perfil perfil = getPerfil();
-        Perfil perfil1 = getPerfil();
-        Perfil perfil2 = getPerfil();
+        Perfil perfil = domainMock.getPerfil();
+        Perfil perfil1 = domainMock.getPerfil();
+        Perfil perfil2 = domainMock.getPerfil();
 
         list.add(perfil);
         list.add(perfil1);
@@ -68,7 +63,7 @@ public class PerfilServiceTest {
 
     @Test
     public void getPerfilByIdTest() {
-        when(perfilRepository.findById(1L)).thenReturn(Optional.of(getPerfil()));
+        when(perfilRepository.findById(1L)).thenReturn(Optional.of(domainMock.getPerfil()));
 
         Optional<Perfil> perfil = perfilService.findById(1L);
 
@@ -77,7 +72,7 @@ public class PerfilServiceTest {
 
     @Test
     public void getFindPerfilByShortIdTest() {
-        Perfil perfil = getPerfil();
+        Perfil perfil = domainMock.getPerfil();
         when(perfilService.findById(1L)).thenReturn(Optional.ofNullable(perfil));
 
         Optional<Perfil> result = perfilService.findById(1L);
@@ -87,7 +82,7 @@ public class PerfilServiceTest {
 
     @Test
     public void createPerfilTest() throws ResourceFoundException {
-        Perfil url = getPerfil();
+        Perfil url = domainMock.getPerfil();
         perfilService.salvar(url);
 
         verify(perfilRepository, times(1)).save(url);
@@ -95,7 +90,7 @@ public class PerfilServiceTest {
 
     @Test
     public void createAndStorePerfilTest() throws ResourceFoundException {
-        Perfil perfil = getPerfil();
+        Perfil perfil = domainMock.getPerfil();
         perfilService.salvar(perfil);
 
         when(perfilService.salvar(perfil)).thenReturn(perfil);

@@ -76,7 +76,7 @@ public class EnderecoResourcesTest {
         when(service.list()).thenReturn(enderecoList);
         mockMvc.perform(get("/v1/enderecos"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"tipo\":\"Av\",\"rua\":\"Afonso Pena\",\"numero\":\"323\",\"cep\":{\"id\":1,\"descricao\":\"Uberlandia\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"tipo\":\"Av\",\"rua\":\"Afonso Pena\",\"numero\":\"323\",\"cep\":{\"id\":1,\"descricao\":\"48688-125\"}}]"))
                 .andExpect(status().isOk());
     }
 

@@ -74,7 +74,7 @@ public class EmpresaResourcesTest {
         when(service.list()).thenReturn(tipoEmpresaList);
         mockMvc.perform(get("/v1/empresas"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"tipoEmpresa\":{\"id\":1,\"descricao\":\"Tecnologia\"},\"usuario\":{\"id\":1,\"nome\":\"root\",\"email\":\"root@localhos.com\",\"senha\":\"123456\"},\"endereco\":{\"id\":1,\"tipo\":\"Av\",\"rua\":\"Afonso Pena\",\"numero\":\"323\",\"cep\":{\"id\":1,\"descricao\":\"Uberlandia\"}},\"nomeFantasia\":\"Empresa X\",\"razaoSocial\":\"Empresa X 23\",\"cnpj\":341423,\"telefone\":3242343,\"email\":\"rogerio@fon.com\"}]"))
+                .andExpect(content().json("[{\"id\":1,\"tipoEmpresa\":{\"id\":1,\"descricao\":\"Tecnologia\"},\"usuario\":{\"id\":1,\"nome\":\"Playboyzinho\",\"email\":\"palyboyzinho@gmail.com\",\"senha\":\"Mjolnir\"},\"endereco\":{\"id\":1,\"tipo\":\"Av\",\"rua\":\"Afonso Pena\",\"numero\":\"323\",\"cep\":{\"id\":1,\"descricao\":\"48688-125\"}},\"nomeFantasia\":\"Stagiun\",\"razaoSocial\":\"ADS-Stagiun\",\"cnpj\":22244455,\"telefone\":32324545,\"email\":\"stagiun@gmail.com\"}]"))
                 .andExpect(status().isOk());
     }
 

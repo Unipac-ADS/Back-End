@@ -1,80 +1,108 @@
 package br.com.stagiun.tccstagiun.model.service;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Endereco;
+import br.com.stagiun.tccstagiun.model.domain.Pais;
 import br.com.stagiun.tccstagiun.model.repository.EnderecoRepository;
+import br.com.stagiun.tccstagiun.model.service.impl.EnderecoServiceImpl;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles(value = "local")
-@AutoConfigureMockMvc
+@Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class EnderecoServiceTest {
+public class EnderecoServiceTest {
+
+    @InjectMocks
+    EnderecoServiceImpl enderecoService;
 
     @Mock
     EnderecoRepository enderecoRepository;
 
-    @MockBean
-    EnderecoService service;
-
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
-    @Test
-    void find_by_countries_and_thenStatus200_and_all_enderecoes() {
-        List<Endereco> enderecoList = new ArrayList<>();
-
-        Endereco endereco = domainMock.getEndereco();
-        enderecoList.add(endereco);
-
-        when(service.list()).thenReturn(enderecoList);
-        assertNotNull(service.list());
+    @BeforeAll
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void find_by_countries_by_id_and_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getAllEmployeesTest() {
+        List<Endereco> list = new ArrayList<>();
 
         Endereco endereco = domainMock.getEndereco();
-        when(service.findById(id)).thenReturn(Optional.of(endereco));
-        assertNotNull(service.findById(id));
+        Endereco endereco1 = domainMock.getEndereco();
+        Endereco endereco2 = domainMock.getEndereco();
+
+        list.add(endereco);
+        list.add(endereco1);
+        list.add(endereco2);
+
+        when(enderecoRepository.findAll()).thenReturn(list);
+
+        // test
+        List<Endereco> urls = enderecoService.list();
+
+        assertEquals(3, urls.size());
+        verify(enderecoRepository, times(1)).findAll();
     }
 
     @Test
-    public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Endereco endereco = domainMock.getEndereco();
+    public void getEnderecoByIdTest() {
+        when(enderecoRepository.findById(1L)).thenReturn(Optional.of(domainMock.getEndereco()));
 
-        when(this.service.salvar(endereco)).thenReturn(endereco);
+        Optional<Endereco> endereco = enderecoService.findById(1L);
 
-        Endereco enderecoSalvo = this.service.salvar(endereco);
-        assertNotNull(enderecoSalvo);
+        assertEquals("Afonso Pena", endereco.get().getRua());
+        assertEquals("Av", endereco.get().getTipo());
+        assertEquals("323", endereco.get().getNumero());
     }
 
     @Test
-    public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getFindEnderecoByShortIdTest() {
         Endereco endereco = domainMock.getEndereco();
+        when(enderecoService.findById(1L)).thenReturn(Optional.ofNullable(endereco));
 
-        when(service.editar(id, endereco)).thenReturn(endereco);
+        Optional<Endereco> result = enderecoService.findById(1L);
 
-        Endereco enderecoAlterado = this.service.editar(id, endereco);
-        assertNotNull(enderecoAlterado);
+        assertEquals("Afonso Pena", result.get().getRua());
+        assertEquals("Av", result.get().getTipo());
+        assertEquals("323", result.get().getNumero());
     }
 
+    @Test
+    public void createEnderecoTest() throws ResourceFoundException {
+        Endereco url = domainMock.getEndereco();
+        enderecoService.salvar(url);
+
+        verify(enderecoRepository, times(3)).save(url);
+    }
+
+    @Test
+    public void createAndStoreEnderecoTest() throws ResourceFoundException {
+        Endereco endereco = domainMock.getEndereco();
+        enderecoService.salvar(endereco);
+
+        when(enderecoService.salvar(endereco)).thenReturn(endereco);
+        Endereco result = enderecoService.salvar(endereco);
+
+        assertEquals("Afonso Pena", result.getRua());
+        assertEquals("Av", result.getTipo());
+        assertEquals("323", result.getNumero());
+    }
 }

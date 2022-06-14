@@ -1,80 +1,124 @@
 package br.com.stagiun.tccstagiun.model.service;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Cargo;
 import br.com.stagiun.tccstagiun.model.repository.CargoRepository;
+import br.com.stagiun.tccstagiun.model.service.impl.CargoServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles(value = "local")
-@AutoConfigureMockMvc
+@Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class CargoServiceTest {
+@Slf4j
+public class CargoServiceTest {
+
+    @InjectMocks
+    CargoServiceImpl cargoService;
 
     @Mock
     CargoRepository cargoRepository;
 
-    @MockBean
-    CargoService service;
-
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
-    @Test
-    void find_by_countries_and_thenStatus200_and_all_cargoes() {
-        List<Cargo> cargoList = new ArrayList<>();
-
-        Cargo cargo = domainMock.getCargo();
-        cargoList.add(cargo);
-
-        when(service.list()).thenReturn(cargoList);
-        assertNotNull(service.list());
+       @BeforeAll
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void find_by_countries_by_id_and_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getAllEmployeesTest() {
+        List<Cargo> list = new ArrayList<>();
 
         Cargo cargo = domainMock.getCargo();
-        when(service.findById(id)).thenReturn(Optional.of(cargo));
-        assertNotNull(service.findById(id));
+        Cargo cargo1 = domainMock.getCargo();
+        Cargo cargo2 = domainMock.getCargo();
+
+        list.add(cargo);
+        list.add(cargo1);
+        list.add(cargo2);
+
+        when(cargoRepository.findAll()).thenReturn(list);
+
+        // test
+        List<Cargo> urls = cargoService.list();
+
+        assertEquals(3, urls.size());
+        verify(cargoRepository, times(1)).findAll();
     }
 
     @Test
-    public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
+    public void getCargoByIdTest() {
+        when(cargoRepository.findById(1L)).thenReturn(Optional.of(domainMock.getCargo()));
+
+        Optional<Cargo> cargo = cargoService.findById(1L);
+
+        assertEquals("Dev Front-End", cargo.get().getDescricao());
+        assertEquals("Júnior", cargo.get().getExperiencia());
+        assertEquals("Web", cargo.get().getAreaAtuacao());
+        assertEquals("Tudo", cargo.get().getBeneficios());
+        assertEquals(BigDecimal.valueOf(2999.00).setScale(2), cargo.get().getSalario());
+        assertEquals("Inglês", cargo.get().getHabilidadesDesejadas());
+        assertEquals("HTML/CSS, JavaScript, React/Angular", cargo.get().getCompetenciasDesejadas());
+    }
+
+    //return Cargo.builder().id(1L).descricao("Dev Front-End").areaAtuacao("Web").beneficios("Tudo").competenciasDesejadas("Inglês").experiencia("Júnior").salario(BigDecimal.valueOf(2999.00)).build();
+
+    @Test
+    public void getFindCargoByShortIdTest() {
         Cargo cargo = domainMock.getCargo();
+        when(cargoService.findById(1L)).thenReturn(Optional.ofNullable(cargo));
 
-        when(this.service.salvar(cargo)).thenReturn(cargo);
+        Optional<Cargo> result = cargoService.findById(1L);
 
-        Cargo cargoSalvo = this.service.salvar(cargo);
-        assertNotNull(cargoSalvo);
+        assertEquals("Dev Front-End", result.get().getDescricao());
+        assertEquals("Júnior", result.get().getExperiencia());
+        assertEquals("Web", result.get().getAreaAtuacao());
+        assertEquals("Tudo", result.get().getBeneficios());
+        assertEquals(BigDecimal.valueOf(2999.00).setScale(2), result.get().getSalario());
+        assertEquals("Inglês", result.get().getHabilidadesDesejadas());
+        assertEquals("HTML/CSS, JavaScript, React/Angular", result.get().getCompetenciasDesejadas());
     }
 
     @Test
-    public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void createCargoTest() throws ResourceFoundException {
         Cargo cargo = domainMock.getCargo();
+        cargoService.salvar(cargo);
 
-        when(service.editar(id, cargo)).thenReturn(cargo);
-
-        Cargo cargoAlterado = this.service.editar(id, cargo);
-        assertNotNull(cargoAlterado);
+        verify(cargoRepository, times(1)).save(cargo);
     }
 
+    @Test
+    public void createAndStoreCargoTest() throws ResourceFoundException {
+        Cargo cargo = domainMock.getCargo();
+        cargoService.salvar(cargo);
+
+        when(cargoService.salvar(cargo)).thenReturn(cargo);
+        Cargo result = cargoService.salvar(cargo);
+
+        assertEquals("Dev Front-End", result.getDescricao());
+        assertEquals("Júnior", result.getExperiencia());
+        assertEquals("Web", result.getAreaAtuacao());
+        assertEquals("Tudo", result.getBeneficios());
+        assertEquals(BigDecimal.valueOf(2999.00).setScale(2), result.getSalario());
+        assertEquals("Inglês", result.getHabilidadesDesejadas());
+        assertEquals("HTML/CSS, JavaScript, React/Angular", result.getCompetenciasDesejadas());
+    }
 }

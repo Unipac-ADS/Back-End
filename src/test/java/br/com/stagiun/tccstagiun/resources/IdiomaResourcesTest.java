@@ -74,7 +74,7 @@ public class IdiomaResourcesTest {
         when(service.list()).thenReturn(tipoIdiomaList);
         mockMvc.perform(get("/v1/idiomas"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"nome\":\"Ingles\",\"aluno\":{\"nome\":\"Brasil\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"nome\":\"Inglês\",\"aluno\":{\"nome\":\"Maria\",\"matricula\":\"ADS001\",\"cpf\":1245683215,\"telefone\":32564748,\"email\":\"brteste@hotmail.com\",\"curriculo\":\"cvteste1\"}}]"))
                 .andExpect(status().isOk());
     }
 

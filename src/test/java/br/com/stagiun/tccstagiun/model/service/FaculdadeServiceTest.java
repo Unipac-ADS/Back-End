@@ -1,80 +1,101 @@
 package br.com.stagiun.tccstagiun.model.service;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Faculdade;
 import br.com.stagiun.tccstagiun.model.repository.FaculdadeRepository;
+import br.com.stagiun.tccstagiun.model.service.impl.FaculdadeServiceImpl;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles(value = "local")
-@AutoConfigureMockMvc
+@Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class FaculdadeServiceTest {
+public class FaculdadeServiceTest {
+
+    @InjectMocks
+    FaculdadeServiceImpl faculdadeService;
 
     @Mock
     FaculdadeRepository faculdadeRepository;
 
-    @MockBean
-    FaculdadeService service;
-
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
-    @Test
-    void find_by_countries_and_thenStatus200_and_all_faculdadees() {
-        List<Faculdade> faculdadeList = new ArrayList<>();
-
-        Faculdade faculdade = domainMock.getFaculdade();
-        faculdadeList.add(faculdade);
-
-        when(service.list()).thenReturn(faculdadeList);
-        assertNotNull(service.list());
+    @BeforeAll
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void find_by_countries_by_id_and_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getAllEmployeesTest() {
+        List<Faculdade> list = new ArrayList<>();
 
         Faculdade faculdade = domainMock.getFaculdade();
-        when(service.findById(id)).thenReturn(Optional.of(faculdade));
-        assertNotNull(service.findById(id));
+        Faculdade faculdade1 = domainMock.getFaculdade();
+        Faculdade faculdade2 = domainMock.getFaculdade();
+
+        list.add(faculdade);
+        list.add(faculdade1);
+        list.add(faculdade2);
+
+        when(faculdadeRepository.findAll()).thenReturn(list);
+
+        // test
+        List<Faculdade> urls = faculdadeService.list();
+
+        assertEquals(3, urls.size());
+        verify(faculdadeRepository, times(1)).findAll();
     }
 
     @Test
-    public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Faculdade faculdade = domainMock.getFaculdade();
+    public void getFaculdadeByIdTest() {
+        when(faculdadeRepository.findById(1L)).thenReturn(Optional.of(domainMock.getFaculdade()));
 
-        when(this.service.salvar(faculdade)).thenReturn(faculdade);
+        Optional<Faculdade> faculdade = faculdadeService.findById(1L);
 
-        Faculdade faculdadeSalvo = this.service.salvar(faculdade);
-        assertNotNull(faculdadeSalvo);
+        assertEquals("Unipac", faculdade.get().getNome());
     }
 
     @Test
-    public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getFindFaculdadeByShortIdTest() {
         Faculdade faculdade = domainMock.getFaculdade();
+        when(faculdadeService.findById(1L)).thenReturn(Optional.ofNullable(faculdade));
 
-        when(service.editar(id, faculdade)).thenReturn(faculdade);
+        Optional<Faculdade> result = faculdadeService.findById(1L);
 
-        Faculdade faculdadeAlterado = this.service.editar(id, faculdade);
-        assertNotNull(faculdadeAlterado);
+        assertEquals("Unipac", faculdade.getNome());
     }
 
+    @Test
+    public void createFaculdadeTest() throws ResourceFoundException {
+        Faculdade url = domainMock.getFaculdade();
+        faculdadeService.salvar(url);
+
+        verify(faculdadeRepository, times(3)).save(url);
+    }
+
+    @Test
+    public void createAndStoreFaculdadeTest() throws ResourceFoundException {
+        Faculdade faculdade = domainMock.getFaculdade();
+        faculdadeService.salvar(faculdade);
+
+        when(faculdadeService.salvar(faculdade)).thenReturn(faculdade);
+        Faculdade result = faculdadeService.salvar(faculdade);
+
+        assertEquals("Unipac", result.getNome());
+    }
 }

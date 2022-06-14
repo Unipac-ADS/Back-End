@@ -75,7 +75,7 @@ public class CargoResourcesTest {
         when(service.list()).thenReturn(cargoList);
         mockMvc.perform(get("/v1/cargos"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"descricao\":\"Unipac\",\"experiencia\":\"Junior3223\",\"areaAtuacao\":\"mpmpmp\",\"beneficios\":\"nao tem\",\"salario\":2999.0,\"competenciasDesejadas\":\"Nenhuma\"}]"))
+                .andExpect(content().json("[{\"id\":1,\"descricao\":\"Dev Front-End\",\"experiencia\":\"Júnior\",\"areaAtuacao\":\"Web\",\"beneficios\":\"Tudo\",\"salario\":2999.00,\"habilidadesDesejadas\":\"Inglês\",\"competenciasDesejadas\":\"HTML/CSS, JavaScript, React/Angular\"}]"))
                 .andExpect(status().isOk());
     }
 

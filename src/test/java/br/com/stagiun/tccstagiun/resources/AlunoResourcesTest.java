@@ -80,7 +80,7 @@ public class AlunoResourcesTest {
         when(service.list()).thenReturn(alunoList);
         mockMvc.perform(get("/v1/alunos"))
                 .andDo(print())
-                .andExpect(content().json("[{\"nome\":\"Brasil\"},{\"nome\":\"Antonio\"},{\"nome\":\"Lua\"}]"))
+                .andExpect(content().json("[{\"nome\":\"Maria\",\"matricula\":\"ADS001\",\"cpf\":1245683215,\"telefone\":32564748,\"email\":\"brteste@hotmail.com\",\"curriculo\":\"cvteste1\"},{\"nome\":\"José\",\"matricula\":\"ADS001\",\"cpf\":1245683215,\"telefone\":32564748,\"email\":\"brteste@hotmail.com\",\"curriculo\":\"cvteste1\"},{\"nome\":\"Joana\",\"matricula\":\"ADS001\",\"cpf\":1245683215,\"telefone\":32564748,\"email\":\"brteste@hotmail.com\",\"curriculo\":\"cvteste1\"}]"))
                 .andExpect(status().isOk());
     }
 

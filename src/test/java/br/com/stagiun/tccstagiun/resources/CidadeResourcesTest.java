@@ -82,7 +82,7 @@ public class CidadeResourcesTest {
         when(service.list()).thenReturn(cidadeList);
         mockMvc.perform(get("/v1/cidades"))
                 .andDo(print())
-                .andExpect(content().json("[{\"descricao\":\"Ubelandia\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}},{\"descricao\":\"Uberaba\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}},{\"descricao\":\"Araguari\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}}]"))
+                .andExpect(content().json("[{\"descricao\":\"Uberlândia\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}},{\"descricao\":\"Uberaba\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}},{\"descricao\":\"Araguari\",\"estado\":{\"descricao\":\"Minas Gerais\",\"pais\":{\"descricao\":\"Brasil\"}}}]"))
                 .andExpect(status().isOk());
     }
 

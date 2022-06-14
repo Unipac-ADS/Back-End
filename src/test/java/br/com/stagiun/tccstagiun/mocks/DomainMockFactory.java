@@ -35,7 +35,7 @@ public class DomainMockFactory {
     }
 
     public Cidade getCidade() {
-        return Cidade.builder().descricao("Ubelandia").estado(getEstado()).build();
+        return Cidade.builder().descricao("Uberlândia").estado(getEstado()).build();
     }
 
     public Cidade getCidade2() {
@@ -75,7 +75,7 @@ public class DomainMockFactory {
 
     public Cep getCep() {
         return Cep.builder().id(1L).descricao
-                ("Uberlandia").build();
+                ("48688-125").build();
     }
 
     public Endereco getEndereco() {
@@ -91,27 +91,15 @@ public class DomainMockFactory {
     }
 
     public Curso getCurso() {
-        return Curso.builder().id(1L).descricao("Analise de Sistema").faculdade(getFaculdade()).build();
+        return Curso.builder().id(1L).descricao("Análise e Desenvolvimento de Sistemas").faculdade(getFaculdade()).build();
     }
 
     public Turma getTurma() {
-        return Turma.builder().id(1l).curso(getCurso()).periodo(1).descricao("3B").build();
+        return Turma.builder().id(1l).curso(getCurso()).periodo(5).descricao("ADS").build();
     }
 
     public Cargo getCargo() {
-        return Cargo.builder().id(1L).descricao("Unipac").areaAtuacao("mpmpmp").beneficios("nao tem").competenciasDesejadas("Nenhuma").experiencia("Junior3223").salario(BigDecimal.valueOf(2999.00)).build();
-    }
-
-    public Aluno getAluno() {
-        return Aluno.builder().nome("Brasil").build();
-    }
-
-    public Aluno getAluno2() {
-        return Aluno.builder().nome("Antonio").build();
-    }
-
-    public Aluno getAluno3() {
-        return Aluno.builder().nome("Lua").build();
+        return Cargo.builder().id(1L).descricao("Dev Front-End").areaAtuacao("Web").beneficios("Tudo").habilidadesDesejadas("Inglês").competenciasDesejadas("HTML/CSS, JavaScript, React/Angular").experiencia("Júnior").salario(BigDecimal.valueOf(2999.00).setScale(2)).build();
     }
 
     public TipoEmpresa getTipoEmpresa() {
@@ -119,20 +107,29 @@ public class DomainMockFactory {
     }
 
     public Usuario getUsuario() {
-        return Usuario.builder().id(1L).nome("root").email("root@localhos.com").senha("123456").build();
+        return Usuario.builder().id(1L).nome("Playboyzinho").email("palyboyzinho@gmail.com").senha("Mjolnir").build();
     }
 
     public Empresa getEmpresa() {
-        return Empresa.builder().id(1L).tipoEmpresa(getTipoEmpresa()).usuario(getUsuario()).endereco(getEndereco()).nomeFantasia("Empresa X").razaoSocial("Empresa X 23").cnpj(341423L).telefone(3242343L).email("rogerio@fon.com").build();
+        return Empresa.builder()
+                .id(1L)
+                .tipoEmpresa(getTipoEmpresa())
+                .usuario(getUsuario())
+                .endereco(getEndereco())
+                .nomeFantasia("Stagiun")
+                .razaoSocial("ADS-Stagiun")
+                .cnpj(22244455L)
+                .telefone(32324545L)
+                .email("stagiun@gmail.com").build();
     }
 
     public Vaga getVaga() {
         return Vaga.builder()
                 .id(1L)
-                .nome("dfasdfasdf2")
+                .nome("Vaga Desenvolvedor Java")
                 .amount(333.00)
-                .dataOfertaInicio("2001-01-01 12:45:09")
-                .dataOfertaFim("2001-01-01 12:45:09")
+                .dataOfertaInicio("26/05/2022")
+                .dataOfertaFim("30/05/2022")
                 .cargo(getCargo())
                 .empresa(getEmpresa()).
                 build();
@@ -163,10 +160,10 @@ public class DomainMockFactory {
     public Dica getDica() {
         return Dica.builder()
                 .id(1L)
-                .titulo("dica 1")
-                .descricao("dica 1")
-                .linksUteis("links udeis")
-                .dataPublicacao("2001-01-01")
+                .titulo("Como virar um ninja em Java")
+                .descricao("Aprenda o que estudar para se tornar um ninja")
+                .linksUteis("links")
+                .dataPublicacao("25/05/2022")
                 .cargo(getCargo())
                 .build();
     }
@@ -175,7 +172,7 @@ public class DomainMockFactory {
         return Idioma
                 .builder()
                 .id(1L)
-                .nome("Ingles")
+                .nome("Inglês")
                 .aluno(getAluno())
                 .build();
     }
@@ -184,7 +181,7 @@ public class DomainMockFactory {
         return Habilidade
                 .builder()
                 .id(1l)
-                .nome("Musica")
+                .nome("Proativo")
                 .aluno(getAluno())
                 .build();
     }
@@ -196,5 +193,69 @@ public class DomainMockFactory {
                 .vaga(getVaga())
                 .aluno(getAluno())
                 .build();
+    }
+
+    public AlunoDetalhe getAlunoDetalhes() {
+        return AlunoDetalhe.builder()
+                .anoDeInicioCurso("07/02/2020")
+                .anoDeConclusaoCurso("17/07/2022")
+                .experiencia("Dev Full Stack")
+                .infoAdicionais("Full Stack")
+                .deficiencia(0)
+                .sobre("Full Stack")
+                .linkedin("linkedin.com/in/thor")
+                .github("github/thor")
+                .instagram("Thor Filho de Odin")
+                .twitter("Thor Filho de Odin")
+                .fileCurriculo("CvThor")
+                .build();
+    }
+
+    public Aluno getAluno() {
+        return Aluno.builder()
+                .nome("Maria")
+                .matricula("ADS001")
+                .cpf(1245683215L)
+                .telefone(32564748L)
+                .email("brteste@hotmail.com")
+                .curriculo("cvteste1")
+                .build();
+    }
+
+    public Aluno getAluno1() {
+        return Aluno.builder()
+                .nome("Antonio")
+                .matricula("ADS001")
+                .cpf(1245683215L)
+                .telefone(32564748L)
+                .email("brteste@hotmail.com")
+                .curriculo("cvteste1")
+                .build();
+    }
+
+    public Aluno getAluno2() {
+        return Aluno.builder()
+                .nome("José")
+                .matricula("ADS001")
+                .cpf(1245683215L)
+                .telefone(32564748L)
+                .email("brteste@hotmail.com")
+                .curriculo("cvteste1")
+                .build();
+    }
+
+    public Aluno getAluno3() {
+        return Aluno.builder()
+                .nome("Joana")
+                .matricula("ADS001")
+                .cpf(1245683215L)
+                .telefone(32564748L)
+                .email("brteste@hotmail.com")
+                .curriculo("cvteste1")
+                .build();
+    }
+
+    public Perfil getPerfil() {
+        return Perfil.builder().id(1l).descricao("Aluno").build();
     }
 }

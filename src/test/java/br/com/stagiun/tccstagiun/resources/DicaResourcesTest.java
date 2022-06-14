@@ -74,7 +74,7 @@ public class DicaResourcesTest {
         when(service.list()).thenReturn(tipoDicaList);
         mockMvc.perform(get("/v1/dicas"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"titulo\":\"dica 1\",\"descricao\":\"dica 1\",\"linksUteis\":\"links udeis\",\"dataPublicacao\":\"2001-01-01\",\"cargo\":{\"id\":1,\"descricao\":\"Unipac\",\"experiencia\":\"Junior3223\",\"areaAtuacao\":\"mpmpmp\",\"beneficios\":\"nao tem\",\"salario\":2999.0,\"competenciasDesejadas\":\"Nenhuma\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"titulo\":\"Como virar um ninja em Java\",\"descricao\":\"Aprenda o que estudar para se tornar um ninja\",\"linksUteis\":\"links\",\"dataPublicacao\":\"25/05/2022\",\"cargo\":{\"id\":1,\"descricao\":\"Dev Front-End\",\"experiencia\":\"Júnior\",\"areaAtuacao\":\"Web\",\"beneficios\":\"Tudo\",\"salario\":2999.00,\"habilidadesDesejadas\":\"Inglês\",\"competenciasDesejadas\":\"HTML/CSS, JavaScript, React/Angular\"}}]"))
                 .andExpect(status().isOk());
     }
 

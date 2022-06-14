@@ -1,100 +1,101 @@
 package br.com.stagiun.tccstagiun.model.service;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Pais;
-import br.com.stagiun.tccstagiun.model.domain.Usuario;
 import br.com.stagiun.tccstagiun.model.repository.PaisRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import br.com.stagiun.tccstagiun.model.service.impl.PaisServiceImpl;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles(value = "local")
-@AutoConfigureMockMvc
+@Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PaisServiceTest {
+public class PaisServiceTest {
+
+    @InjectMocks
+    PaisServiceImpl paisService;
 
     @Mock
     PaisRepository paisRepository;
 
-    @MockBean
-    PaisService service;
-
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
-    @Test
-    void find_by_countries_and_thenStatus200_and_all_paises() {
-        List<Pais> paisList = new ArrayList<>();
-
-        Pais pais = domainMock.getPais();
-        paisList.add(pais);
-
-        Pais pais2 = domainMock.getPais2();
-        paisList.add(pais2);
-
-        Pais pais3 = domainMock.getPais3();
-        paisList.add(pais3);
-
-        when(service.list()).thenReturn(paisList);
-        assertNotNull(service.list());
+    @BeforeAll
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void find_by_countries_by_id_and_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getAllEmployeesTest() {
+        List<Pais> list = new ArrayList<>();
 
         Pais pais = domainMock.getPais();
-        when(service.findById(id)).thenReturn(Optional.of(pais));
-        assertNotNull(service.findById(id));
+        Pais pais1 = domainMock.getPais();
+        Pais pais2 = domainMock.getPais();
+
+        list.add(pais);
+        list.add(pais1);
+        list.add(pais2);
+
+        when(paisRepository.findAll()).thenReturn(list);
+
+        // test
+        List<Pais> urls = paisService.list();
+
+        assertEquals(3, urls.size());
+        verify(paisRepository, times(1)).findAll();
     }
 
     @Test
-    public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Pais pais = domainMock.getPais();
+    public void getPaisByIdTest() {
+        when(paisRepository.findById(1L)).thenReturn(Optional.of(domainMock.getPais()));
 
-        when(this.service.salvar(pais)).thenReturn(pais);
+        Optional<Pais> pais = paisService.findById(1L);
 
-        Pais paisSalvo = this.service.salvar(pais);
-        assertNotNull(paisSalvo);
+        assertEquals("Brasil", pais.get().getDescricao());
     }
 
     @Test
-    public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getFindPaisByShortIdTest() {
         Pais pais = domainMock.getPais();
+        when(paisService.findById(1L)).thenReturn(Optional.ofNullable(pais));
 
-        when(service.editar(id, pais)).thenReturn(pais);
+        Optional<Pais> result = paisService.findById(1L);
 
-        Pais paisAlterado = this.service.editar(id, pais);
-        assertNotNull(paisAlterado);
+        assertEquals("Brasil", pais.getDescricao());
     }
 
+    @Test
+    public void createPaisTest() throws ResourceFoundException {
+        Pais url = domainMock.getPais();
+        paisService.salvar(url);
+
+        verify(paisRepository, times(3)).save(url);
+    }
+
+    @Test
+    public void createAndStorePaisTest() throws ResourceFoundException {
+        Pais pais = domainMock.getPais();
+        paisService.salvar(pais);
+
+        when(paisService.salvar(pais)).thenReturn(pais);
+        Pais result = paisService.salvar(pais);
+
+        assertEquals("Brasil", result.getDescricao());
+    }
 }

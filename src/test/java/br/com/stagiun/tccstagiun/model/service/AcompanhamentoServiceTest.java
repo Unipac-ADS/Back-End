@@ -1,4 +1,4 @@
-package br.com.stagiun.tccstagiun.services;
+package br.com.stagiun.tccstagiun.model.service;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Acompanhamento;

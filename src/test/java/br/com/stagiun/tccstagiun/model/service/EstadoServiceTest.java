@@ -1,86 +1,105 @@
 package br.com.stagiun.tccstagiun.model.service;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Estado;
+import br.com.stagiun.tccstagiun.model.domain.Pais;
 import br.com.stagiun.tccstagiun.model.repository.EstadoRepository;
+import br.com.stagiun.tccstagiun.model.service.impl.EstadoServiceImpl;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles(value = "local")
-@AutoConfigureMockMvc
+@Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class EstadoServiceTest {
+public class EstadoServiceTest {
+
+    @InjectMocks
+    EstadoServiceImpl estadoService;
 
     @Mock
     EstadoRepository estadoRepository;
 
-    @MockBean
-    EstadoService service;
-
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
-    @Test
-    void find_by_countries_and_thenStatus200_and_all_estadoes() {
-        List<Estado> estadoList = new ArrayList<>();
-
-        Estado estado = domainMock.getEstado();
-        estadoList.add(estado);
-
-        Estado estado2 = domainMock.getEstado2();
-        estadoList.add(estado2);
-
-        Estado estado3 = domainMock.getEstado3();
-        estadoList.add(estado3);
-
-        when(service.list()).thenReturn(estadoList);
-        assertNotNull(service.list());
+    @BeforeAll
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void find_by_countries_by_id_and_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getAllEmployeesTest() {
+        List<Estado> list = new ArrayList<>();
 
         Estado estado = domainMock.getEstado();
-        when(service.findById(id)).thenReturn(Optional.of(estado));
-        assertNotNull(service.findById(id));
+        Estado estado1 = domainMock.getEstado();
+        Estado estado2 = domainMock.getEstado();
+
+        list.add(estado);
+        list.add(estado1);
+        list.add(estado2);
+
+        when(estadoRepository.findAll()).thenReturn(list);
+
+        // test
+        List<Estado> urls = estadoService.list();
+
+        assertEquals(3, urls.size());
+        verify(estadoRepository, times(1)).findAll();
     }
 
     @Test
-    public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Estado estado = domainMock.getEstado();
+    public void getEstadoByIdTest() {
+        when(estadoRepository.findById(1L)).thenReturn(Optional.of(domainMock.getEstado()));
 
-        when(this.service.salvar(estado)).thenReturn(estado);
+        Optional<Estado> estado = estadoService.findById(1L);
 
-        Estado estadoSalvo = this.service.salvar(estado);
-        assertNotNull(estadoSalvo);
+        assertEquals("Minas Gerais", estado.get().getDescricao());
+        assertEquals("Brasil", estado.get().getPais().getDescricao());
     }
 
     @Test
-    public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getFindEstadoByShortIdTest() {
         Estado estado = domainMock.getEstado();
+        when(estadoService.findById(1L)).thenReturn(Optional.ofNullable(estado));
 
-        when(service.editar(id, estado)).thenReturn(estado);
+        Optional<Estado> result = estadoService.findById(1L);
 
-        Estado estadoAlterado = this.service.editar(id, estado);
-        assertNotNull(estadoAlterado);
+        assertEquals("Minas Gerais", estado.getDescricao());
+        assertEquals("Brasil", estado.getPais().getDescricao());
     }
 
+    @Test
+    public void createEstadoTest() throws ResourceFoundException {
+        Estado url = domainMock.getEstado();
+        estadoService.salvar(url);
+
+        verify(estadoRepository, times(1)).save(url);
+    }
+
+    @Test
+    public void createAndStoreEstadoTest() throws ResourceFoundException {
+        Estado estado = domainMock.getEstado();
+        estadoService.salvar(estado);
+
+        when(estadoService.salvar(estado)).thenReturn(estado);
+        Estado result = estadoService.salvar(estado);
+
+        assertEquals("Minas Gerais", result.getDescricao());
+        assertEquals("Brasil", result.getPais().getDescricao());
+    }
 }

@@ -74,7 +74,7 @@ public class HabilidadeResourcesTest {
         when(service.list()).thenReturn(tipoHabilidadeList);
         mockMvc.perform(get("/v1/habilidades"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"nome\":\"Musica\",\"aluno\":{\"nome\":\"Brasil\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"nome\":\"Proativo\",\"aluno\":{\"nome\":\"Maria\",\"matricula\":\"ADS001\",\"cpf\":1245683215,\"telefone\":32564748,\"email\":\"brteste@hotmail.com\",\"curriculo\":\"cvteste1\"}}]"))
                 .andExpect(status().isOk());
     }
 

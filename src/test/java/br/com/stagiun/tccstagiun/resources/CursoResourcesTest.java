@@ -76,7 +76,7 @@ public class CursoResourcesTest {
         when(service.list()).thenReturn(cursoList);
         mockMvc.perform(get("/v1/cursos"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"descricao\":\"Analise de Sistema\",\"faculdade\":{\"id\":1,\"nome\":\"Unipac\"}}]"))
+                .andExpect(content().json("[{\"id\":1,\"descricao\":\"Análise e Desenvolvimento de Sistemas\",\"faculdade\":{\"id\":1,\"nome\":\"Unipac\"}}]"))
                 .andExpect(status().isOk());
     }
 

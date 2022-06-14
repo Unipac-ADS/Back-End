@@ -1,80 +1,113 @@
 package br.com.stagiun.tccstagiun.model.service;
 
+import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.mocks.DomainMockFactory;
 import br.com.stagiun.tccstagiun.model.domain.Vaga;
 import br.com.stagiun.tccstagiun.model.repository.VagaRepository;
+import br.com.stagiun.tccstagiun.model.service.impl.VagaServiceImpl;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles(value = "local")
-@AutoConfigureMockMvc
+@Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class VagaServiceTest {
+public class VagaServiceTest {
+
+    @InjectMocks
+    VagaServiceImpl vagaService;
 
     @Mock
     VagaRepository vagaRepository;
 
-    @MockBean
-    VagaService service;
-
     private DomainMockFactory domainMock = DomainMockFactory.getDomainMockFactory();
 
-    @Test
-    void find_by_countries_and_thenStatus200_and_all_vagaes() {
-        List<Vaga> vagaList = new ArrayList<>();
-
-        Vaga vaga = domainMock.getVaga();
-        vagaList.add(vaga);
-
-        when(service.list()).thenReturn(vagaList);
-        assertNotNull(service.list());
+    @BeforeAll
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void find_by_countries_by_id_and_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getAllEmployeesTest() {
+        List<Vaga> list = new ArrayList<>();
 
         Vaga vaga = domainMock.getVaga();
-        when(service.findById(id)).thenReturn(Optional.of(vaga));
-        assertNotNull(service.findById(id));
+        Vaga vaga1 = domainMock.getVaga();
+        Vaga vaga2 = domainMock.getVaga();
+
+        list.add(vaga);
+        list.add(vaga1);
+        list.add(vaga2);
+
+        when(vagaRepository.findAll()).thenReturn(list);
+
+        // test
+        List<Vaga> urls = vagaService.list();
+
+        assertEquals(3, urls.size());
+        verify(vagaRepository, times(1)).findAll();
     }
 
     @Test
-    public void givenStudents_whenSaveStudent_thenStatus201() throws Exception {
-        Vaga vaga = domainMock.getVaga();
+    public void getPerfilByIdTest() {
+        when(vagaRepository.findById(1L)).thenReturn(Optional.of(domainMock.getVaga()));
 
-        when(this.service.salvar(vaga)).thenReturn(vaga);
+        Optional<Vaga> vaga = vagaService.findById(1L);
 
-        Vaga vagaSalvo = this.service.salvar(vaga);
-        assertNotNull(vagaSalvo);
+        assertEquals(1, vaga.get().getId());
+        assertEquals(333.00, vaga.get().getAmount());
+        assertEquals("26/05/2022", vaga.get().getDataOfertaInicio());
+        assertEquals("30/05/2022", vaga.get().getDataOfertaFim());
+        assertEquals("Vaga Desenvolvedor Java", vaga.get().getNome());
     }
 
     @Test
-    public void givenStudents_whenUpdateStudent_thenStatus200() throws Exception {
-        Long id = 1L;
+    public void getFindPerfilByShortIdTest() {
         Vaga vaga = domainMock.getVaga();
+        when(vagaService.findById(1L)).thenReturn(Optional.ofNullable(vaga));
 
-        when(service.editar(id, vaga)).thenReturn(vaga);
+        Optional<Vaga> result = vagaService.findById(1L);
 
-        Vaga vagaAlterado = this.service.editar(id, vaga);
-        assertNotNull(vagaAlterado);
+        assertEquals(1, vaga.getId());
+        assertEquals(333.00, vaga.getAmount());
+        assertEquals("26/05/2022", vaga.getDataOfertaInicio());
+        assertEquals("30/05/2022", vaga.getDataOfertaFim());
+        assertEquals("Vaga Desenvolvedor Java", vaga.getNome());
     }
 
+    @Test
+    public void createPerfilTest() throws ResourceFoundException {
+        Vaga url = domainMock.getVaga();
+        vagaService.salvar(url);
+
+        verify(vagaRepository, times(1)).save(url);
+    }
+
+    @Test
+    public void createAndStorePerfilTest() throws ResourceFoundException {
+        Vaga vaga = domainMock.getVaga();
+        vagaService.salvar(vaga);
+
+        when(vagaService.salvar(vaga)).thenReturn(vaga);
+        Vaga result = vagaService.salvar(vaga);
+
+        assertEquals(1, result.getId());
+        assertEquals(333.00, result.getAmount());
+        assertEquals("26/05/2022", result.getDataOfertaInicio());
+        assertEquals("30/05/2022", result.getDataOfertaFim());
+        assertEquals("Vaga Desenvolvedor Java", result.getNome());
+    }
 }

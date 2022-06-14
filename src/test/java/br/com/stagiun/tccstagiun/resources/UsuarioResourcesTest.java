@@ -75,7 +75,7 @@ public class UsuarioResourcesTest {
         when(service.list()).thenReturn(usuarioList);
         mockMvc.perform(get("/v1/usuarios"))
                 .andDo(print())
-                .andExpect(content().json("[{\"id\":1,\"nome\":\"root\",\"email\":\"root@localhos.com\",\"senha\":\"123456\"}]"))
+                .andExpect(content().json("[{\"id\":1,\"nome\":\"Playboyzinho\",\"email\":\"palyboyzinho@gmail.com\",\"senha\":\"Mjolnir\"}]"))
                 .andExpect(status().isOk());
     }
 
