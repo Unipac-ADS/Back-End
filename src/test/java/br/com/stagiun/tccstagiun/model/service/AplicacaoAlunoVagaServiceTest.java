@@ -104,6 +104,6 @@ public class AplicacaoAlunoVagaServiceTest {
         when(aplicacaoAlunoVagaService.salvar(aplicacaoAlunoVaga)).thenReturn(aplicacaoAlunoVaga);
         AplicacaoAlunoVaga result = aplicacaoAlunoVagaService.salvar(aplicacaoAlunoVaga);
 
-        assertEquals("30/04/2022", result.getDataAplicacao());
+        assertEquals("2021:09:01", result.getDataAplicacao());
     }
 }

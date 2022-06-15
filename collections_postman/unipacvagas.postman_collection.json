@@ -11,6 +11,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/paises",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -39,6 +49,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/paises",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -63,6 +83,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/faculdades",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -91,6 +121,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/faculdades",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -110,6 +150,16 @@
 				{
 					"name": "{{context}}/api/v1/faculdades/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -139,6 +189,16 @@
 				{
 					"name": "{{context}}/api/v1/faculdades/2",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -164,11 +224,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/turmas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"descricao\": \"3B\",\n    \"periodo\": 3,\n    \"curso\": {\n        \"id\": 3\n    }\n}",
+							"raw": "{\n    \"descricao\": \"3323B\",\n    \"periodo\": 3,\n    \"curso\": {\n        \"id\": 1\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -192,6 +262,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/turmas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -211,6 +291,16 @@
 				{
 					"name": "{{context}}/api/v1/turmas/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -240,6 +330,16 @@
 				{
 					"name": "{{context}}/api/v1/faculdades/2",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -265,11 +365,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/cursos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"descricao\": \"B\",\n    \"periodo\": 3,\n    \"faculdade\": {\n        \"id\": 3\n    }\n}",
+							"raw": "{\n    \"descricao\": \"sB\",\n    \"periodo\": 3,\n    \"faculdade\": {\n        \"id\": 1\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -293,6 +403,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/cursos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -312,6 +432,16 @@
 				{
 					"name": "{{context}}/api/v1/cursos/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -341,6 +471,16 @@
 				{
 					"name": "{{context}}/api/v1/cursos/2",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -369,6 +509,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -381,12 +531,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{context}}//api/v1/estados",
+							"raw": "{{context}}/api/v1/estados",
 							"host": [
 								"{{context}}"
 							],
 							"path": [
-								"",
 								"api",
 								"v1",
 								"estados"
@@ -398,11 +547,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/estados",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"descricao\": \"Minas Gerais\",\n    \"pais\": {\n        \"id\": 1\n    }\n}",
+							"raw": "{\n    \"descricao\": \"Minas Gerais\",\n    \"pais\": {\n        \"id\": 3\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -431,11 +590,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/cidades",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"descricao\": \"uberlandia\",\n    \"estado\": {\n        \"id\": 1\n    }\n}",
+							"raw": "{\n    \"descricao\": \"Uberlândia\",\n    \"estado\": {\n        \"id\": 1\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -459,6 +628,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/cidades",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -483,6 +662,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/bairros",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -503,6 +692,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/bairros",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -531,6 +730,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/bairros",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -559,6 +768,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/bairros",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -583,6 +802,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/cep",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -602,6 +831,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/ceps",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -635,6 +874,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/enderecos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -654,6 +903,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/enderecos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -687,6 +946,16 @@
 				{
 					"name": "New Request",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -706,11 +975,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/cargos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"descricao\": \"Junior\",\n    \"experiencia\": \"Nenhuma\",\n    \"area_atuacao\": \"mpmpmp\",\n    \"beneficios\": \"nao tem\",\n    \"salario\": 2999.00,\n    \"habilidadesDesejadas\": \"java/node\",\n    \"competenciasDesejadas\": \"dffds\"\n}",
+							"raw": "{\n    \"descricao\": \"Junior\",\n    \"experiencia\": \"Nenhuma\",\n    \"area_atuacao\": \"mpmpmp\",\n    \"beneficios\": \"nao tem\",\n    \"salario\": 299.00,\n    \"habilidadesDesejadas\": \"java/node\",\n    \"competenciasDesejadas\": \"dffds\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -734,6 +1013,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/cargos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -756,6 +1045,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/cargos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -775,6 +1074,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/cargos/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -804,6 +1113,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/cargos/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -829,6 +1148,16 @@
 				{
 					"name": "New Request",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -848,6 +1177,16 @@
 				{
 					"name": "New Request",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -876,6 +1215,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/usuarios/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -905,6 +1254,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/usuarios/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -930,6 +1289,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/usuarios",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -949,11 +1318,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/empresas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tipoEmpresa\": {\n        \"id\": 1\n    },\n    \"usuario\": {\n        \"id\": 1\n    },\n    \"endereco\": {\n        \"id\": 1\n    },\n    \"nomeFantasia\": \"empresa x1\",\n    \"razaoSocial\": \"Empresa X1\",\n    \"cnpj\": 23423423433,\n    \"telefone\": 3234234,\n    \"email\": \"empresax@gmail.com\"\n}",
+							"raw": "{\n    \"tipoEmpresa\": {\n        \"id\": 1\n    },\n    \"usuario\": {\n        \"id\": 1\n    },\n    \"endereco\": {\n        \"id\": 1\n    },\n    \"nomeFantasia\": \"empresa 11\",\n    \"razaoSocial\": \"Empresa X1\",\n    \"cnpj\": 234234,\n    \"telefone\": 32342,\n    \"email\": \"empresax@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -977,6 +1356,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/empresas/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -1006,6 +1395,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/empresas/3",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1031,6 +1430,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/tipo-empresas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1050,6 +1459,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/tipo-empresas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1062,12 +1481,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/tipo-empresas",
-							"protocol": "http",
+							"raw": "{{context}}/api/v1/tipo-empresas",
 							"host": [
-								"localhost"
+								"{{context}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -1080,6 +1497,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/tipo-empresas/2",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -1104,6 +1531,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/tipo-empresas/2",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1129,6 +1566,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/vagas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1148,11 +1595,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/vagas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"aplicado\": 1,\n    \"amount\": 4300.99,\n    \"dataOfertaInicio\": \"2002-02-02\",\n    \"dataOfertaFim\": \"2002-02-02\",\n    \"nome\": \"rOGERIOGER\",\n    \"cargo\": { \"id\": 1 },\n    \"empresa\": { \"id\": 1 }\n}",
+							"raw": "{\n    \"amount\": 43.99,\n    \"nome\": \"dfasdfasdf2\",\n    \"dataOfertaInicio\": \"2001-01-01 12:45:09\",\n    \"dataOfertaFim\": \"2001-01-01 12:45:09\",\n    \"cargo\": { \"id\": 1 },\n    \"empresa\": { \"id\": 1 }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1176,6 +1633,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/vagas/2",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1196,6 +1663,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/vagas/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -1230,6 +1707,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/alunos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1249,6 +1736,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/alunos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1277,6 +1774,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/alunos/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -1306,6 +1813,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/alunos/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1331,17 +1848,27 @@
 				{
 					"name": "http://localhost:8080/api/v1/alunos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{context}}/api/v1/alunos-detalhes",
+							"raw": "{{context}}/api/v1/aluno-detalhes",
 							"host": [
 								"{{context}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"alunos-detalhes"
+								"aluno-detalhes"
 							]
 						}
 					},
@@ -1350,11 +1877,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/alunos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"aluno\": {\n        \"id\": 2\n    },\n    \"turma\": {\n        \"id\": 3\n    },\n    \"anoDeInicioCurso\": \"2001-01-01\",\n    \"anoDeConclusaoCurso\": \"2001-01-01\",\n    \"experiencia\":\"experiencia\",\n    \"infoAdicionais\":\"info adincionais\",\n    \"deficiencia\": 1,\n    \"linkedin\":\"linedin_user\",\n    \"github\":\"github_user\",\n    \"instagram\":\"instagram_user\",\n    \"twitter\":\"twitter_user\",\n    \"facebook\": \"facebook_user\",\n    \"fileCurriculo\": \"curriculo\"\n}",
+							"raw": "{\n    \"aluno\": {\n        \"id\": 2\n    },\n    \"turma\": {\n        \"id\": 3\n    },\n    \"anoDeInicioCurso\": \"2001\",\n    \"anoDeConclusaoCurso\": \"2001\",\n    \"experiencia\":\"experiencia\",\n    \"infoAdicionais\":\"info adincionais\",\n    \"deficiencia\": 1,\n    \"linkedin\":\"linedin_user\",\n    \"github\":\"github_user\",\n    \"twitter\":\"twitter_user\",\n    \"facebook\": \"facebook_user\",\n    \"fileCurriculo\": \"curriculo\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1378,6 +1915,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/alunos/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -1407,6 +1954,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/alunos/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1432,6 +1989,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/dicas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1451,6 +2018,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/dicas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1479,6 +2056,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/dicas/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -1508,6 +2095,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/dicas/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1533,6 +2130,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/idiomas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1552,6 +2159,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/idiomas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1580,6 +2197,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/idiomas/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -1609,6 +2236,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/idiomas/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1634,6 +2271,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/habilidades",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1653,6 +2300,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/habilidades",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1681,6 +2338,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/habilidades/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -1710,6 +2377,157 @@
 				{
 					"name": "http://localhost:8080/api/v1/habilidades/1",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{context}}/api/v1/habilidades/1",
+							"host": [
+								"{{context}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"habilidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Perfis",
+			"item": [
+				{
+					"name": "http://localhost:8080/api/v1/perfis",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{context}}/api/v1/perfis",
+							"host": [
+								"{{context}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/api/v1/habilidades",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"USER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{context}}/api/v1/perfis",
+							"host": [
+								"{{context}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/api/v1/habilidades/1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aluno\": {\n        \"id\": 2\n    },\n    \"nome\": \"futebol 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{context}}/api/v1/habilidades/1",
+							"host": [
+								"{{context}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"habilidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/api/v1/habilidades/1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1735,6 +2553,16 @@
 				{
 					"name": "http://localhost:8080/api/v1/paises",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1754,11 +2582,21 @@
 				{
 					"name": "http://localhost:8080/api/v1/aplicacao-aluno-vagas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"dataAplicacao\": \"2021:09:01\",\n    \"vaga\": {\n        \"id\": 1\n    },\n    \"aluno\": {\n        \"id\": 1\n    }\n}",
+							"raw": "{\n    \"dataAplicacao\": \"2021:09:01\",\n    \"vaga\": {\n        \"id\": 1\n    },\n    \"aluno\": {\n        \"id\": 2\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1774,6 +2612,84 @@
 								"api",
 								"v1",
 								"aplicacao-aluno-vagas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"item": [
+				{
+					"name": "{{context}}/api/v1/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Antonio\",\n    \"email\": \"antoinio@gmail.com\",\n    \"senha\": \"12356\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{context}}/api/v1/register",
+							"host": [
+								"{{context}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "{{context}}/api/v1/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"pm.environment.set(\"token\", data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"antoinio@gmail.com\",\n    \"senha\": \"12356\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{context}}/api/v1/login",
+							"host": [
+								"{{context}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"login"
 							]
 						}
 					},

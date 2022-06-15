@@ -1,6 +1,10 @@
 package br.com.stagiun.tccstagiun.model.service.impl;
 
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
+import br.com.stagiun.tccstagiun.exceptions.ResourceNotFoundException;
+import br.com.stagiun.tccstagiun.filter.JWTUtil;
+import br.com.stagiun.tccstagiun.filter.PasswordCryptoService;
+import br.com.stagiun.tccstagiun.filter.TokenResponse;
 import br.com.stagiun.tccstagiun.model.domain.Usuario;
 import br.com.stagiun.tccstagiun.model.repository.UsuarioRepository;
 import br.com.stagiun.tccstagiun.model.service.UsuarioService;
@@ -18,19 +22,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PasswordCryptoService passwordCryptoService;
+
     @Override
     public Usuario salvar(Usuario usuario) throws ResourceFoundException {
         Optional<Usuario> existeUsuario = findByNome(usuario.getNome());
-        
+
         if (existeUsuario.isPresent()) {
             throw new ResourceFoundException("Usuário já encontrado");
         }
 
+        usuario.setSenha(passwordCryptoService.encrypt(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
 
     @Override
-    public Usuario editar(Long id, Usuario usuario) throws ResourceFoundException{
+    public Usuario editar(Long id, Usuario usuario) throws ResourceFoundException {
         Optional<Usuario> existeUsuario = findById(id);
 
         if (!existeUsuario.isPresent()) {
@@ -55,6 +63,21 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Optional<Usuario> findByNome(String nome) {
         return usuarioRepository.findByNome(nome);
+    }
+
+    @Override
+    public TokenResponse getLoginAndReturnToken(Usuario usuario) throws ResourceNotFoundException {
+
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(usuario.getEmail());
+
+        if (usuarioOptional.isPresent()) {
+            return TokenResponse.builder()
+                    .userId(usuarioOptional.get().getId())
+                    .token(JWTUtil.createToken(usuarioOptional.get().getEmail()))
+                    .perfils(usuarioOptional.get().getPerfis()).build();
+        }
+
+        return null;
     }
 
     @Override
