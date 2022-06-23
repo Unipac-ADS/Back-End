@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Turma;
 import br.com.stagiun.tccstagiun.model.service.TurmaService;
@@ -13,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/turmas")
-public class TurmaResources {
+@RequestMapping(ResourcesAssemble.V_1 + "turmas")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class TurmaResources extends ResourcesAssemble {
 
     @Autowired
     private TurmaService turmaService;

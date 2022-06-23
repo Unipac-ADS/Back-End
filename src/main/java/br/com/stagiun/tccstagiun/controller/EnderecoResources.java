@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Endereco;
 import br.com.stagiun.tccstagiun.model.service.EnderecoService;
@@ -13,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/enderecos")
-public class EnderecoResources {
+@RequestMapping(ResourcesAssemble.V_1 + "enderecos")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class EnderecoResources extends ResourcesAssemble {
 
     @Autowired
     private EnderecoService enderecoService;

@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.filter.TokenResponse;
 import br.com.stagiun.tccstagiun.model.domain.Usuario;
@@ -12,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/login")
-public class LoginController {
+@RequestMapping(ResourcesAssemble.V_1 + "login")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class LoginController extends ResourcesAssemble {
 
     @Autowired
     private UserDetailsService userDetailsService;

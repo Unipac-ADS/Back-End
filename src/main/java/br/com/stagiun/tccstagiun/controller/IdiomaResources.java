@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Idioma;
 import br.com.stagiun.tccstagiun.model.service.IdiomaService;
@@ -13,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/idiomas")
-public class IdiomaResources {
+@RequestMapping(ResourcesAssemble.V_1 + "idiomas")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class IdiomaResources extends ResourcesAssemble {
 
     @Autowired
     private IdiomaService idiomaService;

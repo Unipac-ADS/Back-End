@@ -1,8 +1,8 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.UsuarioPerfil;
-import br.com.stagiun.tccstagiun.model.repository.UsuarioPerfilRepository;
 import br.com.stagiun.tccstagiun.model.service.UsuarioPerfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/usuariosperfis")
-public class UsuarioPerfilResources {
+@RequestMapping(ResourcesAssemble.V_1 + "usuariosperfis")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class UsuarioPerfilResources extends ResourcesAssemble {
 
     @Autowired
     private UsuarioPerfilService usuarioperfilService;

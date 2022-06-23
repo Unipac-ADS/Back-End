@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Estado;
 import br.com.stagiun.tccstagiun.model.service.EstadoService;
@@ -13,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/estados")
-public class EstadoResources {
+@RequestMapping(ResourcesAssemble.V_1 + "estados")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class EstadoResources extends ResourcesAssemble {
 
     @Autowired
     private EstadoService estadoService;

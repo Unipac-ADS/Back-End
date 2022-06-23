@@ -11,6 +11,8 @@ import java.util.Date;
 public class JWTUtil {
 
     public static final long EXPIRATION_TIME = 864_000_000; // 10 days
+    //3_600_000 1 hora
+    //public static final long EXPIRATION_TIME = 60_000;
     public static final String SECRET = "E7D86FC2-9474-477D-A69C-A3F470509DCD";
     public static final String TOKEN_PREFIX = "Bearer";
     public static final String HEADER_STRING = "Authorization";

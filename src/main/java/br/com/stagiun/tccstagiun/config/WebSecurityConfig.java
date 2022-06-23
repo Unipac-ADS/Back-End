@@ -21,6 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/v1/login",
             "/v1/register",
             "/v1/perfis",
+           // "/v1/usuarios/**",
             "/h2/**"
     };
 

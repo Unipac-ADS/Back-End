@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Cep;
 import br.com.stagiun.tccstagiun.model.service.CepService;
@@ -13,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/ceps")
-public class CepResources {
+@RequestMapping(ResourcesAssemble.V_1 + "ceps")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class CepResources extends ResourcesAssemble {
 
     @Autowired
     private CepService cepService;

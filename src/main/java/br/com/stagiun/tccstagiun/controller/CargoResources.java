@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Cargo;
 import br.com.stagiun.tccstagiun.model.service.CargoService;
@@ -13,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/cargos")
-public class CargoResources {
+@RequestMapping(ResourcesAssemble.V_1 + "cargos")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class CargoResources extends ResourcesAssemble {
 
     @Autowired
     private CargoService cargoService;

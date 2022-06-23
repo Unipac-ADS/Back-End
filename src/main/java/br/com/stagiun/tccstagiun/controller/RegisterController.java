@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.exceptions.ResourceNotFoundException;
 import br.com.stagiun.tccstagiun.filter.RegisterRequest;
@@ -19,8 +20,9 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/v1/register")
-public class RegisterController {
+@RequestMapping(ResourcesAssemble.V_1 + "register")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class RegisterController extends ResourcesAssemble {
 
     @Autowired
     private UsuarioService usuarioService;
@@ -31,7 +33,14 @@ public class RegisterController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequest, UriComponentsBuilder uriBuilder) throws ResourceFoundException, ResourceNotFoundException {
-        Optional<Perfil> perfilOptional = perfilService.findById(1L);
+        String USER = "USER";
+
+        /*Perfil perfil = Perfil.builder()
+                .descricao(USER)
+                .build();*/
+
+        //perfilService.salvar(perfil);
+        Optional<Perfil> perfilOptional = perfilService.findByDescricao(USER);
         Set<Perfil> perfils = new HashSet<>();
         perfils.add(perfilOptional.get());
 

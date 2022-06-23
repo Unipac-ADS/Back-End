@@ -1,5 +1,6 @@
 package br.com.stagiun.tccstagiun.controller;
 
+import br.com.stagiun.tccstagiun.controller.assemble.ResourcesAssemble;
 import br.com.stagiun.tccstagiun.exceptions.ResourceFoundException;
 import br.com.stagiun.tccstagiun.model.domain.Dica;
 import br.com.stagiun.tccstagiun.model.service.DicaService;
@@ -13,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/dicas")
-public class DicaResources {
+@RequestMapping(ResourcesAssemble.V_1 + "dicas")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class DicaResources extends ResourcesAssemble {
 
     @Autowired
     private DicaService dicaService;
