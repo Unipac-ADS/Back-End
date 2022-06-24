@@ -35,6 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             }
 
             usuario.setSenha(passwordCryptoService.encrypt(usuario.getSenha()));
+            log.info("Usuario para cadastrar {}", usuario);
             return usuarioRepository.save(usuario);
         } catch (Exception ex) {
             ex.printStackTrace();

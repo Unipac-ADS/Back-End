@@ -39,14 +39,14 @@ public class RegisterController extends ResourcesAssemble {
 
         Optional<Perfil> perfilOptional = perfilService.findByDescricao(USER);
         if (!perfilOptional.isPresent()) {
-         throw new ResourceFoundException("Perfil " + USER + "não cadastrador");
-        } else {
-            Perfil perfil = Perfil.builder().descricao(USER).build();
-            perfilService.salvar(perfil);
+            //Perfil perfil = Perfil.builder().descricao(USER).build();
+           // perfilService.salvar(perfil);
+            throw new ResourceFoundException("Perfil " + USER + "não cadastrador");
         }
 
-        Set<Perfil>  perfils = new HashSet<>();
+        Set<Perfil> perfils = new HashSet<>();
         perfils.add(perfilOptional.get());
+
         Usuario usuario = Usuario.builder().id(1L).nome(registerRequest.getNome()).email(registerRequest.getEmail()).senha(registerRequest.getSenha()).perfis(perfils).build();
         log.info("Usuário Montado: {}", usuario.toString());
         Usuario registered = usuarioService.salvar(usuario);
