@@ -27,14 +27,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario salvar(Usuario usuario) throws ResourceFoundException {
-        Optional<Usuario> existeUsuario = findByNome(usuario.getNome());
+        try {
+            Optional<Usuario> existeUsuario = findByNome(usuario.getNome());
 
-        if (existeUsuario.isPresent()) {
-            throw new ResourceFoundException("Usuário já encontrado");
+            if (existeUsuario.isPresent()) {
+                throw new ResourceFoundException("Usuário já encontrado");
+            }
+
+            usuario.setSenha(passwordCryptoService.encrypt(usuario.getSenha()));
+            return usuarioRepository.save(usuario);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            log.info("Erro ao cadastrar {}", ex.getMessage());
         }
-
-        usuario.setSenha(passwordCryptoService.encrypt(usuario.getSenha()));
-        return usuarioRepository.save(usuario);
+        return null;
     }
 
     @Override
